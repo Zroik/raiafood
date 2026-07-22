@@ -29,7 +29,7 @@ Make sure you have the following installed:
 
 1. **Clone the Repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/Zroik/raiafood.git
    cd raiafood
    ```
 
@@ -44,15 +44,13 @@ Make sure you have the following installed:
    ```
 
 4. **Setup Environment Variables**
-   Copy the example environment file and configure your credentials:
+   Copy the example environment file:
    ```bash
    cp .env.example .env
    ```
-   Open the `.env` file and set up your:
-   - Database credentials (`DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`, etc.)
-   - Midtrans keys (`MIDTRANS_SERVER_KEY`, `MIDTRANS_CLIENT_KEY`)
-   - Google Client OAuth keys (`GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`)
-   - RajaOngkir API Key (`RAJAONGKIR_API_KEY`)
+   Open the `.env` file and set up your **Database credentials** (`DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`, etc.). 
+   
+   *Note: The Midtrans, Google OAuth, and RajaOngkir API keys are already pre-filled in `.env.example` with working sandbox/development credentials, so you do not need to configure them manually for testing.*
 
 5. **Generate Application Key**
    ```bash
