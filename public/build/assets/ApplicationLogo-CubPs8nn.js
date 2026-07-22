@@ -1,0 +1,1 @@
+import{t as e}from"./app-uAtxqZwr.js";var t=e();function n(e){return(0,t.jsx)(`img`,{src:`/images/raia-logo.webp`,alt:`RaiaFood Logo`,...e})}export{n as t};
