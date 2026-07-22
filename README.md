@@ -40,7 +40,7 @@ Make sure you have the following installed:
 
 3. **Install JavaScript Dependencies**
    ```bash
-   npm install
+   npm install --legacy-peer-deps
    ```
 
 4. **Setup Environment Variables**
