@@ -1,0 +1,78 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Models\Banner;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Inertia\Inertia;
+
+class BannerController extends Controller
+{
+    public function index()
+    {
+        $banners = Banner::orderBy('sort_order')->get();
+        return Inertia::render('Admin/Banners/Index', [
+            'banners' => $banners
+        ]);
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:4096',
+            'link' => 'nullable|string|max:255',
+            'sort_order' => 'integer',
+            'is_active' => 'boolean',
+        ]);
+
+        if ($request->hasFile('image')) {
+            $validated['image'] = $request->file('image')->store('banners', 'public');
+        }
+
+        Banner::create($validated);
+
+        return redirect()->route('admin.banners.index')
+            ->with('success', 'Banner berhasil ditambahkan!');
+    }
+
+    public function update(Request $request, Banner $banner)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:4096',
+            'link' => 'nullable|string|max:255',
+            'sort_order' => 'integer',
+            'is_active' => 'boolean',
+        ]);
+
+        if ($request->hasFile('image')) {
+            if ($banner->image && !str_starts_with($banner->image, 'images/')) {
+                Storage::disk('public')->delete($banner->image);
+            }
+            $validated['image'] = $request->file('image')->store('banners', 'public');
+        } else {
+            unset($validated['image']);
+        }
+
+        $banner->update($validated);
+
+        return redirect()->route('admin.banners.index')
+            ->with('success', 'Banner berhasil diperbarui!');
+    }
+
+    public function destroy(Banner $banner)
+    {
+        if ($banner->image && !str_starts_with($banner->image, 'images/')) {
+            Storage::disk('public')->delete($banner->image);
+        }
+        $banner->delete();
+
+        return redirect()->route('admin.banners.index')
+            ->with('success', 'Banner berhasil dihapus!');
+    }
+}
