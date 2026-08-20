@@ -110,6 +110,27 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])
         // Messages (Hubungi Kami Inboxes)
         Route::resource('messages', AdminMessageController::class)->only(['index', 'show', 'destroy']);
 
+        // FAQs (CMS Dinamis)
+        Route::resource('faqs', \App\Http\Controllers\Admin\FaqController::class)->except(['show', 'create', 'edit']);
+
+        // Users & Role Management
+        Route::resource('users', \App\Http\Controllers\Admin\UserController::class)->except(['show', 'create', 'edit']);
+
+        // Website Settings (CMS Dinamis)
+        Route::prefix('settings')->name('settings.')->group(function () {
+            Route::get('/general', [\App\Http\Controllers\Admin\SettingController::class, 'general'])->name('general');
+            Route::post('/general', [\App\Http\Controllers\Admin\SettingController::class, 'updateGeneral'])->name('general.update');
+
+            Route::get('/pages', [\App\Http\Controllers\Admin\SettingController::class, 'pages'])->name('pages');
+            Route::post('/pages', [\App\Http\Controllers\Admin\SettingController::class, 'updatePages'])->name('pages.update');
+
+            Route::get('/contact', [\App\Http\Controllers\Admin\SettingController::class, 'contact'])->name('contact');
+            Route::post('/contact', [\App\Http\Controllers\Admin\SettingController::class, 'updateContact'])->name('contact.update');
+
+            Route::get('/social', [\App\Http\Controllers\Admin\SettingController::class, 'social'])->name('social');
+            Route::post('/social', [\App\Http\Controllers\Admin\SettingController::class, 'updateSocial'])->name('social.update');
+        });
+
         // WhatsApp Settings
         Route::get('/whatsapp', [WhatsappSettingController::class, 'index'])->name('whatsapp.index');
         Route::post('/whatsapp', [WhatsappSettingController::class, 'update'])->name('whatsapp.update');

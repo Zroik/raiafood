@@ -12,10 +12,19 @@ class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Product::with('category')->active()->inStock();
+        $query = Product::with('category')
+            ->withSum('orderItems as total_sold', 'quantity')
+            ->active()
+            ->inStock();
 
         if ($request->filled('category')) {
             $query->whereHas('category', fn($q) => $q->where('slug', $request->category));
+        }
+
+        if ($request->boolean('flash_sale') || $request->flash_sale === '1') {
+            $query->whereNotNull('discount_price')
+                  ->where('discount_price', '>', 0)
+                  ->whereColumn('discount_price', '<', 'price');
         }
 
         if ($request->filled('search')) {
@@ -25,19 +34,33 @@ class ProductController extends Controller
             });
         }
 
+        if ($request->filled('min_price')) {
+            $query->whereRaw('COALESCE(discount_price, price) >= ?', [(float) $request->min_price]);
+        }
+
+        if ($request->filled('max_price')) {
+            $query->whereRaw('COALESCE(discount_price, price) <= ?', [(float) $request->max_price]);
+        }
+
         if ($request->filled('sort')) {
             match ($request->sort) {
                 'price_asc' => $query->orderByRaw('COALESCE(discount_price, price) ASC'),
                 'price_desc' => $query->orderByRaw('COALESCE(discount_price, price) DESC'),
                 'newest' => $query->orderBy('created_at', 'desc'),
-                'popular' => $query->orderBy('rating_count', 'desc'),
+                'popular' => $query->orderByDesc('total_sold')->orderByDesc('rating_count'),
                 default => $query->orderBy('created_at', 'desc'),
             };
         } else {
             $query->orderBy('created_at', 'desc');
         }
 
-        $products = $query->paginate(12)->withQueryString();
+        $products = $query->paginate(15)->withQueryString();
+
+        $flashSaleCount = Product::active()->inStock()
+            ->whereNotNull('discount_price')
+            ->where('discount_price', '>', 0)
+            ->whereColumn('discount_price', '<', 'price')
+            ->count();
 
         $categories = Category::active()
             ->withCount(['products' => fn($q) => $q->active()])
@@ -47,13 +70,15 @@ class ProductController extends Controller
         return Inertia::render('Shop/Products', [
             'products' => $products,
             'categories' => $categories,
-            'filters' => $request->only(['category', 'search', 'sort']),
+            'flashSaleCount' => $flashSaleCount,
+            'filters' => $request->only(['category', 'search', 'sort', 'min_price', 'max_price', 'flash_sale']),
         ]);
     }
 
     public function show(string $slug)
     {
         $product = Product::with('category')
+            ->withSum('orderItems as total_sold', 'quantity')
             ->where('slug', $slug)
             ->active()
             ->firstOrFail();

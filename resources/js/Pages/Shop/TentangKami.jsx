@@ -1,4 +1,4 @@
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, usePage } from "@inertiajs/react";
 import { useState } from "react";
 import ShopLayout from "@/Layouts/ShopLayout";
 
@@ -149,28 +149,43 @@ function SertifikatCarousel({ certificates = [] }) {
 }
 
 export default function TentangKami({ featuredProducts = [], certificates = [] }) {
+    const { site_settings } = usePage().props;
+
+    const bannerHero = site_settings?.about_banner || '/images/hero.webp';
+    const aboutTitle = site_settings?.about_title || 'Kisah & Dedikasi Raia Food';
+    const aboutDesc = site_settings?.about_description || 'Menyajikan produk berkualitas tinggi untuk hidup yang lebih sehat, dengan dedikasi penuh pada keaslian rasa Nusantara.';
+    const aboutVision = site_settings?.about_vision || 'Menjadi produsen camilan terkemuka yang melestarikan cita rasa khas Nusantara dengan kualitas terbaik dan inovasi modern.';
+    const aboutMission = site_settings?.about_mission ? site_settings.about_mission.split('\n').filter(Boolean) : misiItems;
+
     return (
         <ShopLayout>
             <Head title="Tentang Kami - RaiaFood" />
 
             {/* ── HERO BANNER ─────────────────────────────────────────── */}
             <section className="w-full relative overflow-hidden flex items-center aspect-[1912/630]" style={{ backgroundColor: "#FAE6FF" }}>
-                <img src="/images/hero.webp" alt="Tentang Kami Hero" className="absolute inset-0 w-full h-full object-cover object-center" />
+                <img src={bannerHero} alt="Tentang Kami Hero" className="absolute inset-0 w-full h-full object-cover object-center" />
                 <div className="w-[48%] z-10 relative pl-[6%] pr-[2%] py-[2%] flex flex-col justify-center">
                     <div className="w-full">
-                        {/* Outfit Bold 45 at 1280px ref */}
-                        <h1 className="leading-tight" style={{ fontFamily: "Outfit, sans-serif", fontWeight: 700, fontSize: SZ(45), color: "#60396B", marginBottom: SZ(6) }}>
-                            Tentang Kami
+                        <h1 style={{
+                            fontFamily: "Outfit, sans-serif",
+                            fontWeight: 700,
+                            fontSize: SZ(50),
+                            color: "#843799",
+                            lineHeight: 1.1,
+                            marginBottom: SZ(8),
+                        }}>
+                            {aboutTitle}
                         </h1>
-                        {/* Inter Bold 20 at 1280px ref */}
-                        <p style={{ fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: SZ(20), color: "#843799", lineHeight: 1.4, marginBottom: SZ(8) }}>
-                            Menghadirkan cita rasa khas Jawa<br />
-                            dengan kualitas terbaik dan sentuhan modern.
-                        </p>
-                        {/* Inter Medium 16 at 1280px ref */}
-                        <p style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: SZ(16), color: "#843799", lineHeight: 1.6 }}>
-                            Raia Food hadir untuk memperkenalkan kembali kelezatan makanan khas Jawa kepada generasi masa kini dan mendatang.
-                            Kami menggabungkan resep turun-temurun dengan inovasi modern untuk pengalaman rasa yang autentik dan berkesan.
+                        <div style={{ width: SZ(60), height: "3px", backgroundColor: "#843799", marginBottom: SZ(14), borderRadius: "9999px" }} />
+                        <p style={{
+                            fontFamily: "Outfit, sans-serif",
+                            fontWeight: 400,
+                            fontSize: SZ(15),
+                            color: "#3B0D4A",
+                            lineHeight: 1.6,
+                            maxWidth: SZ(520),
+                        }}>
+                            {aboutDesc}
                         </p>
                     </div>
                 </div>

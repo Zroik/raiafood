@@ -182,16 +182,6 @@ export default function Edit({ product, categories }) {
                                 />
                                 <span className="text-sm font-semibold text-gray-750">Aktifkan & Tampilkan Produk</span>
                             </label>
-
-                            <label className="flex items-center gap-3 cursor-pointer">
-                                <input
-                                    type="checkbox"
-                                    checked={data.is_featured}
-                                    onChange={e => setData('is_featured', e.target.checked)}
-                                    className="w-4.5 h-4.5 text-violet-600 focus:ring-violet-500 rounded border-gray-300"
-                                />
-                                <span className="text-sm font-semibold text-gray-750">Produk Unggulan (Featured)</span>
-                            </label>
                         </div>
                     </div>
 

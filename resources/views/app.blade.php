@@ -4,7 +4,11 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <link rel="icon" type="image/webp" href="/images/raia-logo.webp">
+        @php
+            $favicon = \App\Models\Setting::getValue('site_favicon');
+            $faviconUrl = $favicon ? '/storage/' . $favicon : '/images/raia-logo.webp';
+        @endphp
+        <link rel="icon" type="image/webp" href="{{ $faviconUrl }}">
 
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
 

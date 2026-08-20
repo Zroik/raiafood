@@ -2,16 +2,18 @@ import AdminLayout from '@/Layouts/AdminLayout';
 import { Head, Link, useForm, router, usePage } from '@inertiajs/react';
 import { useState, useRef } from 'react';
 
-export default function Index({ banners }) {
+export default function Index({ banners, currentType = 'all' }) {
     const { flash } = usePage().props;
     const [editMode, setEditMode] = useState(false);
     const [selectedBanner, setSelectedBanner] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
+    const [filterType, setFilterType] = useState(currentType || 'all');
     const fileInputRef = useRef(null);
 
     const { data, setData, post, reset, processing, errors } = useForm({
         _method: 'POST',
         title: '',
+        type: 'hero',
         description: '',
         image: null,
         link: '',
@@ -19,11 +21,17 @@ export default function Index({ banners }) {
         is_active: true,
     });
 
-    const openCreateModal = () => {
+    const handleFilterChange = (type) => {
+        setFilterType(type);
+        router.get(route('admin.banners.index'), { type }, { preserveState: true, replace: true });
+    };
+
+    const openCreateModal = (defaultType = 'hero') => {
         reset();
         setData({
             _method: 'POST',
             title: '',
+            type: filterType !== 'all' ? filterType : defaultType,
             description: '',
             image: null,
             link: '',
@@ -40,8 +48,9 @@ export default function Index({ banners }) {
         setData({
             _method: 'PUT',
             title: banner.title || '',
+            type: banner.type || 'hero',
             description: banner.description || '',
-            image: null, // Image remains unchanged unless a new file is uploaded
+            image: null,
             link: banner.link || '',
             sort_order: banner.sort_order ?? 0,
             is_active: banner.is_active ?? true,
@@ -55,7 +64,6 @@ export default function Index({ banners }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (editMode && selectedBanner) {
-            // Using POST with _method: 'PUT' for Inertia file upload override
             post(route('admin.banners.update', selectedBanner.id), {
                 onSuccess: () => {
                     setModalOpen(false);
@@ -81,7 +89,7 @@ export default function Index({ banners }) {
     };
 
     return (
-        <AdminLayout header={<h2 className="text-xl font-semibold leading-tight text-gray-800">Kelola Banner Beranda</h2>}>
+        <AdminLayout header={<h2 className="text-xl font-semibold leading-tight text-gray-800">Kelola Banner Toko</h2>}>
             <Head title="Kelola Banner" />
 
             <div className="space-y-6">
@@ -98,14 +106,36 @@ export default function Index({ banners }) {
                 )}
 
                 {/* Info & Actions */}
-                <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between">
+                <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div>
-                        <h3 className="text-lg font-bold text-gray-900 mb-1">Banner Slider Beranda</h3>
-                        <p className="text-sm text-gray-500">Banner akan bergeser otomatis di halaman depan beranda. Direkomendasikan gambar beresolusi 1900x630.</p>
+                        <h3 className="text-lg font-bold text-gray-900 mb-1">Banner & Promosi Beranda</h3>
+                        <p className="text-sm text-gray-500">Kelola banner slider utama dan banner Flash Sale promosi di halaman beranda.</p>
+                        
+                        {/* Tab Filter */}
+                        <div className="flex items-center gap-2 mt-4">
+                            <button
+                                onClick={() => handleFilterChange('all')}
+                                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${filterType === 'all' ? 'bg-[#843799] text-white shadow-sm' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+                            >
+                                Semua Banner
+                            </button>
+                            <button
+                                onClick={() => handleFilterChange('hero')}
+                                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${filterType === 'hero' ? 'bg-[#843799] text-white shadow-sm' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+                            >
+                                Slider Beranda (Hero)
+                            </button>
+                            <button
+                                onClick={() => handleFilterChange('flash_sale')}
+                                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${filterType === 'flash_sale' ? 'bg-[#843799] text-white shadow-sm' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+                            >
+                                Banner Flash Sale (4:1)
+                            </button>
+                        </div>
                     </div>
                     <button
-                        onClick={openCreateModal}
-                        className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-violet-600 hover:bg-violet-700 text-white rounded-xl text-sm font-semibold transition-all shadow-md shadow-violet-100"
+                        onClick={() => openCreateModal(filterType === 'flash_sale' ? 'flash_sale' : 'hero')}
+                        className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#843799] hover:bg-[#60396A] text-white rounded-xl text-sm font-semibold transition-all shadow-md self-start sm:self-center"
                     >
                         ➕ Tambah Banner
                     </button>
@@ -118,6 +148,7 @@ export default function Index({ banners }) {
                             <thead>
                                 <tr className="bg-gray-50 text-[10px] uppercase font-bold text-gray-400 tracking-wider">
                                     <th className="py-4 px-6 w-20">Urutan</th>
+                                    <th className="py-4 px-6 w-32">Kategori</th>
                                     <th className="py-4 px-6 w-48">Gambar</th>
                                     <th className="py-4 px-6">Informasi Banner</th>
                                     <th className="py-4 px-6">Link Navigasi</th>
@@ -128,7 +159,7 @@ export default function Index({ banners }) {
                             <tbody className="divide-y divide-gray-100 text-sm">
                                 {banners.length === 0 ? (
                                     <tr>
-                                        <td colSpan="6" className="py-12 text-center text-gray-400">
+                                        <td colSpan="7" className="py-12 text-center text-gray-400">
                                             Belum ada banner yang ditambahkan.
                                         </td>
                                     </tr>
@@ -137,7 +168,12 @@ export default function Index({ banners }) {
                                         <tr key={banner.id} className="hover:bg-gray-50/50 transition-colors">
                                             <td className="py-4 px-6 font-semibold text-gray-700">{banner.sort_order}</td>
                                             <td className="py-4 px-6">
-                                                <div className="w-40 aspect-[190/63] rounded-lg overflow-hidden bg-gray-100 border border-gray-200">
+                                                <span className={`inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-semibold ${banner.type === 'flash_sale' ? 'bg-amber-100 text-amber-800' : 'bg-purple-100 text-purple-800'}`}>
+                                                    {banner.type === 'flash_sale' ? '⚡ Flash Sale' : '🖼️ Slider Hero'}
+                                                </span>
+                                            </td>
+                                            <td className="py-4 px-6">
+                                                <div className={`rounded-lg overflow-hidden bg-gray-100 border border-gray-200 ${banner.type === 'flash_sale' ? 'w-48 aspect-[4/1]' : 'w-40 aspect-[190/63]'}`}>
                                                     <img
                                                         src={banner.image.startsWith('images/') || banner.image.startsWith('/') ? `/${banner.image}` : `/storage/${banner.image}`}
                                                         alt={banner.title}
@@ -192,6 +228,19 @@ export default function Index({ banners }) {
                         </div>
                         <form onSubmit={handleSubmit} className="p-6 space-y-4">
                             <div>
+                                <label className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Tipe Banner</label>
+                                <select
+                                    value={data.type}
+                                    onChange={e => setData('type', e.target.value)}
+                                    className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:border-violet-400 focus:ring-2 focus:ring-violet-100 outline-none transition-all"
+                                >
+                                    <option value="hero">Slider Beranda (Hero) - Rekomendasi: 1912x630</option>
+                                    <option value="flash_sale">Banner Flash Sale - Rasio 4:1 (Contoh: 1920x540)</option>
+                                </select>
+                                {errors.type && <p className="text-xs text-red-500 mt-1">{errors.type}</p>}
+                            </div>
+
+                            <div>
                                 <label className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Judul Banner</label>
                                 <input
                                     type="text"
@@ -224,13 +273,17 @@ export default function Index({ banners }) {
                                     accept="image/*"
                                     className="w-full text-sm text-gray-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100 cursor-pointer"
                                 />
-                                <p className="text-[10px] text-gray-400 mt-1">Harus berupa gambar. Format yang disarankan: 1900x630 (resolusi banner).</p>
+                                <p className="text-[10px] text-gray-400 mt-1">
+                                    {data.type === 'flash_sale' 
+                                        ? 'Rekomendasi: 4:1 (1920x480 px), batas maksimal rasio 3.5:1 (1920x548 px).' 
+                                        : 'Rekomendasi Hero Slider: 1920x630 px (Rasio ~3:1).'}
+                                </p>
                                 {errors.image && <p className="text-xs text-red-500 mt-1">{errors.image}</p>}
                             </div>
 
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Link Navigasi</label>
+                                    <label className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Link Navigasi (Opsional)</label>
                                     <input
                                         type="text"
                                         value={data.link}
@@ -274,7 +327,7 @@ export default function Index({ banners }) {
                                 <button
                                     type="submit"
                                     disabled={processing}
-                                    className="px-6 py-2.5 bg-violet-600 hover:bg-violet-700 text-white rounded-xl text-sm font-bold transition-all shadow-md shadow-violet-100 disabled:opacity-50"
+                                    className="px-6 py-2.5 bg-[#843799] hover:bg-[#60396A] text-white rounded-xl text-sm font-bold transition-all shadow-md disabled:opacity-50"
                                 >
                                     {processing ? 'Menyimpan...' : 'Simpan Banner'}
                                 </button>

@@ -10,11 +10,18 @@ use Inertia\Inertia;
 
 class BannerController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $banners = Banner::orderBy('sort_order')->get();
+        $type = $request->query('type', 'all');
+        $query = Banner::orderBy('sort_order');
+        if ($type !== 'all') {
+            $query->where('type', $type);
+        }
+        $banners = $query->get();
+
         return Inertia::render('Admin/Banners/Index', [
-            'banners' => $banners
+            'banners' => $banners,
+            'currentType' => $type,
         ]);
     }
 
@@ -22,6 +29,7 @@ class BannerController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
+            'type' => 'required|in:hero,flash_sale',
             'description' => 'nullable|string',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:4096',
             'link' => 'nullable|string|max:255',
@@ -43,6 +51,7 @@ class BannerController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
+            'type' => 'required|in:hero,flash_sale',
             'description' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:4096',
             'link' => 'nullable|string|max:255',

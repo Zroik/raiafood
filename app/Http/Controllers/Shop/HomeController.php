@@ -13,10 +13,23 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $featuredProducts = Product::with('category')
+        // Produk Terbaru (last created)
+        $latestProducts = Product::with('category')
+            ->withSum('orderItems as total_sold', 'quantity')
             ->active()
-            ->featured()
             ->inStock()
+            ->orderBy('created_at', 'desc')
+            ->take(6)
+            ->get();
+
+        // Produk Terlaris (terbanyak terjual / popular)
+        $bestSellerProducts = Product::with('category')
+            ->withSum('orderItems as total_sold', 'quantity')
+            ->active()
+            ->inStock()
+            ->orderByDesc('total_sold')
+            ->orderByDesc('rating_count')
+            ->orderByDesc('is_featured')
             ->take(6)
             ->get();
 
@@ -25,12 +38,15 @@ class HomeController extends Controller
             ->orderBy('sort_order')
             ->get();
 
-        $banners = Banner::active()->get();
+        $heroBanners = Banner::active()->hero()->get();
+        $flashSaleBanner = Banner::active()->flashSale()->first();
 
         return Inertia::render('Shop/Home', [
-            'featuredProducts' => $featuredProducts,
+            'latestProducts' => $latestProducts,
+            'bestSellerProducts' => $bestSellerProducts,
             'categories' => $categories,
-            'banners' => $banners,
+            'banners' => $heroBanners,
+            'flashSaleBanner' => $flashSaleBanner,
             'settings' => [
                 'store_name' => Setting::getValue('store_name', 'RaiaFood'),
                 'store_tagline' => Setting::getValue('store_tagline', ''),

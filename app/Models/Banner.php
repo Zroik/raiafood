@@ -8,6 +8,7 @@ class Banner extends Model
 {
     protected $fillable = [
         'title',
+        'type',
         'description',
         'image',
         'link',
@@ -22,5 +23,15 @@ class Banner extends Model
     public function scopeActive($query)
     {
         return $query->where('is_active', true)->orderBy('sort_order');
+    }
+
+    public function scopeHero($query)
+    {
+        return $query->where('type', 'hero');
+    }
+
+    public function scopeFlashSale($query)
+    {
+        return $query->where('type', 'flash_sale');
     }
 }
