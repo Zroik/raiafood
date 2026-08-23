@@ -104,8 +104,14 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])
         // Banners (Beranda Carousel)
         Route::resource('banners', AdminBannerController::class)->except(['show', 'create', 'edit']);
 
-        // Certificates (Tentang Kami Carousel)
+        // Certificates & Awards (Tentang Kami Gallery)
         Route::resource('certificates', AdminCertificateController::class)->except(['show', 'create', 'edit']);
+
+        // Nilai Kami (Tentang Kami Values CMS)
+        Route::resource('values', \App\Http\Controllers\Admin\OurValueController::class)->except(['show', 'create', 'edit']);
+
+        // Flash Sales (Batch Product Campaign & Countdown Sync)
+        Route::resource('flash-sales', \App\Http\Controllers\Admin\FlashSaleController::class)->except(['show', 'create', 'edit']);
 
         // Messages (Hubungi Kami Inboxes)
         Route::resource('messages', AdminMessageController::class)->only(['index', 'show', 'destroy']);

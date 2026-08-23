@@ -266,14 +266,15 @@ export default function Products({ products, categories, filters, flashSaleCount
                             <>
                                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
                                     {products.data.map(product => {
-                                        const effectivePrice = product.discount_price || product.price;
-                                        const hasDiscount = product.discount_price && product.discount_price < product.price;
+                                        const effectivePrice = product.effective_price || product.discount_price || product.price;
+                                        const discountPercentage = product.discount_percentage || (product.discount_price && product.discount_price < product.price ? Math.round(((product.price - product.discount_price) / product.price) * 100) : null);
+                                        const hasDiscount = Boolean(discountPercentage && discountPercentage > 0 && effectivePrice < product.price);
                                         return (
                                             <Link key={product.id} href={`/products/${product.slug}`} className="group block">
                                                 <div className="relative rounded-2xl mb-2.5 aspect-square overflow-hidden transition-all duration-300 group-hover:shadow-md group-hover:shadow-[#F4C6FF]/30 group-hover:brightness-95">
                                                     {hasDiscount && (
-                                                        <div className="absolute top-2 left-2 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full z-10">
-                                                            -{Math.round(((product.price - product.discount_price) / product.price) * 100)}%
+                                                        <div className="absolute top-2 left-2 bg-rose-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-10 shadow-sm flex items-center gap-0.5">
+                                                            <span>⚡</span> -{discountPercentage}%
                                                         </div>
                                                     )}
                                                     {product.image ? (

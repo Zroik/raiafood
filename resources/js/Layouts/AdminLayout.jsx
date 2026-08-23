@@ -33,12 +33,13 @@ export default function AdminLayout({ children, header }) {
             id: 'catalog',
             name: 'Katalog & Penjualan',
             icon: '🛍️',
-            active: route().current('admin.products.*') || route().current('admin.categories.*') || route().current('admin.orders.*') || route().current('admin.promos.*'),
+            active: route().current('admin.products.*') || route().current('admin.categories.*') || route().current('admin.orders.*') || route().current('admin.promos.*') || route().current('admin.flash-sales.*'),
             children: [
                 { name: 'Produk', href: route('admin.products.index'), icon: '🍪', active: route().current('admin.products.*') },
                 { name: 'Kategori', href: route('admin.categories.index'), icon: '📁', active: route().current('admin.categories.*') },
                 { name: 'Pesanan', href: route('admin.orders.index'), icon: '📦', active: route().current('admin.orders.*') },
                 { name: 'Promo & Diskon', href: route('admin.promos.index'), icon: '🏷️', active: route().current('admin.promos.*') },
+                { name: '⚡ Flash Sale Batch', href: route('admin.flash-sales.index'), icon: '⚡', active: route().current('admin.flash-sales.*') },
             ]
         },
         {
@@ -48,7 +49,7 @@ export default function AdminLayout({ children, header }) {
             icon: '🏠',
             active: route().current('admin.banners.*'),
             children: [
-                { name: 'Banner Hero & Flash Sale', href: route('admin.banners.index'), icon: '🖼️', active: route().current('admin.banners.*') },
+                { name: 'Banner Hero & Promo', href: route('admin.banners.index'), icon: '🖼️', active: route().current('admin.banners.*') },
             ]
         },
         {
@@ -56,9 +57,10 @@ export default function AdminLayout({ children, header }) {
             id: 'about',
             name: 'Halaman Tentang Kami',
             icon: '📖',
-            active: route().current('admin.certificates.*') || route().current('admin.settings.pages'),
+            active: route().current('admin.certificates.*') || route().current('admin.values.*') || route().current('admin.settings.pages'),
             children: [
                 { name: 'Teks & Banner Halaman', href: route('admin.settings.pages'), icon: '📝', active: route().current('admin.settings.pages') },
+                { name: 'Nilai-Nilai Kami', href: route('admin.values.index'), icon: '💎', active: route().current('admin.values.*') },
                 { name: 'Sertifikasi & Penghargaan', href: route('admin.certificates.index'), icon: '📜', active: route().current('admin.certificates.*') },
             ]
         },

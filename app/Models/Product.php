@@ -37,6 +37,11 @@ class Product extends Model
         'gallery' => 'array',
     ];
 
+    protected $appends = [
+        'effective_price',
+        'discount_percentage',
+    ];
+
     protected static function boot()
     {
         parent::boot();
@@ -57,15 +62,36 @@ class Product extends Model
         return $this->hasMany(OrderItem::class);
     }
 
+    public function flashSaleItems(): HasMany
+    {
+        return $this->hasMany(FlashSaleItem::class);
+    }
+
+    public function getActiveFlashSaleItemAttribute()
+    {
+        return $this->flashSaleItems()
+            ->whereHas('flashSale', function ($q) {
+                $q->currentlyActive();
+            })
+            ->latest()
+            ->first();
+    }
+
     public function getEffectivePriceAttribute(): float
     {
-        return $this->discount_price ?? $this->price;
+        $activeFs = $this->active_flash_sale_item;
+        if ($activeFs && $activeFs->discount_price > 0 && $activeFs->discount_price < $this->price) {
+            return (float) $activeFs->discount_price;
+        }
+
+        return (float) ($this->discount_price ?? $this->price);
     }
 
     public function getDiscountPercentageAttribute(): ?int
     {
-        if ($this->discount_price && $this->price > 0) {
-            return round((($this->price - $this->discount_price) / $this->price) * 100);
+        $effectivePrice = $this->effective_price;
+        if ($effectivePrice < $this->price && $this->price > 0) {
+            return round((($this->price - $effectivePrice) / $this->price) * 100);
         }
         return null;
     }

@@ -20,11 +20,13 @@ class AboutController extends Controller
 
         $certificates = Certificate::active()->certificates()->get();
         $awards = Certificate::active()->awards()->get();
+        $ourValues = \App\Models\OurValue::active()->get();
 
         return Inertia::render('Shop/TentangKami', [
             'featuredProducts' => $featuredProducts,
             'certificates' => $certificates,
             'awards' => $awards,
+            'ourValues' => $ourValues,
         ]);
     }
 }

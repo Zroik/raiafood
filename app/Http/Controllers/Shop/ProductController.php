@@ -22,9 +22,15 @@ class ProductController extends Controller
         }
 
         if ($request->boolean('flash_sale') || $request->flash_sale === '1') {
-            $query->whereNotNull('discount_price')
-                  ->where('discount_price', '>', 0)
-                  ->whereColumn('discount_price', '<', 'price');
+            $query->where(function ($q) {
+                $q->where(function ($sub) {
+                    $sub->whereNotNull('discount_price')
+                        ->where('discount_price', '>', 0)
+                        ->whereColumn('discount_price', '<', 'price');
+                })->orWhereHas('flashSaleItems', function ($sub) {
+                    $sub->whereHas('flashSale', fn($fs) => $fs->currentlyActive());
+                });
+            });
         }
 
         if ($request->filled('search')) {
@@ -57,9 +63,15 @@ class ProductController extends Controller
         $products = $query->paginate(15)->withQueryString();
 
         $flashSaleCount = Product::active()->inStock()
-            ->whereNotNull('discount_price')
-            ->where('discount_price', '>', 0)
-            ->whereColumn('discount_price', '<', 'price')
+            ->where(function ($q) {
+                $q->where(function ($sub) {
+                    $sub->whereNotNull('discount_price')
+                        ->where('discount_price', '>', 0)
+                        ->whereColumn('discount_price', '<', 'price');
+                })->orWhereHas('flashSaleItems', function ($sub) {
+                    $sub->whereHas('flashSale', fn($fs) => $fs->currentlyActive());
+                });
+            })
             ->count();
 
         $categories = Category::active()

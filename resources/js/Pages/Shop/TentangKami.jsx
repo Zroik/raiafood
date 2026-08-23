@@ -1,6 +1,7 @@
 import { Head, Link, usePage } from "@inertiajs/react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import ShopLayout from "@/Layouts/ShopLayout";
+import { ValueIconRender } from "@/Components/ValueIcon";
 
 // ── Scaleable spacing (ref = 1280px) ─────────────────────────────────────────
 // 40px side gap  → 3.125vw  | clamp(16px, 3.125vw, 64px)
@@ -148,8 +149,9 @@ function SertifikatCarousel({ certificates = [] }) {
     );
 }
 
-export default function TentangKami({ featuredProducts = [], certificates = [], awards = [] }) {
+export default function TentangKami({ featuredProducts = [], certificates = [], awards = [], ourValues = [] }) {
     const { site_settings } = usePage().props;
+    const valuesScrollRef = useRef(null);
 
     const bannerHero = site_settings?.about_banner || '/images/hero.webp';
     const aboutTitle = site_settings?.about_title || 'Kisah & Dedikasi Raia Food';
@@ -283,74 +285,123 @@ export default function TentangKami({ featuredProducts = [], certificates = [], 
             {/* ── WHITE GAP ────────────────────────────────────────────── */}
             <div style={{ height: SZ(15), backgroundColor: "#ffffff" }} />
 
-            {/* ── NILAI KAMI ──────────────────────────────────────────── */}
+            {/* ── NILAI KAMI (Card Vertikal, Dinamis CMS, Navigasi Swipe Kiri & Kanan Elegan) ─── */}
             <div className="w-full max-w-[92vw] xl:max-w-[88vw] 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
                 <section style={{ width: "100%", backgroundColor: "#FFFFFF" }}>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: SZ(16), marginBottom: SZ(16) }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: SZ(16), marginBottom: SZ(24) }}>
                         <div style={{ flex: 1, height: "1px", backgroundColor: "#E4A0F7" }} />
-                        <h2 style={{ fontFamily: "Outfit, sans-serif", fontWeight: 700, fontSize: SZ(32), color: "#843799", whiteSpace: "nowrap" }}>Nilai Kami</h2>
+                        <h2 style={{ fontFamily: "Outfit, sans-serif", fontWeight: 700, fontSize: SZ(32), color: "#843799", whiteSpace: "nowrap" }}>Nilai-Nilai Kami</h2>
                         <div style={{ flex: 1, height: "1px", backgroundColor: "#E4A0F7" }} />
                     </div>
 
-                    {/* Row 1: 4 cards */}
-                    <div style={{
-                        display: "grid",
-                        gridTemplateColumns: "repeat(4, 1fr)",
-                        gap: SZ(10),
-                        marginBottom: SZ(10),
-                    }}>
-                        {nilaiRow1.map((item, i) => (
-                            <div
-                                key={i}
-                                style={{
-                                    display: "flex",
-                                    flexDirection: "row",
-                                    alignItems: "center",
-                                    gap: SZ(12),
-                                    padding: SZ(20),
-                                    borderRadius: SZ(15),
-                                    backgroundColor: "#FAE6FF",
-                                    transition: "transform 0.2s, box-shadow 0.2s",
-                                    cursor: "default",
-                                }}
-                                onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.03)"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(132,55,153,0.15)"; }}
-                                onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "none"; }}
-                            >
-                                <div style={{ flexShrink: 0 }}>{item.icon}</div>
-                                <span style={{ fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: SZ(20), color: "#843799", lineHeight: 1.3 }}>{item.label}</span>
-                            </div>
-                        ))}
-                    </div>
+                    {/* Container dengan Tombol Navigasi Kiri & Kanan */}
+                    <div className="relative group/values-slider">
+                        {/* Tombol Panah Kiri */}
+                        <button
+                            type="button"
+                            onClick={() => {
+                                if (valuesScrollRef.current) {
+                                    valuesScrollRef.current.scrollBy({ left: -320, behavior: 'smooth' });
+                                }
+                            }}
+                            className="hidden md:flex absolute -left-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full items-center justify-center transition-all duration-300 hover:scale-110 shadow-lg border border-purple-200 cursor-pointer bg-[#F4C6FF] text-[#843799] hover:bg-[#843799] hover:text-white"
+                            aria-label="Scroll Nilai Kiri"
+                        >
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+                                <path d="M15 18l-6-6 6-6" />
+                            </svg>
+                        </button>
 
-                    {/* Row 2: 3 cards menyambung (gap-0) dengan sisi paling kiri & kanan rounded */}
-                    <div style={{
-                        display: "grid",
-                        gridTemplateColumns: "repeat(3, 1fr)",
-                        gap: 0,
-                        overflow: "hidden",
-                        borderRadius: SZ(15),
-                    }}>
-                        {nilaiRow2.map((item, i) => (
-                            <div
-                                key={i}
-                                style={{
-                                    display: "flex",
-                                    flexDirection: "row",
-                                    alignItems: "center",
-                                    gap: SZ(12),
-                                    padding: `${SZ(20)} ${SZ(36)}`,
-                                    backgroundColor: "#FAE6FF",
-                                    transition: "transform 0.2s, box-shadow 0.2s",
-                                    cursor: "default",
-                                    borderRight: i < nilaiRow2.length - 1 ? "1px solid rgba(228, 160, 247, 0.4)" : "none",
-                                }}
-                                onMouseEnter={e => { e.currentTarget.style.backgroundColor = "#F4C6FF"; }}
-                                onMouseLeave={e => { e.currentTarget.style.backgroundColor = "#FAE6FF"; }}
-                            >
-                                <div style={{ flexShrink: 0 }}>{item.icon}</div>
-                                <span style={{ fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: SZ(20), color: "#843799", lineHeight: 1.3 }}>{item.label}</span>
-                            </div>
-                        ))}
+                        {/* Horizontal Scrollable Cards Container (Hidden Scrollbar) */}
+                        <div 
+                            ref={valuesScrollRef}
+                            className="w-full overflow-x-auto pb-4 pt-2 snap-x flex gap-4 lg:gap-6 scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+                        >
+                            {(ourValues && ourValues.length > 0 ? ourValues : [
+                                {
+                                    id: 1,
+                                    title: '"R" - Reverence (Penghormatan)',
+                                    description: 'Menghormati alam, petani lokal, dan warisan kuliner leluhur Kota Batu. Kami percaya bahwa cita rasa sejati lahir dari penghormatan terhadap bumi dan tradisi.',
+                                    icon_type: 'lucide',
+                                    icon_value: 'CheckCircle2',
+                                    font_size: 'sm',
+                                },
+                                {
+                                    id: 2,
+                                    title: '"A" - Authenticity (Keaslian)',
+                                    description: 'Menjaga resep turun-temurun tanpa bahan pengawet buatan, mempertahankan cita rasa asli camilan khas Malang yang melegenda dan tak tergantikan.',
+                                    icon_type: 'lucide',
+                                    icon_value: 'Sparkles',
+                                    font_size: 'sm',
+                                },
+                                {
+                                    id: 3,
+                                    title: '"I" - Innovation (Inovasi)',
+                                    description: 'Mengembangkan teknik pengolahan higienis modern dan kemasan menarik agar produk tradisional kami dapat dinikmati lintas generasi dan ke berbagai daerah.',
+                                    icon_type: 'lucide',
+                                    icon_value: 'Lightbulb',
+                                    font_size: 'sm',
+                                },
+                                {
+                                    id: 4,
+                                    title: '"A" - Affection (Kasih Sayang)',
+                                    description: 'Dibuat dengan sepenuh hati untuk menghadirkan kebahagiaan dan kehangatan keluarga di setiap gigitan camilan renyah dan lezat kami.',
+                                    icon_type: 'lucide',
+                                    icon_value: 'Heart',
+                                    font_size: 'sm',
+                                }
+                            ]).map((item, i) => (
+                                <div
+                                    key={item.id || i}
+                                    className="flex-1 min-w-[260px] sm:min-w-[280px] lg:min-w-[calc(25%-18px)] max-w-full flex-shrink-0 bg-[#FAF0FC] hover:bg-[#F6E2FA] rounded-2xl lg:rounded-3xl p-6 sm:p-7 flex flex-col items-center text-center transition-all duration-300 shadow-sm hover:shadow-md border border-purple-100/80 snap-start group"
+                                >
+                                    {/* Circle Icon Badge di Bagian Atas */}
+                                    <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#843799] flex items-center justify-center text-white mb-4 sm:mb-5 shadow-md shadow-purple-200 group-hover:scale-110 transition-transform duration-300">
+                                        <ValueIconRender type={item.icon_type} value={item.icon_value} className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
+                                    </div>
+
+                                    {/* Judul Nilai */}
+                                    <h3
+                                        className="font-bold text-[#843799] mb-3 leading-snug"
+                                        style={{
+                                            fontFamily: "Outfit, sans-serif",
+                                            fontSize: "clamp(15px, 1.2vw, 19px)"
+                                        }}
+                                    >
+                                        {item.title}
+                                    </h3>
+
+                                    {/* Deskripsi Nilai dengan Font Size yang dapat di-adjust */}
+                                    <p
+                                        className={`text-gray-700 font-normal leading-relaxed ${
+                                            item.font_size === 'xs' ? 'text-xs sm:text-[13px]' :
+                                            item.font_size === 'sm' ? 'text-xs sm:text-sm' :
+                                            item.font_size === 'base' ? 'text-sm sm:text-base' :
+                                            'text-base sm:text-lg'
+                                        }`}
+                                        style={{ fontFamily: "Inter, sans-serif" }}
+                                    >
+                                        {item.description}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Tombol Panah Kanan */}
+                        <button
+                            type="button"
+                            onClick={() => {
+                                if (valuesScrollRef.current) {
+                                    valuesScrollRef.current.scrollBy({ left: 320, behavior: 'smooth' });
+                                }
+                            }}
+                            className="hidden md:flex absolute -right-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full items-center justify-center transition-all duration-300 hover:scale-110 shadow-lg border border-purple-200 cursor-pointer bg-[#F4C6FF] text-[#843799] hover:bg-[#843799] hover:text-white"
+                            aria-label="Scroll Nilai Kanan"
+                        >
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+                                <path d="M9 18l6-6-6-6" />
+                            </svg>
+                        </button>
                     </div>
                 </section>
             </div>
