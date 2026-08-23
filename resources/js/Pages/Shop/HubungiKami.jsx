@@ -1,4 +1,4 @@
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, usePage } from "@inertiajs/react";
 import { useState } from "react";
 import ShopLayout from "@/Layouts/ShopLayout";
 import axios from "axios";
@@ -43,18 +43,23 @@ export default function HubungiKami() {
         <ShopLayout>
             <Head title="Hubungi Kami - RaiaFood" />
 
-            {/* HERO */}
-            <section className="w-full relative overflow-hidden flex items-center aspect-[1912/630]" style={{ backgroundColor: "#FAE6FF" }}>
-                <img src={bannerHero} alt="Hubungi Kami Hero" className="absolute inset-0 w-full h-full object-cover object-center" />
-                <div className="w-[48%] z-10 relative pl-[6%] pr-[2%] py-[2%] flex flex-col justify-center">
-                    <h1 style={{ fontFamily: "Outfit, sans-serif", fontWeight: 600, fontSize: SZ(45), color: "#843799", marginBottom: SZ(12), lineHeight: 1.2 }}>Kami Siap Membantu Anda</h1>
-                    <p style={{ fontFamily: "Outfit, sans-serif", fontWeight: 400, fontSize: SZ(15), color: "#000000", lineHeight: 1.6 }}>
-                        Punya pertanyaan, saran, atau ingin bekerja sama?<br />
-                        Jangan ragu untuk menghubungi kami.<br />
-                        Tim RAIA Food akan dengan senang hati membantu anda
-                    </p>
-                </div>
-            </section>
+            {/* HERO (Rasio 3:1 konsisten dengan Beranda) */}
+            <div className="w-full max-w-[92vw] xl:max-w-[88vw] 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6">
+                <section
+                    className="w-full relative overflow-hidden flex items-center aspect-[3/1] rounded-2xl lg:rounded-3xl shadow-sm"
+                    style={{ backgroundColor: "#FAE6FF" }}
+                >
+                    <img src={bannerHero} alt="Hubungi Kami Hero" className="absolute inset-0 w-full h-full object-cover object-center" />
+                    <div className="w-[48%] z-10 relative pl-[6%] pr-[2%] py-[2%] flex flex-col justify-center">
+                        <h1 style={{ fontFamily: "Outfit, sans-serif", fontWeight: 600, fontSize: SZ(45), color: "#843799", marginBottom: SZ(12), lineHeight: 1.2 }}>Kami Siap Membantu Anda</h1>
+                        <p style={{ fontFamily: "Outfit, sans-serif", fontWeight: 400, fontSize: SZ(15), color: "#000000", lineHeight: 1.6 }}>
+                            Punya pertanyaan, saran, atau ingin bekerja sama?<br />
+                            Jangan ragu untuk menghubungi kami.<br />
+                            Tim RAIA Food akan dengan senang hati membantu anda
+                        </p>
+                    </div>
+                </section>
+            </div>
 
             <div style={{ height: SZ(15), backgroundColor: "#ffffff" }} />
 

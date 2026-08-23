@@ -2,26 +2,29 @@ import AdminLayout from '@/Layouts/AdminLayout';
 import { Head, Link, useForm, router, usePage } from '@inertiajs/react';
 import { useState, useRef } from 'react';
 
-export default function Index({ certificates }) {
+export default function Index({ certificates = [] }) {
     const { flash } = usePage().props;
     const [editMode, setEditMode] = useState(false);
     const [selectedCert, setSelectedCert] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
+    const [activeTab, setActiveTab] = useState('all'); // 'all', 'certificate', 'award'
     const fileInputRef = useRef(null);
 
     const { data, setData, post, reset, processing, errors } = useForm({
         _method: 'POST',
         title: '',
+        type: 'certificate',
         image: null,
         sort_order: 0,
         is_active: true,
     });
 
-    const openCreateModal = () => {
+    const openCreateModal = (defaultType = 'certificate') => {
         reset();
         setData({
             _method: 'POST',
             title: '',
+            type: defaultType,
             image: null,
             sort_order: 0,
             is_active: true,
@@ -36,7 +39,8 @@ export default function Index({ certificates }) {
         setData({
             _method: 'PUT',
             title: cert.title || '',
-            image: null, // Image remains unchanged unless a new file is uploaded
+            type: cert.type || 'certificate',
+            image: null,
             sort_order: cert.sort_order ?? 0,
             is_active: cert.is_active ?? true,
         });
@@ -66,16 +70,21 @@ export default function Index({ certificates }) {
     };
 
     const handleDelete = (certId, certTitle) => {
-        if (confirm(`Apakah Anda yakin ingin menghapus sertifikat "${certTitle}"?`)) {
+        if (confirm(`Apakah Anda yakin ingin menghapus "${certTitle}"?`)) {
             router.delete(route('admin.certificates.destroy', certId), {
                 preserveScroll: true,
             });
         }
     };
 
+    const filteredList = certificates.filter(c => {
+        if (activeTab === 'all') return true;
+        return (c.type || 'certificate') === activeTab;
+    });
+
     return (
-        <AdminLayout header={<h2 className="text-xl font-semibold leading-tight text-gray-800">Kelola Sertifikasi Toko</h2>}>
-            <Head title="Kelola Sertifikasi" />
+        <AdminLayout header={<h2 className="text-xl font-semibold leading-tight text-gray-800">Kelola Sertifikasi & Penghargaan</h2>}>
+            <Head title="Kelola Sertifikasi & Penghargaan" />
 
             <div className="space-y-6">
                 {/* Flash Messages */}
@@ -91,16 +100,46 @@ export default function Index({ certificates }) {
                 )}
 
                 {/* Info & Actions */}
-                <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between">
+                <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                     <div>
-                        <h3 className="text-lg font-bold text-gray-900 mb-1">Galeri Sertifikasi</h3>
-                        <p className="text-sm text-gray-500">Unggah sertifikat Halal, Penghargaan, atau inkubasi bisnis. Sistem secara otomatis menyesuaikan tampilan gambar agar lebarnya konsisten.</p>
+                        <h3 className="text-lg font-bold text-gray-900 mb-1">Galeri Sertifikasi & Penghargaan</h3>
+                        <p className="text-sm text-gray-500">Kelola sertifikat izin edar/halal serta piagam penghargaan toko untuk ditampilkan pada 2 galeri terpisah di halaman Tentang Kami.</p>
                     </div>
+                    <div className="flex items-center gap-2">
+                        <button
+                            onClick={() => openCreateModal('certificate')}
+                            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-violet-600 hover:bg-violet-700 text-white rounded-xl text-xs font-semibold transition-all shadow-md shadow-violet-100"
+                        >
+                            ➕ Tambah Sertifikat
+                        </button>
+                        <button
+                            onClick={() => openCreateModal('award')}
+                            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-xs font-semibold transition-all shadow-md shadow-amber-100"
+                        >
+                            🏆 Tambah Penghargaan
+                        </button>
+                    </div>
+                </div>
+
+                {/* Filter Tabs */}
+                <div className="flex items-center gap-2 border-b border-gray-200 pb-2">
                     <button
-                        onClick={openCreateModal}
-                        className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-violet-600 hover:bg-violet-700 text-white rounded-xl text-sm font-semibold transition-all shadow-md shadow-violet-100"
+                        onClick={() => setActiveTab('all')}
+                        className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${activeTab === 'all' ? 'bg-violet-600 text-white shadow-sm' : 'text-gray-600 hover:bg-gray-100'}`}
                     >
-                        ➕ Tambah Sertifikat
+                        Semua ({certificates.length})
+                    </button>
+                    <button
+                        onClick={() => setActiveTab('certificate')}
+                        className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${activeTab === 'certificate' ? 'bg-violet-600 text-white shadow-sm' : 'text-gray-600 hover:bg-gray-100'}`}
+                    >
+                        📜 Sertifikasi ({certificates.filter(c => (c.type || 'certificate') === 'certificate').length})
+                    </button>
+                    <button
+                        onClick={() => setActiveTab('award')}
+                        className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${activeTab === 'award' ? 'bg-amber-500 text-white shadow-sm' : 'text-gray-600 hover:bg-gray-100'}`}
+                    >
+                        🏆 Penghargaan ({certificates.filter(c => c.type === 'award').length})
                     </button>
                 </div>
 
@@ -111,23 +150,29 @@ export default function Index({ certificates }) {
                             <thead>
                                 <tr className="bg-gray-50 text-[10px] uppercase font-bold text-gray-400 tracking-wider">
                                     <th className="py-4 px-6 w-20">Urutan</th>
+                                    <th className="py-4 px-6 w-32">Kategori</th>
                                     <th className="py-4 px-6 w-40">Gambar</th>
-                                    <th className="py-4 px-6">Nama / Judul Sertifikat</th>
+                                    <th className="py-4 px-6">Nama / Judul</th>
                                     <th className="py-4 px-6 w-32">Status</th>
                                     <th className="py-4 px-6 w-36 text-right">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-100 text-sm">
-                                {certificates.length === 0 ? (
+                                {filteredList.length === 0 ? (
                                     <tr>
-                                        <td colSpan="5" className="py-12 text-center text-gray-400">
-                                            Belum ada sertifikat yang ditambahkan.
+                                        <td colSpan="6" className="py-12 text-center text-gray-400">
+                                            Belum ada data untuk kategori ini.
                                         </td>
                                     </tr>
                                 ) : (
-                                    certificates.map((cert) => (
+                                    filteredList.map((cert) => (
                                         <tr key={cert.id} className="hover:bg-gray-50/50 transition-colors">
                                             <td className="py-4 px-6 font-semibold text-gray-700">{cert.sort_order}</td>
+                                            <td className="py-4 px-6">
+                                                <span className={`inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-bold ${cert.type === 'award' ? 'bg-amber-50 text-amber-700 border border-amber-200' : 'bg-violet-50 text-violet-700 border border-violet-200'}`}>
+                                                    {cert.type === 'award' ? '🏆 Penghargaan' : '📜 Sertifikasi'}
+                                                </span>
+                                            </td>
                                             <td className="py-4 px-6">
                                                 <div className="w-24 aspect-[4/3] rounded-lg overflow-hidden bg-gray-50 border border-gray-200 flex items-center justify-center p-1">
                                                     <img
@@ -174,7 +219,7 @@ export default function Index({ certificates }) {
                     <div className="bg-white rounded-2xl max-w-lg w-full border border-gray-100 shadow-xl overflow-hidden animate-fade-in">
                         <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
                             <h3 className="text-lg font-bold text-gray-900">
-                                {editMode ? 'Edit Sertifikat' : 'Tambah Sertifikat'}
+                                {editMode ? 'Edit Data' : 'Tambah Baru'}
                             </h3>
                             <button onClick={() => setModalOpen(false)} className="text-gray-400 hover:text-gray-600 text-lg">
                                 ✕
@@ -182,19 +227,48 @@ export default function Index({ certificates }) {
                         </div>
                         <form onSubmit={handleSubmit} className="p-6 space-y-4">
                             <div>
-                                <label className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Nama Sertifikat</label>
+                                <label className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Kategori Galeri</label>
+                                <div className="grid grid-cols-2 gap-3">
+                                    <label className={`flex items-center justify-center gap-2 p-3 rounded-xl border cursor-pointer text-xs font-bold transition-all ${data.type === 'certificate' ? 'bg-violet-50 border-violet-500 text-violet-700' : 'border-gray-200 text-gray-600 hover:bg-gray-50'}`}>
+                                        <input
+                                            type="radio"
+                                            name="type"
+                                            value="certificate"
+                                            checked={data.type === 'certificate'}
+                                            onChange={e => setData('type', e.target.value)}
+                                            className="sr-only"
+                                        />
+                                        <span>📜 Sertifikasi</span>
+                                    </label>
+                                    <label className={`flex items-center justify-center gap-2 p-3 rounded-xl border cursor-pointer text-xs font-bold transition-all ${data.type === 'award' ? 'bg-amber-50 border-amber-500 text-amber-700' : 'border-gray-200 text-gray-600 hover:bg-gray-50'}`}>
+                                        <input
+                                            type="radio"
+                                            name="type"
+                                            value="award"
+                                            checked={data.type === 'award'}
+                                            onChange={e => setData('type', e.target.value)}
+                                            className="sr-only"
+                                        />
+                                        <span>🏆 Penghargaan</span>
+                                    </label>
+                                </div>
+                                {errors.type && <p className="text-xs text-red-500 mt-1">{errors.type}</p>}
+                            </div>
+
+                            <div>
+                                <label className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Nama / Judul</label>
                                 <input
                                     type="text"
                                     value={data.title}
                                     onChange={e => setData('title', e.target.value)}
-                                    placeholder="Contoh: Sertifikat Halal MUI..."
+                                    placeholder={data.type === 'award' ? "Contoh: Juara 1 UMKM Berprestasi Kota Batu" : "Contoh: Sertifikat Halal MUI..."}
                                     className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:border-violet-400 focus:ring-2 focus:ring-violet-100 outline-none transition-all"
                                 />
                                 {errors.title && <p className="text-xs text-red-500 mt-1">{errors.title}</p>}
                             </div>
 
                             <div>
-                                <label className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">File Gambar Sertifikat</label>
+                                <label className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">File Gambar (Sertifikat / Piagam)</label>
                                 <input
                                     type="file"
                                     ref={fileInputRef}
@@ -202,7 +276,7 @@ export default function Index({ certificates }) {
                                     accept="image/*"
                                     className="w-full text-sm text-gray-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100 cursor-pointer"
                                 />
-                                <p className="text-[10px] text-gray-400 mt-1">Format gambar didukung: JPG, PNG, WEBP. Semua resolusi (seperti 2048x1448) akan disesuaikan otomatis agar lebarnya konsisten.</p>
+                                <p className="text-[10px] text-gray-400 mt-1">Format: JPG, PNG, WEBP. Ditampilkan dalam rasio 4:3 proporsional.</p>
                                 {errors.image && <p className="text-xs text-red-500 mt-1">{errors.image}</p>}
                             </div>
 
@@ -225,7 +299,7 @@ export default function Index({ certificates }) {
                                     onChange={e => setData('is_active', e.target.checked)}
                                     className="rounded border-gray-300 text-violet-600 focus:ring-violet-500"
                                 />
-                                <label htmlFor="is_active" className="text-sm font-semibold text-gray-700">Aktifkan Sertifikat</label>
+                                <label htmlFor="is_active" className="text-sm font-semibold text-gray-700">Aktifkan untuk Tampil di Website</label>
                             </div>
 
                             <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-100">
@@ -241,7 +315,7 @@ export default function Index({ certificates }) {
                                     disabled={processing}
                                     className="px-6 py-2.5 bg-violet-600 hover:bg-violet-700 text-white rounded-xl text-sm font-bold transition-all shadow-md shadow-violet-100 disabled:opacity-50"
                                 >
-                                    {processing ? 'Menyimpan...' : 'Simpan Sertifikat'}
+                                    {processing ? 'Menyimpan...' : 'Simpan Data'}
                                 </button>
                             </div>
                         </form>

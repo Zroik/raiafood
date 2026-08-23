@@ -63,7 +63,7 @@ class HandleInertiaRequests extends Middleware
                 'about_description' => $settings['about_description'] ?? 'Raia Food hadir sebagai wujud cinta dan dedikasi kami dalam menghadirkan aneka olahan camilan khas Kota Batu Malang berkualitas tinggi.',
                 'about_vision' => $settings['about_vision'] ?? 'Menjadi produsen camilan dan oleh-oleh terpercaya di Indonesia yang dikenal karena kualitas, keaslian rasa, dan inovasi tiada henti.',
                 'about_mission' => $settings['about_mission'] ?? 'Menjaga standar kualitas terbaik, memberdayakan potensi lokal, dan memberikan pelayanan sepenuh hati bagi setiap pelanggan.',
-                'about_banner' => isset($settings['about_banner']) ? '/storage/' . $settings['about_banner'] : '/images/about-banner.webp',
+                'about_banner' => isset($settings['about_banner']) ? '/storage/' . $settings['about_banner'] : '/images/hero.webp',
                 'products_banner' => isset($settings['products_banner']) ? '/storage/' . $settings['products_banner'] : null,
                 'contact_banner' => isset($settings['contact_banner']) ? '/storage/' . $settings['contact_banner'] : '/images/hero.webp',
                 'faq_banner' => isset($settings['faq_banner']) ? '/storage/' . $settings['faq_banner'] : '/images/faq.webp',

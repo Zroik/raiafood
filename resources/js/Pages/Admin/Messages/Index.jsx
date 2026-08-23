@@ -1,13 +1,13 @@
 import AdminLayout from '@/Layouts/AdminLayout';
-import { Head, router, usePage } from '@inertiajs/react';
+import { Head, router, usePage, Link } from '@inertiajs/react';
 import { useState } from 'react';
 import axios from 'axios';
 
-export default function Index({ messages }) {
+export default function Index({ messages = { data: [] } }) {
     const { flash } = usePage().props;
     const [selectedMsg, setSelectedMsg] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
-    const [msgList, setMsgList] = useState(messages.data);
+    const [msgList, setMsgList] = useState(messages?.data || []);
 
     const openViewModal = (msg) => {
         // Quick fetch to mark read and show detail

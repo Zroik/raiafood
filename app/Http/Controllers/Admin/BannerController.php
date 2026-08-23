@@ -33,6 +33,11 @@ class BannerController extends Controller
             'description' => 'nullable|string',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:4096',
             'link' => 'nullable|string|max:255',
+            'countdown_enabled' => 'nullable|boolean',
+            'countdown_end' => 'nullable|date',
+            'countdown_pos_x' => 'nullable|numeric|between:0,100',
+            'countdown_pos_y' => 'nullable|numeric|between:0,100',
+            'countdown_scale' => 'nullable|numeric|between:0.3,3.0',
             'sort_order' => 'integer',
             'is_active' => 'boolean',
         ]);
@@ -55,6 +60,11 @@ class BannerController extends Controller
             'description' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:4096',
             'link' => 'nullable|string|max:255',
+            'countdown_enabled' => 'nullable|boolean',
+            'countdown_end' => 'nullable|date',
+            'countdown_pos_x' => 'nullable|numeric|between:0,100',
+            'countdown_pos_y' => 'nullable|numeric|between:0,100',
+            'countdown_scale' => 'nullable|numeric|between:0.3,3.0',
             'sort_order' => 'integer',
             'is_active' => 'boolean',
         ]);

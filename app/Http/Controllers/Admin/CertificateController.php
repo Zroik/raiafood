@@ -22,6 +22,7 @@ class CertificateController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
+            'type' => 'required|in:certificate,award',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:4096',
             'sort_order' => 'integer',
             'is_active' => 'boolean',
@@ -34,13 +35,14 @@ class CertificateController extends Controller
         Certificate::create($validated);
 
         return redirect()->route('admin.certificates.index')
-            ->with('success', 'Sertifikat berhasil ditambahkan!');
+            ->with('success', 'Data sertifikat/penghargaan berhasil ditambahkan!');
     }
 
     public function update(Request $request, Certificate $certificate)
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
+            'type' => 'required|in:certificate,award',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:4096',
             'sort_order' => 'integer',
             'is_active' => 'boolean',
@@ -58,7 +60,7 @@ class CertificateController extends Controller
         $certificate->update($validated);
 
         return redirect()->route('admin.certificates.index')
-            ->with('success', 'Sertifikat berhasil diperbarui!');
+            ->with('success', 'Data sertifikat/penghargaan berhasil diperbarui!');
     }
 
     public function destroy(Certificate $certificate)

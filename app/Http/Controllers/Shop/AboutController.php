@@ -18,11 +18,13 @@ class AboutController extends Controller
             ->take(4)
             ->get();
 
-        $certificates = Certificate::active()->get();
+        $certificates = Certificate::active()->certificates()->get();
+        $awards = Certificate::active()->awards()->get();
 
         return Inertia::render('Shop/TentangKami', [
             'featuredProducts' => $featuredProducts,
             'certificates' => $certificates,
+            'awards' => $awards,
         ]);
     }
 }

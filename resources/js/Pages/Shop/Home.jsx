@@ -37,6 +37,76 @@ function StarRating({ rating = 0, soldCount = 0 }) {
     );
 }
 
+function FlashSaleCountdown({ targetDate, posX = 50, posY = 50, scale = 1.0 }) {
+    const parseLocalDate = (dateStr) => {
+        if (!dateStr) return 0;
+        // If string format is 'YYYY-MM-DD HH:mm:ss' or 'YYYY-MM-DDTHH:mm:ss'
+        const clean = String(dateStr).replace(' ', 'T');
+        const [dPart, tPart] = clean.split('T');
+        if (!dPart) return new Date(dateStr).getTime();
+        const [year, month, day] = dPart.split('-').map(Number);
+        const [hours, minutes, seconds] = (tPart || '00:00:00').split(':').map(Number);
+        return new Date(year, month - 1, day, hours || 0, minutes || 0, seconds || 0).getTime();
+    };
+
+    const calculateTimeLeft = () => {
+        const targetTime = parseLocalDate(targetDate);
+        const now = new Date().getTime();
+        const difference = targetTime - now;
+        let timeLeft = { days: 0, hours: 0, minutes: 0, seconds: 0, isEnded: true };
+
+        if (difference > 0) {
+            timeLeft = {
+                days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+                hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+                minutes: Math.floor((difference / 1000 / 60) % 60),
+                seconds: Math.floor((difference / 1000) % 60),
+                isEnded: false,
+            };
+        }
+        return timeLeft;
+    };
+
+    const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setTimeLeft(calculateTimeLeft());
+        }, 1000);
+
+        return () => clearInterval(timer);
+    }, [targetDate]);
+
+    const formatNum = (n) => String(n).padStart(2, '0');
+
+    return (
+        <div
+            style={{
+                left: `${posX}%`,
+                top: `${posY}%`,
+                transform: `translate(-50%, -50%) scale(${scale})`,
+                transformOrigin: 'center center',
+            }}
+            className="absolute z-20 pointer-events-none select-none flex items-center gap-[0.4cqi] p-[0.6cqi] rounded-[1cqi] bg-gray-950/85 backdrop-blur-md border border-white/20 shadow-2xl transition-all"
+        >
+            {[
+                { val: formatNum(timeLeft.days), label: 'Hari' },
+                { val: formatNum(timeLeft.hours), label: 'Jam' },
+                { val: formatNum(timeLeft.minutes), label: 'Mnt' },
+                { val: formatNum(timeLeft.seconds), label: 'Dtk' },
+            ].map((item, idx) => (
+                <div key={idx} className="flex items-center gap-[0.3cqi]">
+                    <div className="flex flex-col items-center justify-center bg-[#843799] text-white px-[0.7cqi] py-[0.3cqi] rounded-[0.6cqi] min-w-[3.2cqi] shadow-sm">
+                        <span className="font-extrabold text-[1.4cqi] leading-tight font-mono tracking-tight">{item.val}</span>
+                        <span className="text-[0.65cqi] uppercase font-semibold tracking-tighter opacity-80">{item.label}</span>
+                    </div>
+                    {idx < 3 && <span className="text-white font-bold text-[1.2cqi]">:</span>}
+                </div>
+            ))}
+        </div>
+    );
+}
+
 function ProductCard({ product }) {
     const effectivePrice = product.discount_price || product.price;
     const hasDiscount = product.discount_price && product.discount_price < product.price;
@@ -165,16 +235,16 @@ export default function Home({ latestProducts = [], bestSellerProducts = [], cat
                         ))}
                     </div>
 
-                    {/* Left: Text Content styled to scale proportionally (Still / non-moving) */}
-                    <div className="w-[48%] z-10 relative pl-[6%] pr-[2%] py-[2%] flex flex-col justify-center pointer-events-none select-none">
+                    {/* Left: Text Content styled to scale proportionally */}
+                    <div className="w-[50%] z-10 relative pl-[6%] pr-[2%] py-[2%] flex flex-col justify-center select-none">
                         <div className="w-full">
                             {/* "Selamat datang di" */}
                             <p className="leading-snug" style={{
                                 fontFamily: 'Outfit, sans-serif',
                                 fontWeight: 400,
-                                fontSize: 'clamp(14px, 3vw, 76px)',
+                                fontSize: 'clamp(12px, 2.2vw, 40px)',
                                 color: '#60396B',
-                                marginBottom: '0.2vw',
+                                marginBottom: '0.1vw',
                             }}>
                                 Selamat datang di
                             </p>
@@ -182,10 +252,10 @@ export default function Home({ latestProducts = [], bestSellerProducts = [], cat
                             {/* "Raia Food" */}
                             <h1 className="leading-none" style={{
                                 fontFamily: 'Outfit, sans-serif',
-                                fontWeight: 400,
-                                fontSize: 'clamp(18px, 3.75vw, 96px)',
+                                fontWeight: 700,
+                                fontSize: 'clamp(16px, 3.2vw, 60px)',
                                 color: '#60396B',
-                                marginBottom: '0.8vw',
+                                marginBottom: '0.4vw',
                             }}>
                                 Raia Food
                             </h1>
@@ -194,9 +264,9 @@ export default function Home({ latestProducts = [], bestSellerProducts = [], cat
                             <p style={{
                                 fontFamily: 'Inter, sans-serif',
                                 fontWeight: 700,
-                                fontSize: 'clamp(11px, 2vw, 50px)',
+                                fontSize: 'clamp(10px, 1.6vw, 30px)',
                                 color: '#843799',
-                                marginBottom: '0.4vw',
+                                marginBottom: '0.3vw',
                             }}>
                                 Pusat Makanan Khas Batu
                             </p>
@@ -205,12 +275,59 @@ export default function Home({ latestProducts = [], bestSellerProducts = [], cat
                             <p style={{
                                 fontFamily: 'Inter, sans-serif',
                                 fontWeight: 500,
-                                fontSize: 'clamp(8px, 1.25vw, 32px)',
+                                fontSize: 'clamp(8px, 1.1vw, 18px)',
                                 color: '#843799',
-                                lineHeight: 1.6,
+                                lineHeight: 1.5,
+                                marginBottom: '1vw',
                             }}>
                                 {settings?.store_description || 'Dibuat dengan bahan pilihan berkualitas, di goreng dengan cita rasa berbeda.'}
                             </p>
+
+                            {/* CTA Action Buttons */}
+                            <div className="flex items-center gap-2 sm:gap-3 md:gap-3.5 flex-wrap">
+                                <Link
+                                    href="/products"
+                                    className="inline-flex items-center justify-center rounded-lg sm:rounded-xl font-bold transition-all duration-200 shadow-sm whitespace-nowrap"
+                                    style={{
+                                        backgroundColor: '#843799',
+                                        color: '#ffffff',
+                                        padding: 'clamp(4px, 0.6vw, 11px) clamp(11px, 1.5vw, 28px)',
+                                        fontSize: 'clamp(9px, 1vw, 17px)',
+                                    }}
+                                    onMouseEnter={e => {
+                                        e.currentTarget.style.opacity = '0.9';
+                                        e.currentTarget.style.transform = 'translateY(-1px)';
+                                    }}
+                                    onMouseLeave={e => {
+                                        e.currentTarget.style.opacity = '1';
+                                        e.currentTarget.style.transform = 'translateY(0)';
+                                    }}
+                                >
+                                    Belanja Sekarang
+                                </Link>
+
+                                <Link
+                                    href="/tentang-kami"
+                                    className="inline-flex items-center justify-center rounded-lg sm:rounded-xl font-bold transition-all duration-200 border-2 whitespace-nowrap"
+                                    style={{
+                                        borderColor: '#843799',
+                                        backgroundColor: 'rgba(255, 255, 255, 0.85)',
+                                        color: '#843799',
+                                        padding: 'clamp(4px, 0.6vw, 11px) clamp(11px, 1.5vw, 28px)',
+                                        fontSize: 'clamp(9px, 1vw, 17px)',
+                                    }}
+                                    onMouseEnter={e => {
+                                        e.currentTarget.style.backgroundColor = '#ffffff';
+                                        e.currentTarget.style.transform = 'translateY(-1px)';
+                                    }}
+                                    onMouseLeave={e => {
+                                        e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.85)';
+                                        e.currentTarget.style.transform = 'translateY(0)';
+                                    }}
+                                >
+                                    Tentang Kami
+                                </Link>
+                            </div>
                         </div>
                     </div>
 
@@ -238,25 +355,36 @@ export default function Home({ latestProducts = [], bestSellerProducts = [], cat
             {/* ── FLASH SALE BANNER SECTION (Ratio limit 3.5:1, recommended 4:1) ─── */}
             {activeFlashSale && activeFlashSale.is_active && (
                 <div className="w-full max-w-[92vw] xl:max-w-[88vw] 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8">
-                    {activeFlashSale.link ? (
-                        <Link href={activeFlashSale.link} className="block">
-                            <div className="w-full rounded-2xl lg:rounded-3xl overflow-hidden shadow-sm flex items-center justify-center max-h-[calc(92vw/3.5)] xl:max-h-[calc(88vw/3.5)] 2xl:max-h-[412px]">
+                    <div 
+                        style={{ containerType: 'inline-size' }}
+                        className="relative w-full rounded-2xl lg:rounded-3xl overflow-hidden shadow-sm flex items-center justify-center max-h-[calc(92vw/3.5)] xl:max-h-[calc(88vw/3.5)] 2xl:max-h-[412px] group"
+                    >
+                        {activeFlashSale.link ? (
+                            <Link href={activeFlashSale.link} className="block w-full h-full">
                                 <img
                                     src={activeFlashSale.image.startsWith('images/') || activeFlashSale.image.startsWith('/') ? `/${activeFlashSale.image}` : `/storage/${activeFlashSale.image}`}
                                     alt={activeFlashSale.title || 'Flash Sale Banner'}
                                     className="w-full h-auto object-cover object-center block"
                                 />
-                            </div>
-                        </Link>
-                    ) : (
-                        <div className="w-full rounded-2xl lg:rounded-3xl overflow-hidden shadow-sm flex items-center justify-center max-h-[calc(92vw/3.5)] xl:max-h-[calc(88vw/3.5)] 2xl:max-h-[412px]">
+                            </Link>
+                        ) : (
                             <img
                                 src={activeFlashSale.image.startsWith('images/') || activeFlashSale.image.startsWith('/') ? `/${activeFlashSale.image}` : `/storage/${activeFlashSale.image}`}
                                 alt={activeFlashSale.title || 'Flash Sale Banner'}
                                 className="w-full h-auto object-cover object-center block"
                             />
-                        </div>
-                    )}
+                        )}
+
+                        {/* Interactive Countdown Timer Badge */}
+                        {activeFlashSale.countdown_enabled && activeFlashSale.countdown_end && (
+                            <FlashSaleCountdown
+                                targetDate={activeFlashSale.countdown_end}
+                                posX={activeFlashSale.countdown_pos_x ?? 50}
+                                posY={activeFlashSale.countdown_pos_y ?? 50}
+                                scale={activeFlashSale.countdown_scale ?? 1.0}
+                            />
+                        )}
+                    </div>
                 </div>
             )}
 

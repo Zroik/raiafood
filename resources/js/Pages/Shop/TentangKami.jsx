@@ -148,7 +148,7 @@ function SertifikatCarousel({ certificates = [] }) {
     );
 }
 
-export default function TentangKami({ featuredProducts = [], certificates = [] }) {
+export default function TentangKami({ featuredProducts = [], certificates = [], awards = [] }) {
     const { site_settings } = usePage().props;
 
     const bannerHero = site_settings?.about_banner || '/images/hero.webp';
@@ -161,243 +161,239 @@ export default function TentangKami({ featuredProducts = [], certificates = [] }
         <ShopLayout>
             <Head title="Tentang Kami - RaiaFood" />
 
-            {/* ── HERO BANNER ─────────────────────────────────────────── */}
-            <section className="w-full relative overflow-hidden flex items-center aspect-[1912/630]" style={{ backgroundColor: "#FAE6FF" }}>
-                <img src={bannerHero} alt="Tentang Kami Hero" className="absolute inset-0 w-full h-full object-cover object-center" />
-                <div className="w-[48%] z-10 relative pl-[6%] pr-[2%] py-[2%] flex flex-col justify-center">
-                    <div className="w-full">
-                        <h1 style={{
-                            fontFamily: "Outfit, sans-serif",
-                            fontWeight: 700,
-                            fontSize: SZ(50),
-                            color: "#843799",
-                            lineHeight: 1.1,
-                            marginBottom: SZ(8),
-                        }}>
-                            {aboutTitle}
+            {/* ── HERO BANNER (Rasio 3:1 konsisten dengan Beranda) ─────────────────────────────────────────── */}
+            <div className="w-full max-w-[92vw] xl:max-w-[88vw] 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6">
+                <section
+                    className="w-full relative overflow-hidden flex items-center aspect-[3/1] rounded-2xl lg:rounded-3xl shadow-sm"
+                    style={{ backgroundColor: "#FAE6FF" }}
+                >
+                    <img src={bannerHero} alt="Tentang Kami Hero" className="absolute inset-0 w-full h-full object-cover object-center" />
+                    <div className="w-[50%] h-full z-10 relative pl-[6%] pr-[2%] flex items-center">
+                        <h1 className="leading-tight" style={{ fontFamily: "Outfit, sans-serif", fontWeight: 800, fontSize: SZ(64), color: "#60396B", margin: 0 }}>
+                            Tentang Kami
                         </h1>
-                        <div style={{ width: SZ(60), height: "3px", backgroundColor: "#843799", marginBottom: SZ(14), borderRadius: "9999px" }} />
-                        <p style={{
-                            fontFamily: "Outfit, sans-serif",
-                            fontWeight: 400,
-                            fontSize: SZ(15),
-                            color: "#3B0D4A",
-                            lineHeight: 1.6,
-                            maxWidth: SZ(520),
-                        }}>
-                            {aboutDesc}
-                        </p>
                     </div>
-                </div>
-            </section>
+                </section>
+            </div>
 
             {/* ── WHITE GAP ────────────────────────────────────────────── */}
             <div style={{ height: SZ(15), backgroundColor: "#ffffff" }} />
 
-            {/* ── CERITA KAMI ─────────────────────────────────────────── */}
-            {/* 40px side gap, r=15, image aspect 1200:314, text on right */}
-            <section style={{ width: "100%", backgroundColor: "#ffffff", paddingLeft: SZ(40), paddingRight: SZ(40) }}>
-                <div style={{
-                    width: "100%",
-                    borderRadius: SZ(15),
-                    overflow: "hidden",
-                    position: "relative",
-                    backgroundColor: "#FAE6FF",
-                    aspectRatio: "1200 / 314",
-                }}>
-                    {/* Image template: place /images/cerita-kami.webp (1200x314) */}
-                    <img
-                        src="/images/cerita-kami.webp"
-                        alt="Cerita Kami"
-                        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }}
-                        onError={(e) => { e.currentTarget.style.display = "none"; }}
-                    />
-
-                    {/* Text panel on right side */}
+            {/* ── SEKILAS TENTANG KAMI ─────────────────────────────────── */}
+            <div className="w-full max-w-[92vw] xl:max-w-[88vw] 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+                <section style={{ width: "100%", backgroundColor: "#ffffff" }}>
                     <div style={{
-                        position: "absolute",
-                        top: 0, right: 0, bottom: 0,
-                        width: "52%",
-                        background: "linear-gradient(to right, rgba(250,230,255,0) 0%, rgba(250,230,255,0.95) 18%, #FAE6FF 100%)",
+                        borderRadius: SZ(15),
+                        padding: `${SZ(32)} ${SZ(36)}`,
                         display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        paddingLeft: "clamp(8px,1.5vw,24px)",
-                        paddingRight: SZ(32),
+                        alignItems: "flex-start",
+                        gap: SZ(24),
+                        backgroundColor: "#FAE6FF",
                     }}>
-                        <p style={{ fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: SZ(20), color: "#843799", marginBottom: SZ(4) }}>Cerita Kami</p>
-                        <h2 style={{ fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: SZ(17), color: "#60396B", marginBottom: SZ(10), lineHeight: 1.3 }}>
-                            Lebih dari Sekedar Makanan,<br />Ini adalah Warisan
-                        </h2>
-                        <div style={{ display: "flex", flexDirection: "column", gap: SZ(8) }}>
-                            {ceritaItems.map((item, i) => (
-                                <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: SZ(6) }}>
-                                    <div style={{ flexShrink: 0, marginTop: SZ(2) }}>
-                                        {item.icon}
-                                    </div>
-                                    <p style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: SZ(11), color: "#60396A", lineHeight: 1.5 }}>{item.text}</p>
-                                </div>
-                            ))}
+                        <div style={{
+                            flexShrink: 0,
+                            width: SZ(64),
+                            height: SZ(64),
+                            borderRadius: "50%",
+                            backgroundColor: "#ffffff",
+                            boxShadow: "0 2px 8px rgba(132, 55, 153, 0.08)",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                        }}>
+                            <img src={site_settings?.site_favicon || '/images/raia-logo.webp'} alt="RaiaFood Favicon" style={{ width: SZ(38), height: SZ(38), objectFit: "contain" }} />
+                        </div>
+                        <div>
+                            <h3 style={{ fontFamily: "Outfit, sans-serif", fontWeight: 700, fontSize: SZ(24), color: "#60396B", marginBottom: SZ(10) }}>
+                                Sekilas tentang kami
+                            </h3>
+                            <p style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: SZ(16), color: "#60396A", lineHeight: 1.7 }}>
+                                {site_settings?.about_description || 'luxury raiafood adalah toko online terpercaya yang menyediakan produk-produk berkualitas premium dengan Harga terbaik. kami berkomitmen untuk memberikan pengalaman belanja yang nyaman dan memuaskan bagi pelanggan.'}
+                            </p>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            </div>
 
             {/* ── WHITE GAP ────────────────────────────────────────────── */}
             <div style={{ height: SZ(15), backgroundColor: "#ffffff" }} />
 
             {/* ── VISI & MISI ─────────────────────────────────────────── */}
-            <section style={{
-                width: "100%",
-                backgroundColor: "#ffffff",
-                paddingLeft: SZ(40),
-                paddingRight: SZ(40),
-            }}>
-                <div style={{
-                    display: "grid",
-                    gridTemplateColumns: "1fr 1fr",
-                    gap: SZ(26),
-                }}>
-                    {/* Visi Card */}
-                    <div style={{ borderRadius: SZ(15), padding: SZ(32), display: "flex", alignItems: "flex-start", gap: SZ(20), backgroundColor: "#FAE6FF" }}>
-                        <div style={{
-                            flexShrink: 0,
-                            width: SZ(64),
-                            height: SZ(64),
-                            borderRadius: "50%",
-                            backgroundColor: "#F4C6FF",
-                            color: "#843799",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                        }}>
-                            <img src="/images/mata-visi.svg" alt="Visi" style={{ width: SZ(40), height: SZ(40), objectFit: "contain" }} />
+            <div className="w-full max-w-[92vw] xl:max-w-[88vw] 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+                <section style={{ width: "100%", backgroundColor: "#ffffff" }}>
+                    <div style={{
+                        display: "grid",
+                        gridTemplateColumns: "1fr 1fr",
+                        gap: SZ(26),
+                    }}>
+                        {/* Visi Card */}
+                        <div style={{ borderRadius: SZ(15), padding: SZ(32), display: "flex", alignItems: "flex-start", gap: SZ(20), backgroundColor: "#FAE6FF" }}>
+                            <div style={{
+                                flexShrink: 0,
+                                width: SZ(64),
+                                height: SZ(64),
+                                borderRadius: "50%",
+                                backgroundColor: "#F4C6FF",
+                                color: "#843799",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                            }}>
+                                <img src="/images/mata-visi.svg" alt="Visi" style={{ width: SZ(40), height: SZ(40), objectFit: "contain" }} />
+                            </div>
+                            <div>
+                                <h3 style={{ fontFamily: "Outfit, sans-serif", fontWeight: 700, fontSize: SZ(24), color: "#60396B", marginBottom: SZ(10) }}>Visi</h3>
+                                <p style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: SZ(16), color: "#60396A", lineHeight: 1.7 }}>
+                                    Menjadi pelopor makanan ringan premium yang menjaga dan melestarikan keaslian rasa serta tradisi kuliner Jawa, menghubungkan generasi masa kini dengan warisan budaya yang kaya dan otentik.
+                                </p>
+                            </div>
                         </div>
-                        <div>
-                            <h3 style={{ fontFamily: "Outfit, sans-serif", fontWeight: 700, fontSize: SZ(24), color: "#60396B", marginBottom: SZ(10) }}>Visi</h3>
-                            <p style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: SZ(16), color: "#60396A", lineHeight: 1.7 }}>
-                                Menjadi pelopor makanan ringan premium yang menjaga dan melestarikan keaslian rasa serta tradisi kuliner Jawa, menghubungkan generasi masa kini dengan warisan budaya yang kaya dan otentik.
-                            </p>
-                        </div>
-                    </div>
 
-                    {/* Misi Card */}
-                    <div style={{ borderRadius: SZ(15), padding: SZ(32), display: "flex", alignItems: "flex-start", gap: SZ(20), backgroundColor: "#FAE6FF" }}>
-                        <div style={{
-                            flexShrink: 0,
-                            width: SZ(64),
-                            height: SZ(64),
-                            borderRadius: "50%",
-                            backgroundColor: "#F4C6FF",
-                            color: "#843799",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                        }}>
-                            <img src="/images/target-misi.svg" alt="Misi" style={{ width: SZ(40), height: SZ(40), objectFit: "contain" }} />
-                        </div>
-                        <div>
-                            <h3 style={{ fontFamily: "Outfit, sans-serif", fontWeight: 700, fontSize: SZ(24), color: "#60396B", marginBottom: SZ(10) }}>Misi</h3>
-                            <ul style={{ display: "flex", flexDirection: "column", gap: SZ(8) }}>
-                                {misiItems.map((item, i) => (
-                                    <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: SZ(8) }}>
-                                        <img src="/images/checklist-misi.svg" alt="Checklist" style={{ width: SZ(16), height: SZ(16), flexShrink: 0, objectFit: "contain" }} />
-                                        <span style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: SZ(12), color: "#60396A", lineHeight: 1.6 }}>{item}</span>
-                                    </li>
-                                ))}
-                            </ul>
+                        {/* Misi Card */}
+                        <div style={{ borderRadius: SZ(15), padding: SZ(32), display: "flex", alignItems: "flex-start", gap: SZ(20), backgroundColor: "#FAE6FF" }}>
+                            <div style={{
+                                flexShrink: 0,
+                                width: SZ(64),
+                                height: SZ(64),
+                                borderRadius: "50%",
+                                backgroundColor: "#F4C6FF",
+                                color: "#843799",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                            }}>
+                                <img src="/images/target-misi.svg" alt="Misi" style={{ width: SZ(40), height: SZ(40), objectFit: "contain" }} />
+                            </div>
+                            <div>
+                                <h3 style={{ fontFamily: "Outfit, sans-serif", fontWeight: 700, fontSize: SZ(24), color: "#60396B", marginBottom: SZ(10) }}>Misi</h3>
+                                <ul style={{ display: "flex", flexDirection: "column", gap: SZ(8) }}>
+                                    {misiItems.map((item, i) => (
+                                        <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: SZ(8) }}>
+                                            <img src="/images/checklist-misi.svg" alt="Checklist" style={{ width: SZ(16), height: SZ(16), flexShrink: 0, objectFit: "contain" }} />
+                                            <span style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: SZ(12), color: "#60396A", lineHeight: 1.6 }}>{item}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            </div>
 
             {/* ── WHITE GAP ────────────────────────────────────────────── */}
             <div style={{ height: SZ(15), backgroundColor: "#ffffff" }} />
 
             {/* ── NILAI KAMI ──────────────────────────────────────────── */}
-            <section style={{ width: "100%", backgroundColor: "#FFFFFF" }}>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: SZ(16), marginBottom: SZ(16), paddingLeft: SZ(40), paddingRight: SZ(40) }}>
-                    <div style={{ flex: 1, height: "1px", backgroundColor: "#E4A0F7" }} />
-                    <h2 style={{ fontFamily: "Outfit, sans-serif", fontWeight: 700, fontSize: SZ(32), color: "#843799", whiteSpace: "nowrap" }}>Nilai Kami</h2>
-                    <div style={{ flex: 1, height: "1px", backgroundColor: "#E4A0F7" }} />
-                </div>
+            <div className="w-full max-w-[92vw] xl:max-w-[88vw] 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+                <section style={{ width: "100%", backgroundColor: "#FFFFFF" }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: SZ(16), marginBottom: SZ(16) }}>
+                        <div style={{ flex: 1, height: "1px", backgroundColor: "#E4A0F7" }} />
+                        <h2 style={{ fontFamily: "Outfit, sans-serif", fontWeight: 700, fontSize: SZ(32), color: "#843799", whiteSpace: "nowrap" }}>Nilai Kami</h2>
+                        <div style={{ flex: 1, height: "1px", backgroundColor: "#E4A0F7" }} />
+                    </div>
 
-                <div style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(4, 1fr)",
-                    gap: SZ(10),
-                    paddingLeft: SZ(40),
-                    paddingRight: SZ(40),
-                    marginBottom: SZ(10),
-                }}>
-                    {nilaiRow1.map((item, i) => (
-                        <div
-                            key={i}
-                            style={{
-                                display: "flex",
-                                flexDirection: "row",
-                                alignItems: "center",
-                                gap: SZ(12),
-                                padding: SZ(20),
-                                borderRadius: SZ(15),
-                                backgroundColor: "#FAE6FF",
-                                transition: "transform 0.2s, box-shadow 0.2s",
-                                cursor: "default",
-                            }}
-                            onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.03)"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(132,55,153,0.15)"; }}
-                            onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "none"; }}
-                        >
-                            <div style={{ flexShrink: 0 }}>{item.icon}</div>
-                            <span style={{ fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: SZ(20), color: "#843799", lineHeight: 1.3 }}>{item.label}</span>
-                        </div>
-                    ))}
-                </div>
+                    {/* Row 1: 4 cards */}
+                    <div style={{
+                        display: "grid",
+                        gridTemplateColumns: "repeat(4, 1fr)",
+                        gap: SZ(10),
+                        marginBottom: SZ(10),
+                    }}>
+                        {nilaiRow1.map((item, i) => (
+                            <div
+                                key={i}
+                                style={{
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    gap: SZ(12),
+                                    padding: SZ(20),
+                                    borderRadius: SZ(15),
+                                    backgroundColor: "#FAE6FF",
+                                    transition: "transform 0.2s, box-shadow 0.2s",
+                                    cursor: "default",
+                                }}
+                                onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.03)"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(132,55,153,0.15)"; }}
+                                onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "none"; }}
+                            >
+                                <div style={{ flexShrink: 0 }}>{item.icon}</div>
+                                <span style={{ fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: SZ(20), color: "#843799", lineHeight: 1.3 }}>{item.label}</span>
+                            </div>
+                        ))}
+                    </div>
 
-                {/* Row 2: full-width edge-to-edge, no side padding */}
-                <div style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(3, 1fr)",
-                    gap: 0,
-                }}>
-                    {nilaiRow2.map((item, i) => (
-                        <div
-                            key={i}
-                            style={{
-                                display: "flex",
-                                flexDirection: "row",
-                                alignItems: "center",
-                                gap: SZ(12),
-                                padding: `${SZ(20)} ${SZ(40)}`,
-                                backgroundColor: "#FAE6FF",
-                                transition: "transform 0.2s, box-shadow 0.2s",
-                                cursor: "default",
-                            }}
-                            onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.02)"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(132,55,153,0.15)"; }}
-                            onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "none"; }}
-                        >
-                            <div style={{ flexShrink: 0 }}>{item.icon}</div>
-                            <span style={{ fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: SZ(20), color: "#843799", lineHeight: 1.3 }}>{item.label}</span>
-                        </div>
-                    ))}
-                </div>
-            </section>
+                    {/* Row 2: 3 cards menyambung (gap-0) dengan sisi paling kiri & kanan rounded */}
+                    <div style={{
+                        display: "grid",
+                        gridTemplateColumns: "repeat(3, 1fr)",
+                        gap: 0,
+                        overflow: "hidden",
+                        borderRadius: SZ(15),
+                    }}>
+                        {nilaiRow2.map((item, i) => (
+                            <div
+                                key={i}
+                                style={{
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    gap: SZ(12),
+                                    padding: `${SZ(20)} ${SZ(36)}`,
+                                    backgroundColor: "#FAE6FF",
+                                    transition: "transform 0.2s, box-shadow 0.2s",
+                                    cursor: "default",
+                                    borderRight: i < nilaiRow2.length - 1 ? "1px solid rgba(228, 160, 247, 0.4)" : "none",
+                                }}
+                                onMouseEnter={e => { e.currentTarget.style.backgroundColor = "#F4C6FF"; }}
+                                onMouseLeave={e => { e.currentTarget.style.backgroundColor = "#FAE6FF"; }}
+                            >
+                                <div style={{ flexShrink: 0 }}>{item.icon}</div>
+                                <span style={{ fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: SZ(20), color: "#843799", lineHeight: 1.3 }}>{item.label}</span>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            </div>
 
             {/* ── WHITE GAP ────────────────────────────────────────────── */}
             <div style={{ height: SZ(15), backgroundColor: "#ffffff" }} />
 
-            {/* ── SERTIFIKASI & PENCAPAIAN ────────────────────────────── */}
+            {/* ── SERTIFIKASI (Gallery 1: Atas) ────────────────────────────── */}
             {certificates && certificates.length > 0 && (
                 <>
-                    <section style={{ width: "100%", paddingLeft: SZ(40), paddingRight: SZ(40), backgroundColor: "#ffffff" }}>
-                        <div className="max-w-3xl mx-auto">
-                            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: SZ(16), marginBottom: SZ(40) }}>
-                                <div style={{ flex: 1, height: "1px", backgroundColor: "#C57FDC" }} />
-                                <h2 style={{ fontFamily: "Outfit, sans-serif", fontWeight: 700, fontSize: SZ(32), color: "#843799", whiteSpace: "nowrap" }}>Sertifikasi &amp; Pencapaian</h2>
-                                <div style={{ flex: 1, height: "1px", backgroundColor: "#C57FDC" }} />
+                    <div className="w-full max-w-[92vw] xl:max-w-[88vw] 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+                        <section style={{ width: "100%", backgroundColor: "#ffffff" }}>
+                            <div className="max-w-3xl mx-auto">
+                                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: SZ(16), marginBottom: SZ(40) }}>
+                                    <div style={{ flex: 1, height: "1px", backgroundColor: "#C57FDC" }} />
+                                    <h2 style={{ fontFamily: "Outfit, sans-serif", fontWeight: 700, fontSize: SZ(32), color: "#843799", whiteSpace: "nowrap" }}>Sertifikasi</h2>
+                                    <div style={{ flex: 1, height: "1px", backgroundColor: "#C57FDC" }} />
+                                </div>
+                                <SertifikatCarousel certificates={certificates} />
                             </div>
-                            <SertifikatCarousel certificates={certificates} />
-                        </div>
-                    </section>
+                        </section>
+                    </div>
+
+                    {/* ── WHITE GAP ────────────────────────────────────────────── */}
+                    <div style={{ height: SZ(15), backgroundColor: "#ffffff" }} />
+                </>
+            )}
+
+            {/* ── PENGHARGAAN (Gallery 2: Bawah) ────────────────────────────── */}
+            {awards && awards.length > 0 && (
+                <>
+                    <div className="w-full max-w-[92vw] xl:max-w-[88vw] 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+                        <section style={{ width: "100%", backgroundColor: "#ffffff" }}>
+                            <div className="max-w-3xl mx-auto">
+                                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: SZ(16), marginBottom: SZ(40) }}>
+                                    <div style={{ flex: 1, height: "1px", backgroundColor: "#C57FDC" }} />
+                                    <h2 style={{ fontFamily: "Outfit, sans-serif", fontWeight: 700, fontSize: SZ(32), color: "#843799", whiteSpace: "nowrap" }}>Penghargaan</h2>
+                                    <div style={{ flex: 1, height: "1px", backgroundColor: "#C57FDC" }} />
+                                </div>
+                                <SertifikatCarousel certificates={awards} />
+                            </div>
+                        </section>
+                    </div>
 
                     {/* ── WHITE GAP ────────────────────────────────────────────── */}
                     <div style={{ height: SZ(15), backgroundColor: "#ffffff" }} />
@@ -405,47 +401,48 @@ export default function TentangKami({ featuredProducts = [], certificates = [] }
             )}
 
             {/* ── JELAJAHI PRODUK KAMI ─────────────────────────────────── */}
-            {/* ref 1200x131, side gaps SZ(40), rounded SZ(15) */}
-            <section style={{ width: "100%", backgroundColor: "#ffffff", paddingLeft: SZ(40), paddingRight: SZ(40) }}>
-                <div style={{
-                    width: "100%",
-                    position: "relative",
-                    overflow: "hidden",
-                    borderRadius: SZ(15),
-                    aspectRatio: "1200 / 131",
-                    backgroundColor: "#FAE6FF",
-                    display: "flex",
-                    alignItems: "center",
-                }}>
-                    {/* Background image */}
-                    <img src="/images/jelajahi-produk.webp" alt="Jelajahi Produk" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
-                    {/* Content positioned in the middle area (between left orchid and right brown sugar blocks) */}
-                    <div style={{ position: "relative", zIndex: 10, width: "100%", display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingLeft: "26%", paddingRight: "26%", gap: SZ(16) }}>
-                        <div>
-                            <h2 style={{ fontFamily: "Outfit, sans-serif", fontWeight: 700, fontSize: SZ(32), color: "#843799", marginBottom: SZ(4), lineHeight: 1.1 }}>Jelajahi Produk Kami</h2>
-                            <p style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: SZ(12), color: "#843799", lineHeight: 1.4 }}>
-                                Rasakan kelezatan khas Jawa dalam setiap gigitan.<br />Temukan favoritmu sekarang!
-                            </p>
-                        </div>
-                        <div style={{ display: "flex", flexDirection: "column", gap: SZ(6), flexShrink: 0 }}>
-                            <Link href="/products" style={{ display: "inline-flex", alignItems: "center", justifyContent: "space-between", gap: SZ(16), paddingLeft: SZ(16), paddingRight: SZ(16), paddingTop: SZ(8), paddingBottom: SZ(8), borderRadius: SZ(10), backgroundColor: "#843799", transition: "opacity 0.2s", minWidth: SZ(160) }}
-                                onMouseEnter={e => { e.currentTarget.style.opacity = "0.85"; }}
-                                onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
-                            >
-                                <span style={{ fontFamily: "Inter, sans-serif", fontWeight: 600, fontSize: SZ(12), color: "#ffffff" }}>Belanja Sekarang</span>
-                                <svg style={{ width: SZ(14), height: SZ(14), color: "#ffffff" }} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
-                            </Link>
-                            <Link href="#contact" style={{ display: "inline-flex", alignItems: "center", justifyContent: "space-between", gap: SZ(16), paddingLeft: SZ(16), paddingRight: SZ(16), paddingTop: SZ(8), paddingBottom: SZ(8), borderRadius: SZ(10), border: "1px solid #843799", color: "#843799", backgroundColor: "rgba(255,255,255,0.6)", transition: "background-color 0.2s, box-shadow 0.2s", minWidth: SZ(160) }}
-                                onMouseEnter={e => { e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.9)"; e.currentTarget.style.boxShadow = "0 4px 12px rgba(132,55,153,0.15)"; }}
-                                onMouseLeave={e => { e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.6)"; e.currentTarget.style.boxShadow = "none"; }}
-                            >
-                                <span style={{ fontFamily: "Inter, sans-serif", fontWeight: 600, fontSize: SZ(12) }}>Hubungi Kami</span>
-                                <svg style={{ width: SZ(14), height: SZ(14) }} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
-                            </Link>
+            <div className="w-full max-w-[92vw] xl:max-w-[88vw] 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+                <section style={{ width: "100%", backgroundColor: "#ffffff" }}>
+                    <div style={{
+                        width: "100%",
+                        position: "relative",
+                        overflow: "hidden",
+                        borderRadius: SZ(15),
+                        aspectRatio: "1200 / 131",
+                        backgroundColor: "#FAE6FF",
+                        display: "flex",
+                        alignItems: "center",
+                    }}>
+                        {/* Background image */}
+                        <img src="/images/jelajahi-produk.webp" alt="Jelajahi Produk" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+                        {/* Content positioned in the middle area (between left orchid and right brown sugar blocks) */}
+                        <div style={{ position: "relative", zIndex: 10, width: "100%", display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingLeft: "26%", paddingRight: "26%", gap: SZ(16) }}>
+                            <div>
+                                <h2 style={{ fontFamily: "Outfit, sans-serif", fontWeight: 700, fontSize: SZ(32), color: "#843799", marginBottom: SZ(4), lineHeight: 1.1 }}>Jelajahi Produk Kami</h2>
+                                <p style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: SZ(12), color: "#843799", lineHeight: 1.4 }}>
+                                    Rasakan kelezatan khas Jawa dalam setiap gigitan.<br />Temukan favoritmu sekarang!
+                                </p>
+                            </div>
+                            <div style={{ display: "flex", flexDirection: "column", gap: SZ(6), flexShrink: 0 }}>
+                                <Link href="/products" style={{ display: "inline-flex", alignItems: "center", justifyContent: "space-between", gap: SZ(16), paddingLeft: SZ(16), paddingRight: SZ(16), paddingTop: SZ(8), paddingBottom: SZ(8), borderRadius: SZ(10), backgroundColor: "#843799", transition: "opacity 0.2s", minWidth: SZ(160) }}
+                                    onMouseEnter={e => { e.currentTarget.style.opacity = "0.85"; }}
+                                    onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
+                                >
+                                    <span style={{ fontFamily: "Inter, sans-serif", fontWeight: 600, fontSize: SZ(12), color: "#ffffff" }}>Belanja Sekarang</span>
+                                    <svg style={{ width: SZ(14), height: SZ(14), color: "#ffffff" }} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                                </Link>
+                                <Link href="#contact" style={{ display: "inline-flex", alignItems: "center", justifyContent: "space-between", gap: SZ(16), paddingLeft: SZ(16), paddingRight: SZ(16), paddingTop: SZ(8), paddingBottom: SZ(8), borderRadius: SZ(10), border: "1px solid #843799", color: "#843799", backgroundColor: "rgba(255,255,255,0.6)", transition: "background-color 0.2s, box-shadow 0.2s", minWidth: SZ(160) }}
+                                    onMouseEnter={e => { e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.9)"; e.currentTarget.style.boxShadow = "0 4px 12px rgba(132,55,153,0.15)"; }}
+                                    onMouseLeave={e => { e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.6)"; e.currentTarget.style.boxShadow = "none"; }}
+                                >
+                                    <span style={{ fontFamily: "Inter, sans-serif", fontWeight: 600, fontSize: SZ(12) }}>Hubungi Kami</span>
+                                    <svg style={{ width: SZ(14), height: SZ(14) }} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                                </Link>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            </div>
 
             {/* ── WHITE GAP (before footer) ─────────────────────────── */}
             <div style={{ height: SZ(15), backgroundColor: "#ffffff" }} />

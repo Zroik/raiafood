@@ -15,7 +15,7 @@ export default function Pages({ settings }) {
     });
 
     const [previews, setPreviews] = useState({
-        about_banner: settings.about_banner ? `/storage/${settings.about_banner}` : '/images/about-banner.webp',
+        about_banner: settings.about_banner ? `/storage/${settings.about_banner}` : '/images/hero.webp',
         products_banner: settings.products_banner ? `/storage/${settings.products_banner}` : null,
         contact_banner: settings.contact_banner ? `/storage/${settings.contact_banner}` : '/images/hero.webp',
         faq_banner: settings.faq_banner ? `/storage/${settings.faq_banner}` : '/images/faq.webp',

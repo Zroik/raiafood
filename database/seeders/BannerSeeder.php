@@ -36,10 +36,21 @@ class BannerSeeder extends Seeder
   2 => [
     'id' => 5,
     'title' => 'banner3',
+    'type' => 'hero',
     'description' => NULL,
-    'image' => 'banners/8mctIEXQxoSIs15Mk29C8BxzV4zQJv8HE0PCtgGO.webp',
+    'image' => 'images/hero3.webp',
     'link' => '/products',
     'sort_order' => 3,
+    'is_active' => 1,
+  ],
+  3 => [
+    'id' => 6,
+    'title' => 'Flash Sale Spesial',
+    'type' => 'flash_sale',
+    'description' => NULL,
+    'image' => 'images/flash-sale-banner.webp',
+    'link' => '/products?flash_sale=1',
+    'sort_order' => 1,
     'is_active' => 1,
   ],
 ];

@@ -112,20 +112,25 @@ export default function FAQ({ faqs }) {
         <ShopLayout>
             <Head title="FAQ - RaiaFood" />
 
-            {/* HERO */}
-            <section className="w-full relative overflow-hidden flex items-center aspect-[1912/630]" style={{ backgroundColor: "#FAE6FF" }}>
-                <img src="/images/faq.webp" alt="FAQ Hero" className="absolute inset-0 w-full h-full object-cover object-center" />
-                <div className="w-full z-10 relative flex flex-col items-center justify-center text-center px-8 py-[4%]">
-                    <h1 style={{ fontFamily: "Outfit, sans-serif", fontWeight: 700, fontSize: SZ(64), color: "#60396B", marginBottom: SZ(8), lineHeight: 1.1 }}>FAQ</h1>
-                    <div style={{ width: SZ(60), height: "3px", backgroundColor: "#843799", marginBottom: SZ(16), borderRadius: "9999px" }} />
-                    <p style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: SZ(20), color: "#843799", maxWidth: SZ(600), lineHeight: 1.5 }}>
-                        Temukan jawaban cepat untuk pertanyaan seputar pemesanan, pengiriman, kualitas produk, dan layanan kami.
-                    </p>
-                </div>
-            </section>
+            {/* HERO (Rasio 3:1 konsisten dengan Beranda) */}
+            <div className="w-full max-w-[92vw] xl:max-w-[88vw] 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6">
+                <section
+                    className="w-full relative overflow-hidden flex items-center aspect-[3/1] rounded-2xl lg:rounded-3xl shadow-sm"
+                    style={{ backgroundColor: "#FAE6FF" }}
+                >
+                    <img src="/images/faq.webp" alt="FAQ Hero" className="absolute inset-0 w-full h-full object-cover object-center" />
+                    <div className="w-full z-10 relative flex flex-col items-center justify-center text-center px-8 py-[3%]">
+                        <h1 style={{ fontFamily: "Outfit, sans-serif", fontWeight: 700, fontSize: SZ(64), color: "#60396B", marginBottom: SZ(8), lineHeight: 1.1 }}>FAQ</h1>
+                        <div style={{ width: SZ(60), height: "3px", backgroundColor: "#843799", marginBottom: SZ(16), borderRadius: "9999px" }} />
+                        <p style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: SZ(20), color: "#843799", maxWidth: SZ(600), lineHeight: 1.5 }}>
+                            Temukan jawaban cepat untuk pertanyaan seputar pemesanan, pengiriman, kualitas produk, dan layanan kami.
+                        </p>
+                    </div>
+                </section>
+            </div>
 
             {/* FAQ LIST overlapping hero */}
-            <div className="w-full max-w-[92vw] xl:max-w-[88vw] 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 -mt-16 sm:-mt-24 relative z-10">
+            <div className="w-full max-w-[92vw] xl:max-w-[88vw] 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 -mt-6 sm:-mt-10 relative z-10">
                 <div style={{ backgroundColor: "#FCF3FF", borderRadius: "18px", padding: "24px sm:32px" }} className="p-5 sm:p-7 shadow-sm">
                     <div className="flex flex-col gap-3">
                         {list.map((item, index) => (

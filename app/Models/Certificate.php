@@ -8,6 +8,7 @@ class Certificate extends Model
 {
     protected $fillable = [
         'title',
+        'type',
         'image',
         'sort_order',
         'is_active',
@@ -20,5 +21,15 @@ class Certificate extends Model
     public function scopeActive($query)
     {
         return $query->where('is_active', true)->orderBy('sort_order');
+    }
+
+    public function scopeCertificates($query)
+    {
+        return $query->where('type', 'certificate');
+    }
+
+    public function scopeAwards($query)
+    {
+        return $query->where('type', 'award');
     }
 }

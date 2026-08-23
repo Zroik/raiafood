@@ -8,15 +8,18 @@ export default function AdminLayout({ children, header }) {
     // State for open collapsible folders
     const [openFolders, setOpenFolders] = useState({
         catalog: route().current('admin.products.*') || route().current('admin.categories.*') || route().current('admin.orders.*') || route().current('admin.promos.*'),
-        content: route().current('admin.banners.*') || route().current('admin.certificates.*') || route().current('admin.faqs.*') || route().current('admin.messages.*'),
-        settings: route().current('admin.settings.*') || route().current('admin.users.*') || route().current('admin.whatsapp.*'),
+        home: route().current('admin.banners.*'),
+        about: route().current('admin.certificates.*') || (route().current('admin.settings.pages') && window.location.hash !== '#contact-banner' && window.location.hash !== '#faq-banner'),
+        contact: route().current('admin.messages.*') || route().current('admin.settings.contact'),
+        faq: route().current('admin.faqs.*'),
+        settings: route().current('admin.settings.general') || route().current('admin.settings.social') || route().current('admin.users.*') || route().current('admin.whatsapp.*'),
     });
 
     const toggleFolder = (key) => {
         setOpenFolders(prev => ({ ...prev, [key]: !prev[key] }));
     };
 
-    // Navigation Structure organized by Folders
+    // Navigation Structure organized by Page-Based Folders
     const navStructure = [
         {
             type: 'link',
@@ -40,29 +43,56 @@ export default function AdminLayout({ children, header }) {
         },
         {
             type: 'folder',
-            id: 'content',
-            name: 'Konten & Halaman',
-            icon: '📖',
-            active: route().current('admin.banners.*') || route().current('admin.certificates.*') || route().current('admin.faqs.*') || route().current('admin.messages.*'),
+            id: 'home',
+            name: 'Halaman Beranda',
+            icon: '🏠',
+            active: route().current('admin.banners.*'),
             children: [
-                { name: 'Banner Slider Hero', href: route('admin.banners.index'), icon: '🖼️', active: route().current('admin.banners.*') },
-                { name: 'Sertifikasi', href: route('admin.certificates.index'), icon: '📜', active: route().current('admin.certificates.*') },
-                { name: 'Kelola FAQ', href: route('admin.faqs.index'), icon: '❓', active: route().current('admin.faqs.*') },
-                { name: 'Pesan Masuk', href: route('admin.messages.index'), icon: '📥', active: route().current('admin.messages.*') },
+                { name: 'Banner Hero & Flash Sale', href: route('admin.banners.index'), icon: '🖼️', active: route().current('admin.banners.*') },
+            ]
+        },
+        {
+            type: 'folder',
+            id: 'about',
+            name: 'Halaman Tentang Kami',
+            icon: '📖',
+            active: route().current('admin.certificates.*') || route().current('admin.settings.pages'),
+            children: [
+                { name: 'Teks & Banner Halaman', href: route('admin.settings.pages'), icon: '📝', active: route().current('admin.settings.pages') },
+                { name: 'Sertifikasi & Penghargaan', href: route('admin.certificates.index'), icon: '📜', active: route().current('admin.certificates.*') },
+            ]
+        },
+        {
+            type: 'folder',
+            id: 'contact',
+            name: 'Halaman Hubungi Kami',
+            icon: '📞',
+            active: route().current('admin.messages.*') || route().current('admin.settings.contact'),
+            children: [
+                { name: 'Pesan Masuk (Inbox)', href: route('admin.messages.index'), icon: '📥', active: route().current('admin.messages.*') },
+                { name: 'Info Kontak & Maps', href: route('admin.settings.contact'), icon: '📍', active: route().current('admin.settings.contact') },
+            ]
+        },
+        {
+            type: 'folder',
+            id: 'faq',
+            name: 'Halaman FAQ',
+            icon: '❓',
+            active: route().current('admin.faqs.*'),
+            children: [
+                { name: 'Kelola Tanya Jawab', href: route('admin.faqs.index'), icon: '💬', active: route().current('admin.faqs.*') },
             ]
         },
         {
             type: 'folder',
             id: 'settings',
-            name: 'Pengaturan Website',
+            name: 'Pengaturan Toko',
             icon: '⚙️',
-            active: route().current('admin.settings.*') || route().current('admin.users.*') || route().current('admin.whatsapp.*'),
+            active: route().current('admin.settings.general') || route().current('admin.settings.social') || route().current('admin.users.*') || route().current('admin.whatsapp.*'),
             children: [
-                { name: 'Identitas & Tampilan', href: route('admin.settings.general'), icon: '🏢', active: route().current('admin.settings.general') },
-                { name: 'Banner & Teks Halaman', href: route('admin.settings.pages'), icon: '📑', active: route().current('admin.settings.pages') },
-                { name: 'Kontak & Lokasi', href: route('admin.settings.contact'), icon: '📍', active: route().current('admin.settings.contact') },
-                { name: 'Sosial Media', href: route('admin.settings.social'), icon: '🌐', active: route().current('admin.settings.social') },
-                { name: 'Hak Akses & User', href: route('admin.users.index'), icon: '👥', active: route().current('admin.users.*') },
+                { name: 'Identitas, Logo & Tema', href: route('admin.settings.general'), icon: '🎨', active: route().current('admin.settings.general') },
+                { name: 'Sosial Media & Marketplace', href: route('admin.settings.social'), icon: '🌐', active: route().current('admin.settings.social') },
+                { name: 'Hak Akses & Admin', href: route('admin.users.index'), icon: '👥', active: route().current('admin.users.*') },
             ]
         },
     ];
