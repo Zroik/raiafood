@@ -21,6 +21,9 @@ use App\Http\Controllers\Shop\HomeController;
 use App\Http\Controllers\Shop\OrderController;
 use App\Http\Controllers\Shop\ProductController;
 use App\Http\Controllers\Shop\WishlistController;
+use App\Http\Controllers\Shop\NewsController;
+use App\Http\Controllers\Admin\ArticleController as AdminArticleController;
+use App\Http\Controllers\Admin\MediaController as AdminMediaController;
 use Illuminate\Support\Facades\Route;
 
 // ============================================
@@ -31,6 +34,8 @@ Route::get('/tentang-kami', [AboutController::class, 'index'])->name('shop.about
 Route::get('/hubungi-kami', [ContactController::class, 'index'])->name('shop.contact');
 Route::post('/hubungi-kami', [ContactController::class, 'store'])->name('shop.contact.store');
 Route::get('/faq', [FaqController::class, 'index'])->name('shop.faq');
+Route::get('/news', [NewsController::class, 'index'])->name('shop.news.index');
+Route::get('/news/{slug}', [NewsController::class, 'show'])->name('shop.news.show');
 Route::get('/products', [ProductController::class, 'index'])->name('shop.products');
 Route::get('/products/{slug}', [ProductController::class, 'show'])->name('shop.products.show');
 
@@ -112,6 +117,14 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])
 
         // Flash Sales (Batch Product Campaign & Countdown Sync)
         Route::resource('flash-sales', \App\Http\Controllers\Admin\FlashSaleController::class)->except(['show', 'create', 'edit']);
+
+        // News & Articles (Blog CMS)
+        Route::resource('news', AdminArticleController::class)->parameters(['news' => 'news'])->names('news');
+
+        // Media Library API
+        Route::get('/media', [AdminMediaController::class, 'index'])->name('media.index');
+        Route::post('/media', [AdminMediaController::class, 'store'])->name('media.store');
+        Route::delete('/media/{media}', [AdminMediaController::class, 'destroy'])->name('media.destroy');
 
         // Messages (Hubungi Kami Inboxes)
         Route::resource('messages', AdminMessageController::class)->only(['index', 'show', 'destroy']);

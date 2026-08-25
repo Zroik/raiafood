@@ -12,6 +12,7 @@ export default function AdminLayout({ children, header }) {
         about: route().current('admin.certificates.*') || (route().current('admin.settings.pages') && window.location.hash !== '#contact-banner' && window.location.hash !== '#faq-banner'),
         contact: route().current('admin.messages.*') || route().current('admin.settings.contact'),
         faq: route().current('admin.faqs.*'),
+        news: route().current('admin.news.*'),
         settings: route().current('admin.settings.general') || route().current('admin.settings.social') || route().current('admin.users.*') || route().current('admin.whatsapp.*'),
     });
 
@@ -83,6 +84,17 @@ export default function AdminLayout({ children, header }) {
             active: route().current('admin.faqs.*'),
             children: [
                 { name: 'Kelola Tanya Jawab', href: route('admin.faqs.index'), icon: '💬', active: route().current('admin.faqs.*') },
+            ]
+        },
+        {
+            type: 'folder',
+            id: 'news',
+            name: 'Halaman News / Blog',
+            icon: '📰',
+            active: route().current('admin.news.*'),
+            children: [
+                { name: 'Daftar Artikel', href: route('admin.news.index'), icon: '📑', active: route().current('admin.news.index') || route().current('admin.news.edit') },
+                { name: 'Tulis Artikel Baru', href: route('admin.news.create'), icon: '✍️', active: route().current('admin.news.create') },
             ]
         },
         {

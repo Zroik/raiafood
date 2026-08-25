@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             BannerSeeder::class,
             CertificateSeeder::class,
             DynamicContentSyncSeeder::class,
+            ArticleSeeder::class,
         ]);
     }
 }

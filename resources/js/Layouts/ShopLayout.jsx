@@ -37,6 +37,7 @@ export default function ShopLayout({ children, logoScale = 100 }) {
     const navLinks = [
         { name: 'Beranda', href: '/', active: route().current('shop.home') },
         { name: 'Produk', href: '/products', active: route().current('shop.products') || route().current('shop.products.show') },
+        { name: 'News', href: '/news', active: route().current('shop.news.*') },
         { name: 'Tentang Kami', href: '/tentang-kami', active: route().current('shop.about') },
         { name: 'Hubungi Kami', href: '/hubungi-kami', active: route().current('shop.contact') },
         { name: 'FAQ', href: '/faq', active: route().current('shop.faq') },
@@ -235,6 +236,7 @@ export default function ShopLayout({ children, logoScale = 100 }) {
                                 {[
                                     { name: 'Home', href: '/' },
                                     { name: 'Produk', href: '/products' },
+                                    { name: 'News', href: '/news' },
                                     { name: 'Tentang Kami', href: '/tentang-kami' },
                                     { name: 'FAQ', href: '/faq' }
                                 ].map(link => (
