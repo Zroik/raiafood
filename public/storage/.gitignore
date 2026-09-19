@@ -6,3 +6,7 @@
 !certificates/*
 !products/
 !products/*
+!settings/
+!settings/*
+!media/
+!media/*

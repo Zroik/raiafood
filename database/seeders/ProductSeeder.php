@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Product;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -10,12 +9,12 @@ class ProductSeeder extends Seeder
 {
     public function run(): void
     {
-        // Disable foreign key checks
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         DB::table('products')->truncate();
 
-        $data = [
-  0 => [
+        $data = array (
+  0 => 
+  array (
     'id' => 1,
     'category_id' => 1,
     'name' => 'Thin Cookies',
@@ -32,8 +31,11 @@ class ProductSeeder extends Seeder
     'is_featured' => 1,
     'rating_count' => 120,
     'rating_avg' => '4.50',
-  ],
-  1 => [
+    'created_at' => NULL,
+    'updated_at' => NULL,
+  ),
+  1 => 
+  array (
     'id' => 2,
     'category_id' => 1,
     'name' => 'Gurita Crispy',
@@ -50,8 +52,11 @@ class ProductSeeder extends Seeder
     'is_featured' => 1,
     'rating_count' => 85,
     'rating_avg' => '4.30',
-  ],
-  2 => [
+    'created_at' => NULL,
+    'updated_at' => NULL,
+  ),
+  2 => 
+  array (
     'id' => 3,
     'category_id' => 1,
     'name' => 'Jajan Putihan',
@@ -68,8 +73,11 @@ class ProductSeeder extends Seeder
     'is_featured' => 1,
     'rating_count' => 75,
     'rating_avg' => '4.20',
-  ],
-  3 => [
+    'created_at' => NULL,
+    'updated_at' => NULL,
+  ),
+  3 => 
+  array (
     'id' => 4,
     'category_id' => 2,
     'name' => 'Bumbu Rawon',
@@ -86,8 +94,11 @@ class ProductSeeder extends Seeder
     'is_featured' => 0,
     'rating_count' => 98,
     'rating_avg' => '4.60',
-  ],
-  4 => [
+    'created_at' => NULL,
+    'updated_at' => NULL,
+  ),
+  4 => 
+  array (
     'id' => 5,
     'category_id' => 2,
     'name' => 'Bumbu Soto Daging',
@@ -104,8 +115,11 @@ class ProductSeeder extends Seeder
     'is_featured' => 0,
     'rating_count' => 86,
     'rating_avg' => '4.40',
-  ],
-  5 => [
+    'created_at' => NULL,
+    'updated_at' => NULL,
+  ),
+  5 => 
+  array (
     'id' => 6,
     'category_id' => 2,
     'name' => 'Bumbu Soto Ayam',
@@ -122,8 +136,11 @@ class ProductSeeder extends Seeder
     'is_featured' => 0,
     'rating_count' => 64,
     'rating_avg' => '4.50',
-  ],
-  6 => [
+    'created_at' => NULL,
+    'updated_at' => NULL,
+  ),
+  6 => 
+  array (
     'id' => 13,
     'category_id' => 1,
     'name' => 'Jenang Jawa Gula Kelapa',
@@ -140,8 +157,11 @@ class ProductSeeder extends Seeder
     'is_featured' => 1,
     'rating_count' => 0,
     'rating_avg' => '0.00',
-  ],
-  7 => [
+    'created_at' => NULL,
+    'updated_at' => NULL,
+  ),
+  7 => 
+  array (
     'id' => 14,
     'category_id' => 1,
     'name' => 'Jenang Jawa Gula Tebu',
@@ -158,8 +178,11 @@ class ProductSeeder extends Seeder
     'is_featured' => 1,
     'rating_count' => 0,
     'rating_avg' => '0.00',
-  ],
-  8 => [
+    'created_at' => NULL,
+    'updated_at' => NULL,
+  ),
+  8 => 
+  array (
     'id' => 15,
     'category_id' => 1,
     'name' => 'Jenang Jawa Madu Mongso',
@@ -176,8 +199,11 @@ class ProductSeeder extends Seeder
     'is_featured' => 1,
     'rating_count' => 0,
     'rating_avg' => '0.00',
-  ],
-  9 => [
+    'created_at' => NULL,
+    'updated_at' => NULL,
+  ),
+  9 => 
+  array (
     'id' => 16,
     'category_id' => 1,
     'name' => 'Jenang Jawa',
@@ -194,8 +220,11 @@ class ProductSeeder extends Seeder
     'is_featured' => 0,
     'rating_count' => 0,
     'rating_avg' => '0.00',
-  ],
-  10 => [
+    'created_at' => NULL,
+    'updated_at' => NULL,
+  ),
+  10 => 
+  array (
     'id' => 17,
     'category_id' => 1,
     'name' => 'Kue Bulan',
@@ -212,8 +241,11 @@ class ProductSeeder extends Seeder
     'is_featured' => 0,
     'rating_count' => 0,
     'rating_avg' => '0.00',
-  ],
-  11 => [
+    'created_at' => NULL,
+    'updated_at' => NULL,
+  ),
+  11 => 
+  array (
     'id' => 18,
     'category_id' => 1,
     'name' => 'Kue Kecipir',
@@ -230,8 +262,11 @@ class ProductSeeder extends Seeder
     'is_featured' => 0,
     'rating_count' => 0,
     'rating_avg' => '0.00',
-  ],
-  12 => [
+    'created_at' => NULL,
+    'updated_at' => NULL,
+  ),
+  12 => 
+  array (
     'id' => 19,
     'category_id' => 1,
     'name' => 'Kue Sagon',
@@ -248,8 +283,11 @@ class ProductSeeder extends Seeder
     'is_featured' => 0,
     'rating_count' => 0,
     'rating_avg' => '0.00',
-  ],
-  13 => [
+    'created_at' => NULL,
+    'updated_at' => NULL,
+  ),
+  13 => 
+  array (
     'id' => 20,
     'category_id' => 1,
     'name' => 'Kuping Gajah',
@@ -266,8 +304,11 @@ class ProductSeeder extends Seeder
     'is_featured' => 0,
     'rating_count' => 0,
     'rating_avg' => '0.00',
-  ],
-  14 => [
+    'created_at' => NULL,
+    'updated_at' => NULL,
+  ),
+  14 => 
+  array (
     'id' => 21,
     'category_id' => 1,
     'name' => 'Masirat',
@@ -284,8 +325,11 @@ class ProductSeeder extends Seeder
     'is_featured' => 0,
     'rating_count' => 0,
     'rating_avg' => '0.00',
-  ],
-  15 => [
+    'created_at' => NULL,
+    'updated_at' => NULL,
+  ),
+  15 => 
+  array (
     'id' => 22,
     'category_id' => 1,
     'name' => 'Nastar',
@@ -302,8 +346,11 @@ class ProductSeeder extends Seeder
     'is_featured' => 0,
     'rating_count' => 0,
     'rating_avg' => '0.00',
-  ],
-  16 => [
+    'created_at' => NULL,
+    'updated_at' => NULL,
+  ),
+  16 => 
+  array (
     'id' => 23,
     'category_id' => 1,
     'name' => 'Pia',
@@ -320,8 +367,11 @@ class ProductSeeder extends Seeder
     'is_featured' => 0,
     'rating_count' => 0,
     'rating_avg' => '0.00',
-  ],
-  17 => [
+    'created_at' => NULL,
+    'updated_at' => NULL,
+  ),
+  17 => 
+  array (
     'id' => 24,
     'category_id' => 1,
     'name' => 'Tetel',
@@ -338,8 +388,11 @@ class ProductSeeder extends Seeder
     'is_featured' => 0,
     'rating_count' => 0,
     'rating_avg' => '0.00',
-  ],
-  18 => [
+    'created_at' => NULL,
+    'updated_at' => NULL,
+  ),
+  18 => 
+  array (
     'id' => 25,
     'category_id' => 1,
     'name' => 'Egg Roll',
@@ -356,8 +409,11 @@ class ProductSeeder extends Seeder
     'is_featured' => 1,
     'rating_count' => 0,
     'rating_avg' => '0.00',
-  ],
-  19 => [
+    'created_at' => NULL,
+    'updated_at' => NULL,
+  ),
+  19 => 
+  array (
     'id' => 26,
     'category_id' => 1,
     'name' => 'Tahu Wajik',
@@ -374,8 +430,11 @@ class ProductSeeder extends Seeder
     'is_featured' => 0,
     'rating_count' => 0,
     'rating_avg' => '0.00',
-  ],
-  20 => [
+    'created_at' => NULL,
+    'updated_at' => NULL,
+  ),
+  20 => 
+  array (
     'id' => 27,
     'category_id' => 2,
     'name' => 'Bumbu Gulai',
@@ -392,8 +451,11 @@ class ProductSeeder extends Seeder
     'is_featured' => 1,
     'rating_count' => 0,
     'rating_avg' => '0.00',
-  ],
-  21 => [
+    'created_at' => NULL,
+    'updated_at' => NULL,
+  ),
+  21 => 
+  array (
     'id' => 28,
     'category_id' => 2,
     'name' => 'Bumbu Tahu Campur',
@@ -410,8 +472,11 @@ class ProductSeeder extends Seeder
     'is_featured' => 0,
     'rating_count' => 0,
     'rating_avg' => '0.00',
-  ],
-  22 => [
+    'created_at' => NULL,
+    'updated_at' => NULL,
+  ),
+  22 => 
+  array (
     'id' => 29,
     'category_id' => 2,
     'name' => 'Chili Oil',
@@ -428,8 +493,11 @@ class ProductSeeder extends Seeder
     'is_featured' => 0,
     'rating_count' => 0,
     'rating_avg' => '0.00',
-  ],
-  23 => [
+    'created_at' => NULL,
+    'updated_at' => NULL,
+  ),
+  23 => 
+  array (
     'id' => 30,
     'category_id' => 2,
     'name' => 'Sambal Bawang Bandeng',
@@ -446,8 +514,11 @@ class ProductSeeder extends Seeder
     'is_featured' => 0,
     'rating_count' => 0,
     'rating_avg' => '0.00',
-  ],
-  24 => [
+    'created_at' => NULL,
+    'updated_at' => NULL,
+  ),
+  24 => 
+  array (
     'id' => 31,
     'category_id' => 2,
     'name' => 'Sambal Bawang Cumi',
@@ -464,8 +535,11 @@ class ProductSeeder extends Seeder
     'is_featured' => 0,
     'rating_count' => 0,
     'rating_avg' => '0.00',
-  ],
-  25 => [
+    'created_at' => NULL,
+    'updated_at' => NULL,
+  ),
+  25 => 
+  array (
     'id' => 32,
     'category_id' => 2,
     'name' => 'Sambal Bawang Gurita',
@@ -482,8 +556,11 @@ class ProductSeeder extends Seeder
     'is_featured' => 0,
     'rating_count' => 0,
     'rating_avg' => '0.00',
-  ],
-  26 => [
+    'created_at' => NULL,
+    'updated_at' => NULL,
+  ),
+  26 => 
+  array (
     'id' => 33,
     'category_id' => 2,
     'name' => 'Sambal Bawang Udang',
@@ -500,8 +577,11 @@ class ProductSeeder extends Seeder
     'is_featured' => 0,
     'rating_count' => 0,
     'rating_avg' => '0.00',
-  ],
-  27 => [
+    'created_at' => NULL,
+    'updated_at' => NULL,
+  ),
+  27 => 
+  array (
     'id' => 34,
     'category_id' => 2,
     'name' => 'Sambal Cabe Kering',
@@ -518,8 +598,11 @@ class ProductSeeder extends Seeder
     'is_featured' => 0,
     'rating_count' => 0,
     'rating_avg' => '0.00',
-  ],
-  28 => [
+    'created_at' => NULL,
+    'updated_at' => NULL,
+  ),
+  28 => 
+  array (
     'id' => 35,
     'category_id' => 2,
     'name' => 'Sambal Cabe Hijau',
@@ -536,8 +619,11 @@ class ProductSeeder extends Seeder
     'is_featured' => 0,
     'rating_count' => 0,
     'rating_avg' => '0.00',
-  ],
-  29 => [
+    'created_at' => NULL,
+    'updated_at' => NULL,
+  ),
+  29 => 
+  array (
     'id' => 36,
     'category_id' => 2,
     'name' => 'Sambal Matah',
@@ -554,8 +640,11 @@ class ProductSeeder extends Seeder
     'is_featured' => 0,
     'rating_count' => 0,
     'rating_avg' => '0.00',
-  ],
-  30 => [
+    'created_at' => NULL,
+    'updated_at' => NULL,
+  ),
+  30 => 
+  array (
     'id' => 37,
     'category_id' => 2,
     'name' => 'Sambal Pecel',
@@ -572,8 +661,10 @@ class ProductSeeder extends Seeder
     'is_featured' => 0,
     'rating_count' => 0,
     'rating_avg' => '0.00',
-  ],
-];
+    'created_at' => NULL,
+    'updated_at' => NULL,
+  ),
+);
 
         foreach ($data as $item) {
             DB::table('products')->insert($item);

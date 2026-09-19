@@ -64,11 +64,16 @@ Make sure you have the following installed:
    ```
 
 7. **Run Database Migrations & Seeders**
-   Create the database schema and populate it with initial data (Admin user, categories, products, banners, settings):
+   Create the database schema and populate it with 100% identical data (Admin & demo customer, categories, 31 products, banners, certificates, our values, FAQs, flash sales, articles, and store settings):
    ```bash
    php artisan migrate --seed
    ```
-   *Note: The default administrator login will be created via `AdminSeeder`.*
+   *Default Credentials:*
+   - **Admin Panel** (`/admin/login`): `admin@raiafood.com` / `password`
+   - **Customer Account** (`/login`): `customer@raiafood.com` / `password`
+
+   *(Opsional) Jika ingin import database langsung via phpMyAdmin / MySQL CLI:*
+   File dump SQL lengkap tersedia di: `database/raiafood_dump.sql`.
 
 8. **Start the Development Servers**
 

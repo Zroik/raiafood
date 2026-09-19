@@ -18,8 +18,12 @@ class DatabaseSeeder extends Seeder
             SettingSeeder::class,
             BannerSeeder::class,
             CertificateSeeder::class,
-            DynamicContentSyncSeeder::class,
+            OurValueSeeder::class,
+            FaqSeeder::class,
+            FlashSaleSeeder::class,
             ArticleSeeder::class,
+            MediaSeeder::class,
+            ContactMessageSeeder::class,
         ]);
     }
 }
