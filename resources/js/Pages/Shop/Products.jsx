@@ -105,7 +105,7 @@ export default function Products({ products, categories, filters, flashSaleCount
         <ShopLayout>
             <Head title="Produk - RaiaFood" />
 
-            <div style={{ backgroundColor: '#FAE6FF' }} className="py-7">
+            <div style={{ backgroundColor: 'var(--color-soft)' }} className="py-7">
                 <div className="w-full max-w-[92vw] xl:max-w-[88vw] 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
                     <h1 className="text-2xl sm:text-3xl font-bold text-gray-900" style={{ fontFamily: 'Outfit, sans-serif' }}>Produk</h1>
                     <p className="text-gray-500 text-sm mt-0.5">Temukan Camilan Kesukaanmu</p>
@@ -221,7 +221,7 @@ export default function Products({ products, categories, filters, flashSaleCount
                                     <button
                                         type="submit"
                                         className="w-full py-1.5 rounded-lg text-xs font-semibold text-white transition-opacity hover:opacity-90 mt-1"
-                                        style={{ backgroundColor: '#843799' }}
+                                        style={{ backgroundColor: 'var(--color-primary)' }}
                                     >
                                         Terapkan
                                     </button>
@@ -280,8 +280,8 @@ export default function Products({ products, categories, filters, flashSaleCount
                                                     {product.image ? (
                                                         <img src={`/storage/${product.image}`} alt={product.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                                                     ) : (
-                                                        <div className="w-full h-full flex items-center justify-center" style={{ backgroundColor: '#FAE6FF' }}>
-                                                            <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #F4C6FF, #843799)' }}>
+                                                        <div className="w-full h-full flex items-center justify-center" style={{ backgroundColor: 'var(--color-soft)' }}>
+                                                            <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, var(--color-secondary), var(--color-primary))' }}>
                                                                 <span className="text-2xl">🍪</span>
                                                             </div>
                                                         </div>
@@ -306,9 +306,9 @@ export default function Products({ products, categories, filters, flashSaleCount
                                                             });
                                                         }}
                                                         className="w-8 h-8 rounded-lg flex-shrink-0 flex items-center justify-center transition-all duration-200 hover:scale-105"
-                                                        style={{ backgroundColor: '#FAE6FF', color: '#843799' }}
-                                                        onMouseEnter={e => { e.currentTarget.style.backgroundColor = '#843799'; e.currentTarget.style.color = 'white'; }}
-                                                        onMouseLeave={e => { e.currentTarget.style.backgroundColor = '#FAE6FF'; e.currentTarget.style.color = '#843799'; }}
+                                                        style={{ backgroundColor: 'var(--color-soft)', color: 'var(--color-primary)' }}
+                                                        onMouseEnter={e => { e.currentTarget.style.backgroundColor = 'var(--color-primary)'; e.currentTarget.style.color = 'white'; }}
+                                                        onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'var(--color-soft)'; e.currentTarget.style.color = 'var(--color-primary)'; }}
                                                     >
                                                         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />

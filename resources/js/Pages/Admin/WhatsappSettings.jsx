@@ -1,5 +1,6 @@
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Head, useForm } from '@inertiajs/react';
+import { BellOff, CheckCircle2, XCircle } from 'lucide-react';
 
 export default function WhatsappSettings({ settings }) {
     const { data, setData, post, processing, errors } = useForm({
@@ -24,31 +25,28 @@ export default function WhatsappSettings({ settings }) {
             <div className="max-w-2xl mx-auto space-y-6">
                 {/* Preview Card */}
                 <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-                    <h3 className="text-md font-bold text-gray-800 mb-4">Pratinjau Tombol</h3>
-                    <div className="bg-gray-50 rounded-xl p-8 flex items-center justify-center relative min-h-[120px]">
+                    <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">Pratinjau Tombol Toko</h3>
+                    <div className="bg-gray-50 rounded-xl p-8 flex items-center justify-center border border-dashed border-gray-200 min-h-[160px]">
                         {data.whatsapp_button_enabled === '1' ? (
                             <div className="flex items-center gap-4">
-                                <div className="relative">
-                                    <a
-                                        href={previewUrl}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="w-14 h-14 bg-[#25D366] hover:bg-[#20BD5A] text-white rounded-full flex items-center justify-center shadow-lg shadow-emerald-200 transition-all hover:scale-110"
-                                    >
-                                        <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
-                                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                                        </svg>
-                                    </a>
-                                    <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-emerald-400 border-2 border-white rounded-full animate-pulse"></span>
-                                </div>
-                                <div className="text-sm">
+                                <a
+                                    href={previewUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="w-14 h-14 bg-[#25D366] hover:bg-[#20BD5A] text-white rounded-full flex items-center justify-center shadow-lg shadow-emerald-200 transition-all hover:scale-110"
+                                >
+                                    <svg className="w-7 h-7 fill-current" viewBox="0 0 24 24">
+                                        <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.699c.971.53 1.769.814 2.796.814 3.181 0 5.767-2.586 5.768-5.766 0-3.18-2.587-5.766-5.768-5.766zm3.376 8.21c-.14.394-.716.745-1.002.775-.27.028-.62.046-1.785-.436-1.488-.616-2.457-2.128-2.531-2.227-.075-.099-.607-.808-.607-1.542s.385-1.096.522-1.246c.137-.15.299-.187.399-.187.1 0 .2.001.287.006.091.005.213-.035.333.253.123.296.422 1.028.459 1.103.037.075.062.163.012.262-.05.1-.075.163-.15.25-.075.088-.158.196-.226.263-.075.074-.153.155-.066.305.087.15.387.639.83 1.033.57.507 1.05.664 1.199.739.15.075.237.062.325-.038.087-.1.374-.436.474-.586.1-.15.2-.125.337-.075.137.05.872.411 1.022.486.15.075.249.112.287.175.037.062.037.362-.103.756z" />
+                                    </svg>
+                                </a>
+                                <div>
                                     <p className="font-semibold text-gray-800">Tombol Aktif</p>
                                     <p className="text-gray-500 text-xs mt-0.5">Akan tampil di kanan bawah halaman toko</p>
                                 </div>
                             </div>
                         ) : (
                             <div className="text-center text-gray-400">
-                                <span className="text-3xl block mb-2">🔇</span>
+                                <BellOff className="w-8 h-8 mx-auto mb-2 text-gray-300" />
                                 <p className="text-sm font-medium">Tombol WhatsApp Nonaktif</p>
                                 <p className="text-xs mt-0.5">Pelanggan tidak akan melihat tombol ini</p>
                             </div>
@@ -77,7 +75,7 @@ export default function WhatsappSettings({ settings }) {
                                         onChange={e => setData('whatsapp_button_enabled', e.target.value)}
                                         className="sr-only"
                                     />
-                                    <span className="text-2xl block mb-1">✅</span>
+                                    <CheckCircle2 className="w-6 h-6 mx-auto mb-1 text-emerald-600" />
                                     <span className="text-sm font-semibold">Aktif</span>
                                 </label>
                                 <label className={`flex-1 cursor-pointer rounded-xl border-2 p-4 text-center transition-all ${data.whatsapp_button_enabled === '0' ? 'border-red-300 bg-red-50 text-red-700' : 'border-gray-200 bg-white text-gray-500 hover:border-gray-300'}`}>
@@ -89,7 +87,7 @@ export default function WhatsappSettings({ settings }) {
                                         onChange={e => setData('whatsapp_button_enabled', e.target.value)}
                                         className="sr-only"
                                     />
-                                    <span className="text-2xl block mb-1">❌</span>
+                                    <XCircle className="w-6 h-6 mx-auto mb-1 text-red-500" />
                                     <span className="text-sm font-semibold">Nonaktif</span>
                                 </label>
                             </div>

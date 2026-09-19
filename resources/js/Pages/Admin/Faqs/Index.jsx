@@ -1,6 +1,7 @@
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Head, useForm, router } from '@inertiajs/react';
 import { useState } from 'react';
+import { Plus, X } from 'lucide-react';
 
 export default function FaqIndex({ faqs = [] }) {
     const [modalOpen, setModalOpen] = useState(false);
@@ -69,7 +70,7 @@ export default function FaqIndex({ faqs = [] }) {
                         onClick={openCreateModal}
                         className="px-4 py-2.5 rounded-xl bg-[#843799] text-white font-bold text-xs shadow-md hover:bg-[#60396A] transition-all flex items-center gap-2 self-start sm:self-auto"
                     >
-                        <span>➕</span>
+                        <Plus className="w-4 h-4" />
                         <span>Tambah Pertanyaan FAQ</span>
                     </button>
                 </div>
@@ -143,7 +144,9 @@ export default function FaqIndex({ faqs = [] }) {
                             <h3 className="font-bold text-base text-gray-900">
                                 {editingFaq ? 'Edit Pertanyaan FAQ' : 'Tambah Pertanyaan FAQ'}
                             </h3>
-                            <button onClick={() => setModalOpen(false)} className="text-gray-400 hover:text-gray-600">✕</button>
+                            <button onClick={() => setModalOpen(false)} className="text-gray-400 hover:text-gray-600">
+                                <X className="w-5 h-5" />
+                            </button>
                         </div>
 
                         <form onSubmit={handleSubmit} className="space-y-4">

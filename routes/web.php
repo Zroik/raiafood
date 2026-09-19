@@ -139,6 +139,9 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])
         Route::prefix('settings')->name('settings.')->group(function () {
             Route::get('/general', [\App\Http\Controllers\Admin\SettingController::class, 'general'])->name('general');
             Route::post('/general', [\App\Http\Controllers\Admin\SettingController::class, 'updateGeneral'])->name('general.update');
+            Route::post('/custom-themes', [\App\Http\Controllers\Admin\SettingController::class, 'storeCustomTheme'])->name('custom-themes.store');
+            Route::put('/custom-themes/{id}', [\App\Http\Controllers\Admin\SettingController::class, 'updateCustomTheme'])->name('custom-themes.update');
+            Route::delete('/custom-themes/{id}', [\App\Http\Controllers\Admin\SettingController::class, 'destroyCustomTheme'])->name('custom-themes.destroy');
 
             Route::get('/pages', [\App\Http\Controllers\Admin\SettingController::class, 'pages'])->name('pages');
             Route::post('/pages', [\App\Http\Controllers\Admin\SettingController::class, 'updatePages'])->name('pages.update');
@@ -148,6 +151,12 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])
 
             Route::get('/social', [\App\Http\Controllers\Admin\SettingController::class, 'social'])->name('social');
             Route::post('/social', [\App\Http\Controllers\Admin\SettingController::class, 'updateSocial'])->name('social.update');
+
+            Route::get('/navigation', [\App\Http\Controllers\Admin\SettingController::class, 'navigation'])->name('navigation');
+            Route::post('/navigation', [\App\Http\Controllers\Admin\SettingController::class, 'updateNavigation'])->name('navigation.update');
+
+            Route::get('/store', [\App\Http\Controllers\Admin\SettingController::class, 'storeSettings'])->name('store');
+            Route::post('/store', [\App\Http\Controllers\Admin\SettingController::class, 'updateStoreSettings'])->name('store.update');
         });
 
         // WhatsApp Settings

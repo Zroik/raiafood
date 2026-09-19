@@ -1,6 +1,7 @@
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Head, Link, useForm, router, usePage } from '@inertiajs/react';
 import { useState } from 'react';
+import { Plus, Pencil, Trash2, CheckCircle2, AlertTriangle, X } from 'lucide-react';
 
 export default function Index({ categories }) {
     const { flash } = usePage().props;
@@ -38,43 +39,37 @@ export default function Index({ categories }) {
         e.preventDefault();
         if (editMode && selectedCategory) {
             put(route('admin.categories.update', selectedCategory.id), {
-                onSuccess: () => {
-                    setModalOpen(false);
-                    reset();
-                }
+                onSuccess: () => setModalOpen(false)
             });
         } else {
             post(route('admin.categories.store'), {
-                onSuccess: () => {
-                    setModalOpen(false);
-                    reset();
-                }
+                onSuccess: () => setModalOpen(false)
             });
         }
     };
 
-    const handleDelete = (categoryId, categoryName) => {
-        if (confirm(`Apakah Anda yakin ingin menghapus kategori "${categoryName}"?`)) {
-            router.delete(route('admin.categories.destroy', categoryId), {
-                preserveScroll: true,
-            });
+    const handleDelete = (id, name) => {
+        if (confirm(`Apakah Anda yakin ingin menghapus kategori "${name}"? Produk yang terkait akan menjadi tidak berkategori.`)) {
+            router.delete(route('admin.categories.destroy', id));
         }
     };
 
     return (
-        <AdminLayout header={<h2 className="text-xl font-semibold leading-tight text-gray-800">Daftar Kategori Cookies</h2>}>
+        <AdminLayout header={<h2 className="text-xl font-semibold leading-tight text-gray-800">Kelola Kategori Cookies</h2>}>
             <Head title="Kelola Kategori" />
 
             <div className="space-y-6">
                 {/* Flash Messages */}
                 {flash?.success && (
                     <div className="bg-emerald-50 border border-emerald-200 text-emerald-700 px-5 py-3 rounded-xl text-sm font-medium flex items-center gap-2">
-                        <span>✅</span> {flash.success}
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                        <span>{flash.success}</span>
                     </div>
                 )}
                 {flash?.error && (
                     <div className="bg-red-50 border border-red-200 text-red-700 px-5 py-3 rounded-xl text-sm font-medium flex items-center gap-2">
-                        <span>⚠️</span> {flash.error}
+                        <AlertTriangle className="w-4 h-4 text-red-600 flex-shrink-0" />
+                        <span>{flash.error}</span>
                     </div>
                 )}
 
@@ -85,7 +80,8 @@ export default function Index({ categories }) {
                         onClick={openCreateModal}
                         className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-violet-600 hover:bg-violet-700 text-white rounded-xl text-sm font-semibold transition-all shadow-md shadow-violet-100"
                     >
-                        ➕ Tambah Kategori
+                        <Plus className="w-4 h-4" />
+                        <span>Tambah Kategori</span>
                     </button>
                 </div>
 
@@ -130,7 +126,7 @@ export default function Index({ categories }) {
                                                     className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-gray-50 text-gray-600 hover:bg-violet-50 hover:text-violet-600 transition-colors"
                                                     title="Edit"
                                                 >
-                                                    ✏️
+                                                    <Pencil className="w-3.5 h-3.5" />
                                                 </button>
                                                 <button
                                                     type="button"
@@ -138,7 +134,7 @@ export default function Index({ categories }) {
                                                     className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-gray-50 text-red-600 hover:bg-red-50 transition-colors"
                                                     title="Hapus"
                                                 >
-                                                    🗑️
+                                                    <Trash2 className="w-3.5 h-3.5" />
                                                 </button>
                                             </td>
                                         </tr>
@@ -173,8 +169,8 @@ export default function Index({ categories }) {
                             <h3 className="text-md font-bold text-gray-800">
                                 {editMode ? 'Edit Kategori' : 'Tambah Kategori'}
                             </h3>
-                            <button onClick={() => setModalOpen(false)} className="text-gray-400 hover:text-gray-600 text-lg">
-                                ✕
+                            <button onClick={() => setModalOpen(false)} className="text-gray-400 hover:text-gray-600">
+                                <X className="w-5 h-5" />
                             </button>
                         </div>
 

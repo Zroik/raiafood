@@ -37,8 +37,8 @@ export default function ProductDetail({ product, relatedProducts, inWishlist }) 
                         {product.image ? (
                             <img src={`/storage/${product.image}`} alt={product.name} className="w-full h-full object-cover" />
                         ) : (
-                            <div className="w-full h-full flex items-center justify-center" style={{ backgroundColor: '#FAE6FF' }}>
-                                <div className="w-64 h-64 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #F4C6FF, #843799)' }}>
+                            <div className="w-full h-full flex items-center justify-center" style={{ backgroundColor: 'var(--color-soft)' }}>
+                                <div className="w-64 h-64 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, var(--color-secondary), var(--color-primary))' }}>
                                     <span className="text-8xl">🍪</span>
                                 </div>
                             </div>
@@ -48,7 +48,7 @@ export default function ProductDetail({ product, relatedProducts, inWishlist }) 
                     {/* Details */}
                     <div className="space-y-6">
                         <div>
-                            <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#843799' }}>{product.category?.name}</span>
+                            <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--color-primary)' }}>{product.category?.name}</span>
                             <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 mt-2" style={{ fontFamily: 'Outfit, sans-serif' }}>
                                 {product.name}
                             </h1>
@@ -70,7 +70,7 @@ export default function ProductDetail({ product, relatedProducts, inWishlist }) 
 
                         {/* Price */}
                         <div className="flex items-baseline gap-3">
-                            <span className="text-3xl font-bold" style={{ color: '#843799' }}>
+                            <span className="text-3xl font-bold" style={{ color: 'var(--color-primary)' }}>
                                 Rp {Number(effectivePrice).toLocaleString('id-ID')}
                             </span>
                             {hasDiscount && (
@@ -110,9 +110,9 @@ export default function ProductDetail({ product, relatedProducts, inWishlist }) 
                                 </div>
                                 <button
                                     onClick={addToCart}
-                                    style={{ backgroundColor: '#843799', color: 'white' }}
-                                    onMouseEnter={e => { e.currentTarget.style.backgroundColor = '#60396A'; }}
-                                    onMouseLeave={e => { e.currentTarget.style.backgroundColor = '#843799'; }}
+                                    style={{ backgroundColor: 'var(--color-primary)', color: 'white' }}
+                                    onMouseEnter={e => { e.currentTarget.style.backgroundColor = 'var(--color-dark)'; }}
+                                    onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'var(--color-primary)'; }}
                                     className="flex-1 py-3.5 rounded-xl font-semibold transition-all duration-200 hover:shadow-lg flex items-center justify-center gap-2"
                                 >
                                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -123,7 +123,7 @@ export default function ProductDetail({ product, relatedProducts, inWishlist }) 
                                 <button
                                     onClick={toggleWishlist}
                                     className="w-12 h-12 rounded-xl border border-gray-200 flex items-center justify-center transition-colors text-gray-400 hover:text-red-500 hover:border-red-200"
-                                    style={isFav ? { color: '#843799', borderColor: '#FAE6FF', backgroundColor: '#FAE6FF' } : {}}
+                                    style={isFav ? { color: 'var(--color-primary)', borderColor: 'var(--color-soft)', backgroundColor: 'var(--color-soft)' } : {}}
                                     title={isFav ? "Hapus dari Favorit" : "Tambah ke Favorit"}
                                 >
                                     <svg className="w-5 h-5" fill={isFav ? "currentColor" : "none"} stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
@@ -150,7 +150,7 @@ export default function ProductDetail({ product, relatedProducts, inWishlist }) 
                                             {p.image ? (
                                                 <img src={`/storage/${p.image}`} alt={p.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                                             ) : (
-                                                <div className="w-full h-full flex items-center justify-center" style={{ backgroundColor: '#FAE6FF' }}><div className="w-20 h-20 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #F4C6FF, #843799)' }}><span className="text-3xl">🍪</span></div></div>
+                                                <div className="w-full h-full flex items-center justify-center" style={{ backgroundColor: 'var(--color-soft)' }}><div className="w-20 h-20 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, var(--color-secondary), var(--color-primary))' }}><span className="text-3xl">🍪</span></div></div>
                                             )}
                                         </div>
                                         <h3 className="font-semibold text-gray-900 text-sm mb-1 group-hover:text-[#843799] transition-colors">{p.name}</h3>

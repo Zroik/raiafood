@@ -1,6 +1,7 @@
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Head, Link, useForm, router, usePage } from '@inertiajs/react';
 import { useState, useRef, useEffect } from 'react';
+import { CheckCircle2, AlertTriangle, Image as ImageIcon, Zap, Plus, X, Crosshair, Lightbulb } from 'lucide-react';
 
 export default function Index({ banners, currentType = 'all' }) {
     const { flash } = usePage().props;
@@ -26,6 +27,10 @@ export default function Index({ banners, currentType = 'all' }) {
         countdown_pos_x: 50.0,
         countdown_pos_y: 50.0,
         countdown_scale: 1.0,
+        countdown_box_color: '#030712',
+        countdown_font_color: '#ffffff',
+        countdown_font_family: 'Outfit',
+        countdown_digit_bg: '',
         sort_order: 0,
         is_active: true,
     });
@@ -50,6 +55,10 @@ export default function Index({ banners, currentType = 'all' }) {
             countdown_pos_x: 50.0,
             countdown_pos_y: 50.0,
             countdown_scale: 1.0,
+            countdown_box_color: '#030712',
+            countdown_font_color: '#ffffff',
+            countdown_font_family: 'Outfit',
+            countdown_digit_bg: '',
             sort_order: 0,
             is_active: true,
         });
@@ -79,6 +88,10 @@ export default function Index({ banners, currentType = 'all' }) {
             countdown_pos_x: banner.countdown_pos_x !== null ? Number(banner.countdown_pos_x) : 50.0,
             countdown_pos_y: banner.countdown_pos_y !== null ? Number(banner.countdown_pos_y) : 50.0,
             countdown_scale: banner.countdown_scale !== null ? Number(banner.countdown_scale) : 1.0,
+            countdown_box_color: banner.countdown_box_color || '#030712',
+            countdown_font_color: banner.countdown_font_color || '#ffffff',
+            countdown_font_family: banner.countdown_font_family || 'Outfit',
+            countdown_digit_bg: banner.countdown_digit_bg || '',
             sort_order: banner.sort_order ?? 0,
             is_active: banner.is_active ?? true,
         });
@@ -184,12 +197,14 @@ export default function Index({ banners, currentType = 'all' }) {
             <div className="space-y-6">
                 {flash?.success && (
                     <div className="bg-emerald-50 border border-emerald-200 text-emerald-700 px-5 py-3 rounded-xl text-sm font-medium flex items-center gap-2">
-                        <span>✅</span> {flash.success}
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                        <span>{flash.success}</span>
                     </div>
                 )}
                 {flash?.error && (
                     <div className="bg-red-50 border border-red-200 text-red-700 px-5 py-3 rounded-xl text-sm font-medium flex items-center gap-2">
-                        <span>⚠️</span> {flash.error}
+                        <AlertTriangle className="w-4 h-4 text-red-600 flex-shrink-0" />
+                        <span>{flash.error}</span>
                     </div>
                 )}
 
@@ -208,22 +223,25 @@ export default function Index({ banners, currentType = 'all' }) {
                             </button>
                             <button
                                 onClick={() => handleFilterChange('hero')}
-                                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${filterType === 'hero' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-900'}`}
+                                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all inline-flex items-center gap-1.5 ${filterType === 'hero' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-900'}`}
                             >
-                                🖼️ Slider Hero
+                                <ImageIcon className="w-3.5 h-3.5" />
+                                <span>Slider Hero</span>
                             </button>
                             <button
                                 onClick={() => handleFilterChange('flash_sale')}
-                                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${filterType === 'flash_sale' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-900'}`}
+                                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all inline-flex items-center gap-1.5 ${filterType === 'flash_sale' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-900'}`}
                             >
-                                ⚡ Flash Sale
+                                <Zap className="w-3.5 h-3.5" />
+                                <span>Flash Sale</span>
                             </button>
                         </div>
                         <button
                             onClick={() => openCreateModal('hero')}
-                            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#843799] hover:bg-[#60396A] text-white rounded-xl text-xs font-semibold transition-all shadow-md"
+                            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-violet-600 hover:bg-violet-700 text-white rounded-xl text-xs font-semibold transition-all shadow-md shadow-violet-100"
                         >
-                            ➕ Tambah Banner
+                            <Plus className="w-4 h-4" />
+                            <span>Tambah Banner</span>
                         </button>
                     </div>
                 </div>
@@ -252,8 +270,9 @@ export default function Index({ banners, currentType = 'all' }) {
                                         <tr key={banner.id} className="hover:bg-gray-50/50 transition-colors">
                                             <td className="py-4 px-6 font-semibold text-gray-700">{banner.sort_order}</td>
                                             <td className="py-4 px-6">
-                                                <span className={`inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-semibold ${banner.type === 'flash_sale' ? 'bg-amber-100 text-amber-800' : 'bg-purple-100 text-purple-800'}`}>
-                                                    {banner.type === 'flash_sale' ? '⚡ Flash Sale' : '🖼️ Slider Hero'}
+                                                <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold ${banner.type === 'flash_sale' ? 'bg-amber-100 text-amber-800' : 'bg-purple-100 text-purple-800'}`}>
+                                                    {banner.type === 'flash_sale' ? <Zap className="w-3.5 h-3.5" /> : <ImageIcon className="w-3.5 h-3.5" />}
+                                                    <span>{banner.type === 'flash_sale' ? 'Flash Sale' : 'Slider Hero'}</span>
                                                 </span>
                                             </td>
                                             <td className="py-4 px-6">
@@ -310,8 +329,8 @@ export default function Index({ banners, currentType = 'all' }) {
                             <h3 className="text-lg font-bold text-gray-900">
                                 {editMode ? 'Edit Banner' : 'Tambah Banner Baru'}
                             </h3>
-                            <button onClick={() => setModalOpen(false)} className="text-gray-400 hover:text-gray-600 text-lg">
-                                ✕
+                            <button onClick={() => setModalOpen(false)} className="text-gray-400 hover:text-gray-600">
+                                <X className="w-5 h-5" />
                             </button>
                         </div>
                         <form onSubmit={handleSubmit} className="p-6 space-y-5 max-h-[80vh] overflow-y-auto">
@@ -323,8 +342,8 @@ export default function Index({ banners, currentType = 'all' }) {
                                         onChange={e => setData('type', e.target.value)}
                                         className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:border-violet-400 focus:ring-2 focus:ring-violet-100 outline-none transition-all"
                                     >
-                                        <option value="hero">🖼️ Slider Beranda (Hero)</option>
-                                        <option value="flash_sale">⚡ Banner Flash Sale (Rasio 4:1)</option>
+                                        <option value="hero">Slider Beranda (Hero)</option>
+                                        <option value="flash_sale">Banner Flash Sale (Rasio 4:1)</option>
                                     </select>
                                     {errors.type && <p className="text-xs text-red-500 mt-1">{errors.type}</p>}
                                 </div>
@@ -414,9 +433,146 @@ export default function Index({ banners, currentType = 'all' }) {
                                                     />
                                                 </div>
                                             </div>
+                                            {/* Styling Controls for Timer (Box Color, Font Color, Font Family, Digit Background) */}
+                                            <div className="bg-white/80 rounded-2xl p-4 border border-amber-200/80 space-y-3.5 shadow-2xs">
+                                                <div className="flex items-center justify-between border-b border-amber-100 pb-2">
+                                                    <span className="text-xs font-bold text-gray-800 flex items-center gap-1.5">
+                                                        <span className="w-2.5 h-2.5 rounded-full bg-violet-600"></span>
+                                                        Kustomisasi Desain &amp; Tipografi Timer
+                                                    </span>
+                                                    <span className="text-[11px] text-gray-500">Live preview langsung terlihat di bawah</span>
+                                                </div>
+
+                                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                                                    {/* 1. Warna Latar Box Luar (Warna Hitamnya) */}
+                                                    <div>
+                                                        <label className="block text-[11px] font-bold text-gray-700 mb-1">
+                                                            Warna Latar Box (Luar)
+                                                        </label>
+                                                        <div className="flex items-center gap-2">
+                                                            <input
+                                                                type="color"
+                                                                value={data.countdown_box_color?.startsWith('#') ? data.countdown_box_color : '#030712'}
+                                                                onChange={e => setData('countdown_box_color', e.target.value)}
+                                                                className="w-9 h-9 rounded-lg cursor-pointer border border-gray-200 p-0.5 bg-white shadow-2xs"
+                                                            />
+                                                            <input
+                                                                type="text"
+                                                                value={data.countdown_box_color || ''}
+                                                                onChange={e => setData('countdown_box_color', e.target.value)}
+                                                                placeholder="#030712"
+                                                                className="flex-1 px-2.5 py-1.5 text-xs font-mono rounded-lg border border-gray-200 focus:border-violet-400 focus:ring-1 focus:ring-violet-200 uppercase outline-none"
+                                                            />
+                                                        </div>
+                                                        <div className="flex items-center gap-1 mt-1.5">
+                                                            {['#030712', '#0f172a', '#1e293b', '#2e0836', '#451a03'].map(c => (
+                                                                <button
+                                                                    key={c}
+                                                                    type="button"
+                                                                    onClick={() => setData('countdown_box_color', c)}
+                                                                    style={{ backgroundColor: c }}
+                                                                    title={c}
+                                                                    className="w-4 h-4 rounded-full border border-white shadow-2xs hover:scale-115 transition-transform"
+                                                                />
+                                                            ))}
+                                                        </div>
+                                                    </div>
+
+                                                    {/* 2. Warna Teks Font & Angka */}
+                                                    <div>
+                                                        <label className="block text-[11px] font-bold text-gray-700 mb-1">
+                                                            Warna Font &amp; Angka
+                                                        </label>
+                                                        <div className="flex items-center gap-2">
+                                                            <input
+                                                                type="color"
+                                                                value={data.countdown_font_color?.startsWith('#') ? data.countdown_font_color : '#ffffff'}
+                                                                onChange={e => setData('countdown_font_color', e.target.value)}
+                                                                className="w-9 h-9 rounded-lg cursor-pointer border border-gray-200 p-0.5 bg-white shadow-2xs"
+                                                            />
+                                                            <input
+                                                                type="text"
+                                                                value={data.countdown_font_color || ''}
+                                                                onChange={e => setData('countdown_font_color', e.target.value)}
+                                                                placeholder="#FFFFFF"
+                                                                className="flex-1 px-2.5 py-1.5 text-xs font-mono rounded-lg border border-gray-200 focus:border-violet-400 focus:ring-1 focus:ring-violet-200 uppercase outline-none"
+                                                            />
+                                                        </div>
+                                                        <div className="flex items-center gap-1 mt-1.5">
+                                                            {['#ffffff', '#fef08a', '#fde047', '#bef264', '#7dd3fc'].map(c => (
+                                                                <button
+                                                                    key={c}
+                                                                    type="button"
+                                                                    onClick={() => setData('countdown_font_color', c)}
+                                                                    style={{ backgroundColor: c }}
+                                                                    title={c}
+                                                                    className="w-4 h-4 rounded-full border border-gray-300 shadow-2xs hover:scale-115 transition-transform"
+                                                                />
+                                                            ))}
+                                                        </div>
+                                                    </div>
+
+                                                    {/* 3. Pilihan Font */}
+                                                    <div>
+                                                        <label className="block text-[11px] font-bold text-gray-700 mb-1">
+                                                            Pilihan Font Timer
+                                                        </label>
+                                                        <select
+                                                            value={data.countdown_font_family || 'Outfit'}
+                                                            onChange={e => setData('countdown_font_family', e.target.value)}
+                                                            className="w-full px-2.5 py-2 text-xs rounded-lg border border-gray-200 focus:border-violet-400 focus:ring-1 focus:ring-violet-200 outline-none bg-white font-medium"
+                                                        >
+                                                            <option value="Outfit" style={{ fontFamily: 'Outfit, sans-serif' }}>Outfit (Modern Sans - Default)</option>
+                                                            <option value="Inter" style={{ fontFamily: 'Inter, sans-serif' }}>Inter (Clean &amp; Sleek)</option>
+                                                            <option value="Plus Jakarta Sans" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>Plus Jakarta Sans (Geometric)</option>
+                                                            <option value="Montserrat" style={{ fontFamily: 'Montserrat, sans-serif' }}>Montserrat (Punchy Display)</option>
+                                                            <option value="Poppins" style={{ fontFamily: 'Poppins, sans-serif' }}>Poppins (Rounded Friendly)</option>
+                                                            <option value="Roboto Mono" style={{ fontFamily: 'Roboto Mono, monospace' }}>Roboto Mono (Digital Tech)</option>
+                                                            <option value="Oswald" style={{ fontFamily: 'Oswald, sans-serif' }}>Oswald (Impact Bold)</option>
+                                                            <option value="Courier New" style={{ fontFamily: 'Courier New, monospace' }}>Courier New (Retro Clock)</option>
+                                                        </select>
+                                                        <span className="text-[10px] text-gray-400 mt-1 block">Teraplikasi pada angka dan label waktu.</span>
+                                                    </div>
+                                                </div>
+
+                                                {/* 4. Warna Box Angka (Warna Palet Toko atau Custom) */}
+                                                <div className="pt-1 flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-t border-amber-100/60">
+                                                    <div className="flex items-center gap-2">
+                                                        <label className="text-[11px] font-bold text-gray-700">Warna Box Angka:</label>
+                                                        <div className="flex items-center gap-1.5">
+                                                            <input
+                                                                type="color"
+                                                                value={data.countdown_digit_bg?.startsWith('#') ? data.countdown_digit_bg : '#843799'}
+                                                                onChange={e => setData('countdown_digit_bg', e.target.value)}
+                                                                className="w-6 h-6 rounded cursor-pointer border border-gray-200 p-0 bg-white"
+                                                            />
+                                                            <input
+                                                                type="text"
+                                                                value={data.countdown_digit_bg || ''}
+                                                                onChange={e => setData('countdown_digit_bg', e.target.value)}
+                                                                placeholder="Otomatis (Palet Toko)"
+                                                                className="w-40 px-2 py-1 text-[11px] font-mono rounded border border-gray-200 focus:border-violet-400 outline-none uppercase"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    {data.countdown_digit_bg && (
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => setData('countdown_digit_bg', '')}
+                                                            className="text-[10px] font-semibold text-violet-600 hover:text-violet-800 underline self-start sm:self-auto cursor-pointer"
+                                                        >
+                                                            Reset ke Warna Palet Toko
+                                                        </button>
+                                                    )}
+                                                </div>
+                                            </div>
+
                                             <div>
                                                 <div className="flex items-center justify-between mb-2">
-                                                    <label className="text-xs font-bold text-gray-700">🎯 Drag &amp; Drop Posisi Timer di Banner:</label>
+                                                    <label className="text-xs font-bold text-gray-700 flex items-center gap-1.5">
+                                                        <Crosshair className="w-3.5 h-3.5 text-violet-600" />
+                                                        <span>Drag &amp; Drop Posisi Timer di Banner:</span>
+                                                    </label>
                                                     <span className="text-[11px] text-gray-500 font-mono">Posisi: X={data.countdown_pos_x}% | Y={data.countdown_pos_y}%</span>
                                                 </div>
                                                 <div
@@ -437,21 +593,51 @@ export default function Index({ banners, currentType = 'all' }) {
                                                             top: `${data.countdown_pos_y}%`,
                                                             transform: `translate(-50%, -50%) scale(${data.countdown_scale})`,
                                                             transformOrigin: 'center center',
+                                                            backgroundColor: data.countdown_box_color || '#030712',
+                                                            fontFamily: data.countdown_font_family ? `${data.countdown_font_family}, sans-serif` : 'Outfit, sans-serif',
                                                         }}
-                                                        className="absolute flex items-center gap-[0.4cqi] p-[0.6cqi] rounded-[1cqi] bg-gray-950/85 backdrop-blur-md border border-white/20 shadow-2xl transition-shadow cursor-grab active:cursor-grabbing hover:border-amber-400"
+                                                        className="absolute flex items-center gap-[0.4cqi] p-[0.6cqi] rounded-[1cqi] backdrop-blur-md border border-white/20 shadow-2xl transition-shadow cursor-grab active:cursor-grabbing hover:border-amber-400"
                                                     >
-                                                        {[ { val: '02', label: 'Hari' }, { val: '14', label: 'Jam' }, { val: '45', label: 'Mnt' }, { val: '30', label: 'Dtk' } ].map((item, idx) => (
-                                                            <div key={idx} className="flex items-center gap-[0.3cqi]">
-                                                                <div className="flex flex-col items-center justify-center bg-[#843799] text-white px-[0.7cqi] py-[0.3cqi] rounded-[0.6cqi] min-w-[3.2cqi] shadow-sm">
-                                                                    <span className="font-extrabold text-[1.4cqi] leading-tight font-mono tracking-tight">{item.val}</span>
-                                                                    <span className="text-[0.65cqi] uppercase font-semibold tracking-tighter opacity-80">{item.label}</span>
+                                                        {[ { val: '02', label: 'Hari' }, { val: '14', label: 'Jam' }, { val: '45', label: 'Mnt' }, { val: '30', label: 'Dtk' } ].map((item, idx) => {
+                                                            const fontStyle = data.countdown_font_family ? `${data.countdown_font_family}, sans-serif` : 'Outfit, sans-serif';
+                                                            const fontColor = data.countdown_font_color || '#ffffff';
+                                                            const digitBg = data.countdown_digit_bg || 'var(--color-primary, #843799)';
+                                                            return (
+                                                                <div key={idx} className="flex items-center gap-[0.3cqi]">
+                                                                    <div
+                                                                        style={{ backgroundColor: digitBg }}
+                                                                        className="flex flex-col items-center justify-center px-[0.7cqi] py-[0.3cqi] rounded-[0.6cqi] min-w-[3.2cqi] shadow-sm"
+                                                                    >
+                                                                        <span
+                                                                            style={{ color: fontColor, fontFamily: fontStyle }}
+                                                                            className="font-extrabold text-[1.4cqi] leading-tight tracking-tight"
+                                                                        >
+                                                                            {item.val}
+                                                                        </span>
+                                                                        <span
+                                                                            style={{ color: fontColor, fontFamily: fontStyle }}
+                                                                            className="text-[0.65cqi] uppercase font-semibold tracking-tighter opacity-80"
+                                                                        >
+                                                                            {item.label}
+                                                                        </span>
+                                                                    </div>
+                                                                    {idx < 3 && (
+                                                                        <span
+                                                                            style={{ color: fontColor, fontFamily: fontStyle }}
+                                                                            className="font-bold text-[1.2cqi]"
+                                                                        >
+                                                                            :
+                                                                        </span>
+                                                                    )}
                                                                 </div>
-                                                                {idx < 3 && <span className="text-white font-bold text-[1.2cqi]">:</span>}
-                                                            </div>
-                                                        ))}
+                                                            );
+                                                        })}
                                                     </div>
                                                 </div>
-                                                <p className="text-[11px] text-gray-500 mt-1 italic">💡 Klik atau geser badge countdown di atas untuk memindahkan posisinya sesuai desain banner Anda.</p>
+                                                <p className="text-[11px] text-gray-500 mt-1 italic flex items-center gap-1">
+                                                    <Lightbulb className="w-3.5 h-3.5 text-amber-500 flex-shrink-0" />
+                                                    <span>Klik atau geser badge countdown di atas untuk memindahkan posisinya sesuai desain banner Anda.</span>
+                                                </p>
                                             </div>
                                         </div>
                                     )}

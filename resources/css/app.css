@@ -2,6 +2,336 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ===== Dynamic Store Palette Theme ===== */
+:root {
+    --color-primary: #843799;
+    --color-secondary: #F4C6FF;
+    --color-soft: #FAE6FF;
+    --color-dark: #60396A;
+}
+
+/* Primary Color Utility Overrides */
+.bg-\[\#843799\],
+[class*="bg-[#843799]"] {
+    background-color: var(--color-primary) !important;
+}
+.text-\[\#843799\],
+[class*="text-[#843799]"] {
+    color: var(--color-primary) !important;
+}
+.border-\[\#843799\],
+[class*="border-[#843799]"] {
+    border-color: var(--color-primary) !important;
+}
+.fill-\[\#843799\] {
+    fill: var(--color-primary) !important;
+}
+.stroke-\[\#843799\] {
+    stroke: var(--color-primary) !important;
+}
+.ring-\[\#843799\] {
+    --tw-ring-color: var(--color-primary) !important;
+}
+.hover\:bg-\[\#843799\]:hover,
+[class*="hover:bg-[#843799]"]:hover {
+    background-color: var(--color-primary) !important;
+}
+.hover\:text-\[\#843799\]:hover,
+[class*="hover:text-[#843799]"]:hover {
+    color: var(--color-primary) !important;
+}
+.group:hover .group-hover\:text-\[\#843799\],
+.group-hover\:text-\[\#843799\] {
+    color: var(--color-primary) !important;
+}
+.focus\:border-\[\#843799\]:focus,
+.focus-within\:border-\[\#843799\]:focus-within {
+    border-color: var(--color-primary) !important;
+}
+.focus-within\:ring-\[\#843799\]:focus-within {
+    --tw-ring-color: var(--color-primary) !important;
+}
+
+/* Dark Accent Utility Overrides */
+.bg-\[\#60396A\],
+[class*="bg-[#60396A]"] {
+    background-color: var(--color-dark) !important;
+}
+.text-\[\#60396A\],
+[class*="text-[#60396A]"] {
+    color: var(--color-dark) !important;
+}
+.border-\[\#60396A\],
+[class*="border-[#60396A]"] {
+    border-color: var(--color-dark) !important;
+}
+.hover\:bg-\[\#60396A\]:hover,
+[class*="hover:bg-[#60396A]"]:hover {
+    background-color: var(--color-dark) !important;
+}
+.hover\:text-\[\#60396A\]:hover,
+[class*="hover:text-[#60396A]"]:hover {
+    color: var(--color-dark) !important;
+}
+
+/* Secondary Color Utility Overrides */
+.bg-\[\#F4C6FF\],
+[class*="bg-[#F4C6FF]"] {
+    background-color: var(--color-secondary) !important;
+}
+.text-\[\#F4C6FF\],
+[class*="text-[#F4C6FF]"] {
+    color: var(--color-secondary) !important;
+}
+.border-\[\#F4C6FF\],
+[class*="border-[#F4C6FF]"] {
+    border-color: var(--color-secondary) !important;
+}
+.hover\:bg-\[\#F4C6FF\]:hover,
+[class*="hover:bg-[#F4C6FF]"]:hover {
+    background-color: var(--color-secondary) !important;
+}
+.hover\:text-\[\#F4C6FF\]:hover,
+[class*="hover:text-[#F4C6FF]"]:hover {
+    color: var(--color-secondary) !important;
+}
+
+/* Soft Color Utility Overrides */
+.bg-\[\#FAE6FF\],
+[class*="bg-[#FAE6FF]"] {
+    background-color: var(--color-soft) !important;
+}
+.text-\[\#FAE6FF\],
+[class*="text-[#FAE6FF]"] {
+    color: var(--color-soft) !important;
+}
+.border-\[\#FAE6FF\],
+[class*="border-[#FAE6FF]"] {
+    border-color: var(--color-soft) !important;
+}
+.hover\:bg-\[\#FAE6FF\]:hover,
+[class*="hover:bg-[#FAE6FF]"]:hover {
+    background-color: var(--color-soft) !important;
+}
+.focus\:ring-\[\#FAE6FF\]:focus {
+    --tw-ring-color: var(--color-soft) !important;
+}
+
+/* Gradient Utilities */
+.from-\[\#843799\] {
+    --tw-gradient-from: var(--color-primary) !important;
+    --tw-gradient-to: rgb(255 255 255 / 0) !important;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+.to-\[\#60396A\] {
+    --tw-gradient-to: var(--color-dark) !important;
+}
+.from-\[\#F4C6FF\] {
+    --tw-gradient-from: var(--color-secondary) !important;
+    --tw-gradient-to: rgb(255 255 255 / 0) !important;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+.to-\[\#843799\] {
+    --tw-gradient-to: var(--color-primary) !important;
+}
+.from-\[\#FAE6FF\] {
+    --tw-gradient-from: var(--color-soft) !important;
+    --tw-gradient-to: rgb(255 255 255 / 0) !important;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+
+/* Tailwind Native Purple & Violet Utility Fallbacks to Theme Variables */
+.bg-purple-50,
+.bg-purple-100,
+.bg-violet-50,
+.bg-violet-100,
+.bg-\[\#FAF0FC\],
+[class*="bg-purple-50"],
+[class*="bg-purple-100"],
+[class*="bg-violet-50"],
+[class*="bg-violet-100"],
+[class*="bg-[#FAF0FC]"],
+[class*="bg-[#FAE6FF]"] {
+    background-color: var(--color-soft) !important;
+}
+.bg-purple-200,
+.bg-violet-200,
+[class*="bg-purple-200"],
+[class*="bg-violet-200"] {
+    background-color: var(--color-secondary) !important;
+}
+.bg-purple-600,
+.bg-purple-700,
+.bg-violet-600,
+.bg-violet-700,
+[class*="bg-purple-600"],
+[class*="bg-purple-700"],
+[class*="bg-violet-600"],
+[class*="bg-violet-700"] {
+    background-color: var(--color-primary) !important;
+}
+.bg-purple-800,
+.bg-purple-900,
+.bg-violet-800,
+.bg-violet-900,
+[class*="bg-purple-800"],
+[class*="bg-purple-900"],
+[class*="bg-violet-800"],
+[class*="bg-violet-900"] {
+    background-color: var(--color-dark) !important;
+}
+
+.text-purple-600,
+.text-purple-700,
+.text-violet-600,
+.text-violet-700,
+[class*="text-purple-600"],
+[class*="text-purple-700"],
+[class*="text-violet-600"],
+[class*="text-violet-700"] {
+    color: var(--color-primary) !important;
+}
+.text-purple-800,
+.text-purple-900,
+.text-violet-800,
+.text-violet-900,
+.text-violet-950,
+[class*="text-purple-800"],
+[class*="text-purple-900"],
+[class*="text-violet-800"],
+[class*="text-violet-900"],
+[class*="text-violet-950"] {
+    color: var(--color-dark) !important;
+}
+
+.border-purple-100,
+.border-purple-200,
+.border-violet-100,
+.border-violet-200,
+[class*="border-purple-100"],
+[class*="border-purple-200"],
+[class*="border-violet-100"],
+[class*="border-violet-200"] {
+    border-color: var(--color-secondary) !important;
+}
+.border-purple-500,
+.border-purple-600,
+.border-violet-400,
+.border-violet-500,
+.border-violet-600,
+[class*="border-purple-500"],
+[class*="border-purple-600"],
+[class*="border-violet-400"],
+[class*="border-violet-500"],
+[class*="border-violet-600"] {
+    border-color: var(--color-primary) !important;
+}
+
+.hover\:bg-purple-50:hover,
+.hover\:bg-purple-100:hover,
+.hover\:bg-violet-50:hover,
+.hover\:bg-violet-100:hover,
+.hover\:bg-violet-200:hover,
+[class*="hover:bg-purple-50"]:hover,
+[class*="hover:bg-purple-100"]:hover,
+[class*="hover:bg-violet-50"]:hover,
+[class*="hover:bg-violet-100"]:hover,
+[class*="hover:bg-violet-200"]:hover {
+    background-color: var(--color-soft) !important;
+}
+.hover\:bg-purple-600:hover,
+.hover\:bg-purple-700:hover,
+.hover\:bg-violet-600:hover,
+.hover\:bg-violet-700:hover,
+[class*="hover:bg-purple-600"]:hover,
+[class*="hover:bg-purple-700"]:hover,
+[class*="hover:bg-violet-600"]:hover,
+[class*="hover:bg-violet-700"]:hover {
+    background-color: var(--color-primary) !important;
+}
+.hover\:bg-violet-800:hover,
+[class*="hover:bg-violet-800"]:hover {
+    background-color: var(--color-dark) !important;
+}
+.hover\:text-purple-700:hover,
+.hover\:text-purple-800:hover,
+.hover\:text-violet-600:hover,
+.hover\:text-violet-700:hover,
+.hover\:text-violet-900:hover,
+[class*="hover:text-purple-700"]:hover,
+[class*="hover:text-purple-800"]:hover,
+[class*="hover:text-violet-600"]:hover,
+[class*="hover:text-violet-700"]:hover,
+[class*="hover:text-violet-900"]:hover {
+    color: var(--color-primary) !important;
+}
+
+.focus\:border-violet-400:focus,
+.focus\:border-violet-500:focus,
+[class*="focus:border-violet"]:focus,
+[class*="focus:border-[#843799]"]:focus {
+    border-color: var(--color-primary) !important;
+}
+.focus\:ring-purple-100:focus,
+.focus\:ring-purple-200:focus,
+.focus\:ring-violet-100:focus,
+.focus\:ring-violet-200:focus,
+.ring-purple-100,
+.ring-violet-100,
+[class*="focus:ring-purple"]:focus,
+[class*="focus:ring-violet"]:focus,
+[class*="focus:ring-[#FAE6FF]"]:focus {
+    --tw-ring-color: var(--color-soft) !important;
+}
+
+.shadow-purple-100,
+.shadow-purple-200,
+.shadow-violet-100,
+.shadow-violet-200,
+[class*="shadow-purple-100"],
+[class*="shadow-purple-200"],
+[class*="shadow-violet-100"],
+[class*="shadow-violet-200"],
+[class*="shadow-purple-500"],
+[class*="shadow-violet-500"] {
+    --tw-shadow-color: var(--color-secondary) !important;
+}
+
+/* File input button overrides */
+[class*="file:bg-purple-50"]::file-selector-button,
+[class*="file:bg-violet-50"]::file-selector-button {
+    background-color: var(--color-soft) !important;
+}
+[class*="file:text-[#843799]"]::file-selector-button,
+[class*="file:text-violet-700"]::file-selector-button {
+    color: var(--color-primary) !important;
+}
+
+/* Form checkboxes & radio buttons */
+input[type="checkbox"]:checked,
+input[type="radio"]:checked {
+    background-color: var(--color-primary) !important;
+    border-color: var(--color-primary) !important;
+}
+
+/* ===== Cursor & Caret Typography Normalization (Default Black) ===== */
+input[type="text"],
+input[type="email"],
+input[type="url"],
+input[type="password"],
+input[type="search"],
+input[type="number"],
+input[type="tel"],
+textarea,
+select,
+[contenteditable="true"],
+.cursor-text {
+    cursor: text;
+    caret-color: #0f172a !important; /* Default Black / Dark Slate */
+    color: #0f172a;
+}
+
+
 /* ===== Floating WhatsApp Button ===== */
 .floating-wa-container {
     position: fixed;

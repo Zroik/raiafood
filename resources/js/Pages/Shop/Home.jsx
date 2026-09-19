@@ -1,4 +1,4 @@
-import { Head, Link, router } from '@inertiajs/react';
+import { Head, Link, router, usePage } from '@inertiajs/react';
 import ShopLayout from '@/Layouts/ShopLayout';
 import { useState, useEffect } from 'react';
 
@@ -37,7 +37,16 @@ function StarRating({ rating = 0, soldCount = 0 }) {
     );
 }
 
-function FlashSaleCountdown({ targetDate, posX = 50, posY = 50, scale = 1.0 }) {
+function FlashSaleCountdown({
+    targetDate,
+    posX = 50,
+    posY = 50,
+    scale = 1.0,
+    boxColor = '#030712',
+    fontColor = '#ffffff',
+    fontFamily = 'Outfit',
+    digitBg = null,
+}) {
     const parseLocalDate = (dateStr) => {
         if (!dateStr) return 0;
         // If string format is 'YYYY-MM-DD HH:mm:ss' or 'YYYY-MM-DDTHH:mm:ss'
@@ -78,6 +87,10 @@ function FlashSaleCountdown({ targetDate, posX = 50, posY = 50, scale = 1.0 }) {
     }, [targetDate]);
 
     const formatNum = (n) => String(n).padStart(2, '0');
+    const selectedFont = fontFamily ? `${fontFamily}, sans-serif` : 'Outfit, sans-serif';
+    const effectiveBoxBg = boxColor || '#030712';
+    const effectiveFontColor = fontColor || '#ffffff';
+    const effectiveDigitBg = digitBg || 'var(--color-primary)';
 
     return (
         <div
@@ -86,8 +99,10 @@ function FlashSaleCountdown({ targetDate, posX = 50, posY = 50, scale = 1.0 }) {
                 top: `${posY}%`,
                 transform: `translate(-50%, -50%) scale(${scale})`,
                 transformOrigin: 'center center',
+                backgroundColor: effectiveBoxBg,
+                fontFamily: selectedFont,
             }}
-            className="absolute z-20 pointer-events-none select-none flex items-center gap-[0.4cqi] p-[0.6cqi] rounded-[1cqi] bg-gray-950/85 backdrop-blur-md border border-white/20 shadow-2xl transition-all"
+            className="absolute z-20 pointer-events-none select-none flex items-center gap-[0.4cqi] p-[0.6cqi] rounded-[1cqi] backdrop-blur-md border border-white/20 shadow-2xl transition-all"
         >
             {[
                 { val: formatNum(timeLeft.days), label: 'Hari' },
@@ -96,11 +111,31 @@ function FlashSaleCountdown({ targetDate, posX = 50, posY = 50, scale = 1.0 }) {
                 { val: formatNum(timeLeft.seconds), label: 'Dtk' },
             ].map((item, idx) => (
                 <div key={idx} className="flex items-center gap-[0.3cqi]">
-                    <div className="flex flex-col items-center justify-center bg-[#843799] text-white px-[0.7cqi] py-[0.3cqi] rounded-[0.6cqi] min-w-[3.2cqi] shadow-sm">
-                        <span className="font-extrabold text-[1.4cqi] leading-tight font-mono tracking-tight">{item.val}</span>
-                        <span className="text-[0.65cqi] uppercase font-semibold tracking-tighter opacity-80">{item.label}</span>
+                    <div
+                        style={{ backgroundColor: effectiveDigitBg }}
+                        className="flex flex-col items-center justify-center px-[0.7cqi] py-[0.3cqi] rounded-[0.6cqi] min-w-[3.2cqi] shadow-sm"
+                    >
+                        <span
+                            style={{ color: effectiveFontColor, fontFamily: selectedFont }}
+                            className="font-extrabold text-[1.4cqi] leading-tight tracking-tight"
+                        >
+                            {item.val}
+                        </span>
+                        <span
+                            style={{ color: effectiveFontColor, fontFamily: selectedFont }}
+                            className="text-[0.65cqi] uppercase font-semibold tracking-tighter opacity-80"
+                        >
+                            {item.label}
+                        </span>
                     </div>
-                    {idx < 3 && <span className="text-white font-bold text-[1.2cqi]">:</span>}
+                    {idx < 3 && (
+                        <span
+                            style={{ color: effectiveFontColor, fontFamily: selectedFont }}
+                            className="font-bold text-[1.2cqi]"
+                        >
+                            :
+                        </span>
+                    )}
                 </div>
             ))}
         </div>
@@ -138,8 +173,8 @@ function ProductCard({ product }) {
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                 ) : (
-                    <div className="w-full h-full flex items-center justify-center" style={{ backgroundColor: '#FAE6FF' }}>
-                        <div className="w-24 h-24 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #F4C6FF, #843799)' }}>
+                    <div className="w-full h-full flex items-center justify-center" style={{ backgroundColor: 'var(--color-soft)' }}>
+                        <div className="w-24 h-24 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, var(--color-secondary), var(--color-primary))' }}>
                             <span className="text-3xl">&#x1F36A;</span>
                         </div>
                     </div>
@@ -163,9 +198,9 @@ function ProductCard({ product }) {
                 <button
                     onClick={handleAddToCart}
                     className="w-8 h-8 rounded-xl flex-shrink-0 flex items-center justify-center transition-all duration-200 hover:scale-110"
-                    style={{ backgroundColor: '#FAE6FF', color: '#843799' }}
-                    onMouseEnter={e => { e.currentTarget.style.backgroundColor = '#843799'; e.currentTarget.style.color = 'white'; }}
-                    onMouseLeave={e => { e.currentTarget.style.backgroundColor = '#FAE6FF'; e.currentTarget.style.color = '#843799'; }}
+                    style={{ backgroundColor: 'var(--color-soft)', color: 'var(--color-primary)' }}
+                    onMouseEnter={e => { e.currentTarget.style.backgroundColor = 'var(--color-primary)'; e.currentTarget.style.color = 'white'; }}
+                    onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'var(--color-soft)'; e.currentTarget.style.color = 'var(--color-primary)'; }}
                     aria-label="Tambah ke keranjang"
                 >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -178,6 +213,8 @@ function ProductCard({ product }) {
 }
 
 export default function Home({ latestProducts = [], bestSellerProducts = [], categories, settings, banners = [], flashSaleBanner = null }) {
+    const { site_settings } = usePage().props;
+    const homeSettings = site_settings?.home_settings || {};
     const [currentIndex, setCurrentIndex] = useState(0);
 
     // Banners list fallback
@@ -217,7 +254,7 @@ export default function Home({ latestProducts = [], bestSellerProducts = [], cat
             <div className="w-full max-w-[92vw] xl:max-w-[88vw] 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6">
                 <section
                     className="w-full relative overflow-hidden flex items-center aspect-[3/1] rounded-2xl lg:rounded-3xl shadow-sm"
-                    style={{ backgroundColor: '#FAE6FF' }}
+                    style={{ backgroundColor: 'var(--color-soft)' }}
                 >
                     {/* Sliding Wrapper */}
                     <div 
@@ -243,10 +280,10 @@ export default function Home({ latestProducts = [], bestSellerProducts = [], cat
                                 fontFamily: 'Outfit, sans-serif',
                                 fontWeight: 400,
                                 fontSize: 'clamp(12px, 2.2vw, 40px)',
-                                color: '#60396B',
+                                color: 'var(--color-dark)',
                                 marginBottom: '0.1vw',
                             }}>
-                                Selamat datang di
+                                {homeSettings.hero_greeting || 'Selamat datang di'}
                             </p>
 
                             {/* "Raia Food" */}
@@ -254,10 +291,10 @@ export default function Home({ latestProducts = [], bestSellerProducts = [], cat
                                 fontFamily: 'Outfit, sans-serif',
                                 fontWeight: 700,
                                 fontSize: 'clamp(16px, 3.2vw, 60px)',
-                                color: '#60396B',
+                                color: 'var(--color-dark)',
                                 marginBottom: '0.4vw',
                             }}>
-                                Raia Food
+                                {homeSettings.hero_title || site_settings?.company_name || 'Raia Food'}
                             </h1>
 
                             {/* "Pusat Makanan Khas Batu" */}
@@ -265,10 +302,10 @@ export default function Home({ latestProducts = [], bestSellerProducts = [], cat
                                 fontFamily: 'Inter, sans-serif',
                                 fontWeight: 700,
                                 fontSize: 'clamp(10px, 1.6vw, 30px)',
-                                color: '#843799',
+                                color: 'var(--color-primary)',
                                 marginBottom: '0.3vw',
                             }}>
-                                Pusat Makanan Khas Batu
+                                {homeSettings.hero_motto || site_settings?.company_tagline || 'Pusat Makanan Khas Batu'}
                             </p>
 
                             {/* Description */}
@@ -276,20 +313,20 @@ export default function Home({ latestProducts = [], bestSellerProducts = [], cat
                                 fontFamily: 'Inter, sans-serif',
                                 fontWeight: 500,
                                 fontSize: 'clamp(8px, 1.1vw, 18px)',
-                                color: '#843799',
+                                color: 'var(--color-primary)',
                                 lineHeight: 1.5,
                                 marginBottom: '1vw',
                             }}>
-                                {settings?.store_description || 'Dibuat dengan bahan pilihan berkualitas, di goreng dengan cita rasa berbeda.'}
+                                {settings?.store_description || site_settings?.company_tagline || 'Dibuat dengan bahan pilihan berkualitas, di goreng dengan cita rasa berbeda.'}
                             </p>
 
                             {/* CTA Action Buttons */}
                             <div className="flex items-center gap-2 sm:gap-3 md:gap-3.5 flex-wrap">
                                 <Link
-                                    href="/products"
+                                    href={homeSettings.hero_cta_link || '/products'}
                                     className="inline-flex items-center justify-center rounded-lg sm:rounded-xl font-bold transition-all duration-200 shadow-sm whitespace-nowrap"
                                     style={{
-                                        backgroundColor: '#843799',
+                                        backgroundColor: 'var(--color-primary)',
                                         color: '#ffffff',
                                         padding: 'clamp(4px, 0.6vw, 11px) clamp(11px, 1.5vw, 28px)',
                                         fontSize: 'clamp(9px, 1vw, 17px)',
@@ -303,16 +340,16 @@ export default function Home({ latestProducts = [], bestSellerProducts = [], cat
                                         e.currentTarget.style.transform = 'translateY(0)';
                                     }}
                                 >
-                                    Belanja Sekarang
+                                    {homeSettings.hero_cta_text || 'Belanja Sekarang'}
                                 </Link>
 
                                 <Link
-                                    href="/tentang-kami"
+                                    href={homeSettings.hero_cta_sec_link || '/tentang-kami'}
                                     className="inline-flex items-center justify-center rounded-lg sm:rounded-xl font-bold transition-all duration-200 border-2 whitespace-nowrap"
                                     style={{
-                                        borderColor: '#843799',
+                                        borderColor: 'var(--color-primary)',
                                         backgroundColor: 'rgba(255, 255, 255, 0.85)',
-                                        color: '#843799',
+                                        color: 'var(--color-primary)',
                                         padding: 'clamp(4px, 0.6vw, 11px) clamp(11px, 1.5vw, 28px)',
                                         fontSize: 'clamp(9px, 1vw, 17px)',
                                     }}
@@ -325,7 +362,7 @@ export default function Home({ latestProducts = [], bestSellerProducts = [], cat
                                         e.currentTarget.style.transform = 'translateY(0)';
                                     }}
                                 >
-                                    Tentang Kami
+                                    {homeSettings.hero_cta_sec_text || 'Tentang Kami'}
                                 </Link>
                             </div>
                         </div>
@@ -342,7 +379,7 @@ export default function Home({ latestProducts = [], bestSellerProducts = [], cat
                                     style={{
                                         width: i === currentIndex ? "20px" : "8px",
                                         height: "8px",
-                                        backgroundColor: i === currentIndex ? "#843799" : "#F4C6FF",
+                                        backgroundColor: i === currentIndex ? "var(--color-primary)" : "var(--color-secondary)",
                                     }}
                                     aria-label={`Slide ${i + 1}`}
                                 />
@@ -382,6 +419,10 @@ export default function Home({ latestProducts = [], bestSellerProducts = [], cat
                                 posX={activeFlashSale.countdown_pos_x ?? 50}
                                 posY={activeFlashSale.countdown_pos_y ?? 50}
                                 scale={activeFlashSale.countdown_scale ?? 1.0}
+                                boxColor={activeFlashSale.countdown_box_color}
+                                fontColor={activeFlashSale.countdown_font_color}
+                                fontFamily={activeFlashSale.countdown_font_family}
+                                digitBg={activeFlashSale.countdown_digit_bg}
                             />
                         )}
                     </div>
@@ -394,13 +435,13 @@ export default function Home({ latestProducts = [], bestSellerProducts = [], cat
                     <div className="flex items-center justify-between mb-8">
                         <div className="flex items-center gap-3">
                             <h2 className="text-2xl lg:text-3xl font-bold text-gray-900" style={{ fontFamily: 'Outfit, sans-serif' }}>
-                                Produk Terbaru
+                                {homeSettings.section_latest_title || 'Produk Terbaru'}
                             </h2>
                         </div>
                         <Link
                             href="/products?sort=newest"
                             className="hidden sm:flex items-center gap-1 text-sm font-semibold transition-colors hover:opacity-80"
-                            style={{ color: '#843799' }}
+                            style={{ color: 'var(--color-primary)' }}
                         >
                             Lihat Semua
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -416,7 +457,7 @@ export default function Home({ latestProducts = [], bestSellerProducts = [], cat
                     </div>
 
                     <div className="sm:hidden text-center mt-8">
-                        <Link href="/products?sort=newest" className="inline-flex items-center gap-1 text-sm font-semibold" style={{ color: '#843799' }}>
+                        <Link href="/products?sort=newest" className="inline-flex items-center gap-1 text-sm font-semibold" style={{ color: 'var(--color-primary)' }}>
                             Lihat Semua &#x2192;
                         </Link>
                     </div>
@@ -429,13 +470,13 @@ export default function Home({ latestProducts = [], bestSellerProducts = [], cat
                     <div className="flex items-center justify-between mb-8">
                         <div className="flex items-center gap-3">
                             <h2 className="text-2xl lg:text-3xl font-bold text-gray-900" style={{ fontFamily: 'Outfit, sans-serif' }}>
-                                Produk Terlaris
+                                {homeSettings.section_popular_title || 'Produk Terlaris'}
                             </h2>
                         </div>
                         <Link
                             href="/products?sort=popular"
                             className="hidden sm:flex items-center gap-1 text-sm font-semibold transition-colors hover:opacity-80"
-                            style={{ color: '#843799' }}
+                            style={{ color: 'var(--color-primary)' }}
                         >
                             Lihat Semua
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -451,7 +492,7 @@ export default function Home({ latestProducts = [], bestSellerProducts = [], cat
                     </div>
 
                     <div className="sm:hidden text-center mt-8">
-                        <Link href="/products?sort=popular" className="inline-flex items-center gap-1 text-sm font-semibold" style={{ color: '#843799' }}>
+                        <Link href="/products?sort=popular" className="inline-flex items-center gap-1 text-sm font-semibold" style={{ color: 'var(--color-primary)' }}>
                             Lihat Semua &#x2192;
                         </Link>
                     </div>

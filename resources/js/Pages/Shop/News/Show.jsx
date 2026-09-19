@@ -40,7 +40,7 @@ export default function Show({ article, previousArticle, nextArticle, recentArti
 
                     {/* Article Header Card */}
                     <header className="space-y-4 text-center sm:text-left">
-                        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-bold" style={{ backgroundColor: '#FAE6FF', color: '#843799' }}>
+                        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-bold" style={{ backgroundColor: 'var(--color-soft)', color: 'var(--color-primary)' }}>
                             <span>📰</span>
                             <span>KABAR RAIA FOOD</span>
                         </div>

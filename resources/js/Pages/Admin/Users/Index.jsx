@@ -1,6 +1,7 @@
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Head, useForm, router, Link } from '@inertiajs/react';
 import { useState } from 'react';
+import { Plus, ShieldCheck, User, X } from 'lucide-react';
 
 export default function UserIndex({ users, filters }) {
     const [modalOpen, setModalOpen] = useState(false);
@@ -115,7 +116,7 @@ export default function UserIndex({ users, filters }) {
                         onClick={openCreateModal}
                         className="px-4 py-2 rounded-xl bg-[#843799] text-white font-bold text-xs shadow-md hover:bg-[#60396A] transition-all flex items-center gap-2 self-start sm:self-auto"
                     >
-                        <span>➕</span>
+                        <Plus className="w-4 h-4" />
                         <span>Tambah User Baru</span>
                     </button>
                 </div>
@@ -164,7 +165,15 @@ export default function UserIndex({ users, filters }) {
                                                         ? 'bg-purple-100 text-[#843799] border border-purple-200'
                                                         : 'bg-emerald-50 text-emerald-700 border border-emerald-100'
                                                 }`}>
-                                                    {user.role === 'admin' ? '🛡️ Administrator' : '👤 Customer'}
+                                                    {user.role === 'admin' ? (
+                                                        <span className="inline-flex items-center gap-1.5">
+                                                            <ShieldCheck className="w-3.5 h-3.5" /> Administrator
+                                                        </span>
+                                                    ) : (
+                                                        <span className="inline-flex items-center gap-1.5">
+                                                            <User className="w-3.5 h-3.5" /> Customer
+                                                        </span>
+                                                    )}
                                                 </span>
                                             </td>
                                             <td className="px-6 py-4 text-xs text-gray-400">
@@ -221,7 +230,9 @@ export default function UserIndex({ users, filters }) {
                             <h3 className="font-bold text-base text-gray-900">
                                 {editingUser ? 'Edit Hak Akses User' : 'Tambah User Baru'}
                             </h3>
-                            <button onClick={() => setModalOpen(false)} className="text-gray-400 hover:text-gray-600">✕</button>
+                            <button onClick={() => setModalOpen(false)} className="text-gray-400 hover:text-gray-600">
+                                <X className="w-5 h-5" />
+                            </button>
                         </div>
 
                         <form onSubmit={handleSubmit} className="space-y-3.5">
@@ -271,8 +282,8 @@ export default function UserIndex({ users, filters }) {
                                     onChange={e => setData('role', e.target.value)}
                                     className="w-full px-3 py-2 rounded-xl border border-gray-200 text-sm focus:border-[#843799] outline-none"
                                 >
-                                    <option value="admin">🛡️ Administrator (Akses Penuh CMS)</option>
-                                    <option value="customer">👤 Customer (Pelanggan Toko)</option>
+                                    <option value="admin">Administrator (Akses Penuh CMS)</option>
+                                    <option value="customer">Customer (Pelanggan Toko)</option>
                                 </select>
                             </div>
 

@@ -1,6 +1,7 @@
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Head, Link, useForm, router, usePage } from '@inertiajs/react';
 import { useState, useRef } from 'react';
+import { Plus, Award, X } from 'lucide-react';
 
 export default function Index({ certificates = [] }) {
     const { flash } = usePage().props;
@@ -110,13 +111,15 @@ export default function Index({ certificates = [] }) {
                             onClick={() => openCreateModal('certificate')}
                             className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-violet-600 hover:bg-violet-700 text-white rounded-xl text-xs font-semibold transition-all shadow-md shadow-violet-100"
                         >
-                            ➕ Tambah Sertifikat
+                            <Plus className="w-4 h-4" />
+                            <span>Tambah Sertifikat</span>
                         </button>
                         <button
                             onClick={() => openCreateModal('award')}
                             className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-xs font-semibold transition-all shadow-md shadow-amber-100"
                         >
-                            🏆 Tambah Penghargaan
+                            <Award className="w-4 h-4" />
+                            <span>Tambah Penghargaan</span>
                         </button>
                     </div>
                 </div>
@@ -169,8 +172,9 @@ export default function Index({ certificates = [] }) {
                                         <tr key={cert.id} className="hover:bg-gray-50/50 transition-colors">
                                             <td className="py-4 px-6 font-semibold text-gray-700">{cert.sort_order}</td>
                                             <td className="py-4 px-6">
-                                                <span className={`inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-bold ${cert.type === 'award' ? 'bg-amber-50 text-amber-700 border border-amber-200' : 'bg-violet-50 text-violet-700 border border-violet-200'}`}>
-                                                    {cert.type === 'award' ? '🏆 Penghargaan' : '📜 Sertifikasi'}
+                                                <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold ${cert.type === 'award' ? 'bg-amber-50 text-amber-700 border border-amber-200' : 'bg-violet-50 text-violet-700 border border-violet-200'}`}>
+                                                    <Award className="w-3.5 h-3.5" />
+                                                    {cert.type === 'award' ? 'Penghargaan' : 'Sertifikasi'}
                                                 </span>
                                             </td>
                                             <td className="py-4 px-6">
@@ -221,8 +225,8 @@ export default function Index({ certificates = [] }) {
                             <h3 className="text-lg font-bold text-gray-900">
                                 {editMode ? 'Edit Data' : 'Tambah Baru'}
                             </h3>
-                            <button onClick={() => setModalOpen(false)} className="text-gray-400 hover:text-gray-600 text-lg">
-                                ✕
+                            <button onClick={() => setModalOpen(false)} className="text-gray-400 hover:text-gray-600">
+                                <X className="w-5 h-5" />
                             </button>
                         </div>
                         <form onSubmit={handleSubmit} className="p-6 space-y-4">

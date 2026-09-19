@@ -100,11 +100,12 @@ function FallbackCheck({ className }) {
 // ==========================================
 export function ValueIconRender({ type = 'lucide', value, className = "w-6 h-6 text-white" }) {
     if (type === 'svg') {
+        const isWhite = className?.includes('text-white');
         return (
             <img 
                 src={`/images/${value}`} 
                 alt={value} 
-                className="w-full h-full object-contain drop-shadow-sm" 
+                className={`w-full h-full object-contain drop-shadow-sm ${isWhite ? 'brightness-0 invert' : ''} ${className}`} 
             />
         );
     }

@@ -17,6 +17,10 @@ class Banner extends Model
         'countdown_pos_x',
         'countdown_pos_y',
         'countdown_scale',
+        'countdown_box_color',
+        'countdown_font_color',
+        'countdown_font_family',
+        'countdown_digit_bg',
         'sort_order',
         'is_active',
     ];

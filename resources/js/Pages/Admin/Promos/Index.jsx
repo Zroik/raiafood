@@ -1,6 +1,7 @@
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Head, Link, useForm, router } from '@inertiajs/react';
 import { useState } from 'react';
+import { Plus, Pencil, Trash2, X } from 'lucide-react';
 
 export default function Index({ promos }) {
     const [editMode, setEditMode] = useState(false);
@@ -38,8 +39,8 @@ export default function Index({ promos }) {
             min_order: promo.min_order || '',
             max_discount: promo.max_discount || '',
             usage_limit: promo.usage_limit || '',
-            start_date: promo.start_date ? promo.start_date.substring(0, 16) : '',
-            end_date: promo.end_date ? promo.end_date.substring(0, 16) : '',
+            start_date: promo.start_date || '',
+            end_date: promo.end_date || '',
             is_active: promo.is_active ?? true,
         });
         setEditMode(true);
@@ -51,29 +52,23 @@ export default function Index({ promos }) {
         e.preventDefault();
         if (editMode && selectedPromo) {
             put(route('admin.promos.update', selectedPromo.id), {
-                onSuccess: () => {
-                    setModalOpen(false);
-                    reset();
-                }
+                onSuccess: () => setModalOpen(false)
             });
         } else {
             post(route('admin.promos.store'), {
-                onSuccess: () => {
-                    setModalOpen(false);
-                    reset();
-                }
+                onSuccess: () => setModalOpen(false)
             });
         }
     };
 
     const handleDelete = (promoId) => {
-        if (confirm('Apakah Anda yakin ingin menghapus promo ini?')) {
+        if (confirm('Apakah Anda yakin ingin menghapus voucher promo ini?')) {
             router.delete(route('admin.promos.destroy', promoId));
         }
     };
 
     return (
-        <AdminLayout header={<h2 className="text-xl font-semibold leading-tight text-gray-800">Daftar Voucher Promo & Diskon</h2>}>
+        <AdminLayout header={<h2 className="text-xl font-semibold leading-tight text-gray-800">Kelola Voucher Promo</h2>}>
             <Head title="Kelola Voucher Promo" />
 
             <div className="space-y-6">
@@ -84,7 +79,8 @@ export default function Index({ promos }) {
                         onClick={openCreateModal}
                         className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-violet-600 hover:bg-violet-700 text-white rounded-xl text-sm font-semibold transition-all shadow-md shadow-violet-100 flex-shrink-0"
                     >
-                        ➕ Tambah Promo Baru
+                        <Plus className="w-4 h-4" />
+                        <span>Tambah Promo Baru</span>
                     </button>
                 </div>
 
@@ -165,14 +161,14 @@ export default function Index({ promos }) {
                                                         className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-gray-50 hover:bg-violet-50 hover:text-violet-600 text-gray-600 transition-colors"
                                                         title="Edit"
                                                     >
-                                                        ✏️
+                                                        <Pencil className="w-3.5 h-3.5" />
                                                     </button>
                                                     <button
                                                         onClick={() => handleDelete(promo.id)}
                                                         className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-gray-50 hover:bg-red-50 text-red-650 transition-colors"
                                                         title="Hapus"
                                                     >
-                                                        🗑️
+                                                        <Trash2 className="w-3.5 h-3.5" />
                                                     </button>
                                                 </td>
                                             </tr>
@@ -208,8 +204,8 @@ export default function Index({ promos }) {
                             <h3 className="text-md font-bold text-gray-850">
                                 {editMode ? 'Edit Voucher Promo' : 'Tambah Voucher Promo'}
                             </h3>
-                            <button onClick={() => setModalOpen(false)} className="text-gray-400 hover:text-gray-600 text-lg">
-                                ✕
+                            <button onClick={() => setModalOpen(false)} className="text-gray-400 hover:text-gray-600">
+                                <X className="w-5 h-5" />
                             </button>
                         </div>
 

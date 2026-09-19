@@ -32,6 +32,47 @@ class HandleInertiaRequests extends Middleware
     {
         $settings = Setting::pluck('value', 'key')->all();
 
+        // Decode navbar_menu with fallback
+        $defaultNavbar = [
+            ['id' => '1', 'name' => 'Beranda', 'href' => '/'],
+            ['id' => '2', 'name' => 'Produk', 'href' => '/products'],
+            ['id' => '3', 'name' => 'Tentang Kami', 'href' => '/tentang-kami'],
+            ['id' => '4', 'name' => 'Hubungi Kami', 'href' => '/hubungi-kami'],
+        ];
+        $navbarMenu = isset($settings['navbar_menu']) ? json_decode($settings['navbar_menu'], true) : null;
+        if (!is_array($navbarMenu) || empty($navbarMenu)) {
+            $navbarMenu = $defaultNavbar;
+        }
+
+        // Decode footer_columns with fallback
+        $defaultFooterColumns = [
+            [
+                'id' => 'col_1',
+                'title' => 'Informasi',
+                'links' => [
+                    ['id' => '1', 'name' => 'Home', 'href' => '/'],
+                    ['id' => '2', 'name' => 'Produk', 'href' => '/products'],
+                    ['id' => '3', 'name' => 'News', 'href' => '/news'],
+                    ['id' => '4', 'name' => 'Tentang Kami', 'href' => '/tentang-kami'],
+                    ['id' => '5', 'name' => 'FAQ', 'href' => '/faq'],
+                ]
+            ],
+            [
+                'id' => 'col_2',
+                'title' => 'Layanan',
+                'links' => [
+                    ['id' => '6', 'name' => 'Cara Pemesanan', 'href' => '/faq'],
+                    ['id' => '7', 'name' => 'Pengiriman', 'href' => '/faq'],
+                    ['id' => '8', 'name' => 'Sertifikasi', 'href' => '/tentang-kami'],
+                    ['id' => '9', 'name' => 'Hubungi Kami', 'href' => '/hubungi-kami'],
+                ]
+            ]
+        ];
+        $footerColumns = isset($settings['footer_columns']) ? json_decode($settings['footer_columns'], true) : null;
+        if (!is_array($footerColumns) || empty($footerColumns)) {
+            $footerColumns = $defaultFooterColumns;
+        }
+
         return [
             ...parent::share($request),
             'auth' => [
@@ -67,6 +108,49 @@ class HandleInertiaRequests extends Middleware
                 'products_banner' => isset($settings['products_banner']) ? '/storage/' . $settings['products_banner'] : null,
                 'contact_banner' => isset($settings['contact_banner']) ? '/storage/' . $settings['contact_banner'] : '/images/hero.webp',
                 'faq_banner' => isset($settings['faq_banner']) ? '/storage/' . $settings['faq_banner'] : '/images/faq.webp',
+                // Dynamic Navigation & Footer
+                'navbar_menu' => $navbarMenu,
+                'footer_columns' => $footerColumns,
+                'footer_copyright' => $settings['footer_copyright'] ?? '',
+                // Top Announcement Bar
+                'announcement_bar' => [
+                    'enabled' => ($settings['announcement_enabled'] ?? '0') === '1',
+                    'text' => $settings['announcement_text'] ?? '',
+                    'link' => $settings['announcement_link'] ?? '',
+                ],
+                // Dynamic Home Texts
+                'home_settings' => [
+                    'hero_greeting' => $settings['home_hero_greeting'] ?? 'Selamat datang di',
+                    'hero_title' => $settings['home_hero_title'] ?? ($settings['company_name'] ?? 'Raia Food'),
+                    'hero_motto' => $settings['home_hero_motto'] ?? 'Pusat Makanan Khas Batu',
+                    'hero_cta_text' => $settings['home_hero_cta_text'] ?? 'Belanja Sekarang',
+                    'hero_cta_link' => $settings['home_hero_cta_link'] ?? '/products',
+                    'hero_cta_sec_text' => $settings['home_hero_cta_sec_text'] ?? 'Tentang Kami',
+                    'hero_cta_sec_link' => $settings['home_hero_cta_sec_link'] ?? '/tentang-kami',
+                    'section_latest_title' => $settings['home_section_latest_title'] ?? 'Produk Terbaru',
+                    'section_popular_title' => $settings['home_section_popular_title'] ?? 'Produk Terlaris',
+                ],
+                // Dynamic About CTA Banner
+                'about_settings' => [
+                    'cta_title' => $settings['about_cta_title'] ?? 'Jelajahi Produk Kami',
+                    'cta_subtitle' => $settings['about_cta_subtitle'] ?? "Rasakan kelezatan khas Jawa dalam setiap gigitan.\nTemukan favoritmu sekarang!",
+                    'cta_btn_text' => $settings['about_cta_btn_text'] ?? 'Lihat Produk',
+                    'cta_btn_link' => $settings['about_cta_btn_link'] ?? '/products',
+                ],
+                // Dynamic Contact Hero
+                'contact_settings' => [
+                    'hero_title' => $settings['contact_hero_title'] ?? 'Kami Siap Membantu Anda',
+                    'hero_subtitle' => $settings['contact_hero_subtitle'] ?? "Punya pertanyaan, saran, atau ingin bekerja sama?\nJangan ragu untuk menghubungi kami.\nTim RAIA Food akan dengan senang hati membantu anda",
+                ],
+                // Store & Shipping Settings
+                'store_settings' => [
+                    'shipping_cost' => (float) ($settings['shipping_cost'] ?? 15000),
+                    'free_shipping_min' => (float) ($settings['free_shipping_min'] ?? 150000),
+                    'bank_name' => $settings['payment_bank_name'] ?? 'BCA',
+                    'bank_account' => $settings['payment_bank_account'] ?? '123-456-7890',
+                    'bank_holder' => $settings['payment_bank_holder'] ?? 'Raia Food Official',
+                    'payment_instructions' => $settings['payment_instructions'] ?? 'Silakan lakukan transfer sesuai total pesanan dan konfirmasi via WhatsApp.',
+                ],
             ],
             'whatsapp' => [
                 'enabled' => ($settings['whatsapp_button_enabled'] ?? '1') === '1',

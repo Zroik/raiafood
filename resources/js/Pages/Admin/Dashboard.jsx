@@ -1,5 +1,6 @@
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Head, Link } from '@inertiajs/react';
+import { DollarSign, ShoppingBag, Package, Users, Tag, Eye } from 'lucide-react';
 
 export default function Dashboard({ stats, recentOrders, monthlySales }) {
     const formattedRevenue = new Intl.NumberFormat('id-ID', {
@@ -46,8 +47,8 @@ export default function Dashboard({ stats, recentOrders, monthlySales }) {
                             <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Total Pendapatan</p>
                             <h3 className="text-2xl font-bold text-gray-900 mt-2">{formattedRevenue}</h3>
                         </div>
-                        <div className="w-12 h-12 bg-emerald-50 rounded-2xl flex items-center justify-center text-xl text-emerald-600">
-                            💰
+                        <div className="w-12 h-12 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600">
+                            <DollarSign className="w-6 h-6" />
                         </div>
                     </div>
 
@@ -57,8 +58,8 @@ export default function Dashboard({ stats, recentOrders, monthlySales }) {
                             <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Total Pesanan</p>
                             <h3 className="text-2xl font-bold text-gray-900 mt-2">{stats.totalOrders}</h3>
                         </div>
-                        <div className="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center text-xl text-blue-600">
-                            📦
+                        <div className="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600">
+                            <ShoppingBag className="w-6 h-6" />
                         </div>
                     </div>
 
@@ -68,8 +69,8 @@ export default function Dashboard({ stats, recentOrders, monthlySales }) {
                             <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Total Produk</p>
                             <h3 className="text-2xl font-bold text-gray-900 mt-2">{stats.totalProducts}</h3>
                         </div>
-                        <div className="w-12 h-12 bg-violet-50 rounded-2xl flex items-center justify-center text-xl text-violet-600">
-                            🍪
+                        <div className="w-12 h-12 bg-violet-50 rounded-2xl flex items-center justify-center text-violet-600">
+                            <Package className="w-6 h-6" />
                         </div>
                     </div>
 
@@ -79,8 +80,8 @@ export default function Dashboard({ stats, recentOrders, monthlySales }) {
                             <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Total Pelanggan</p>
                             <h3 className="text-2xl font-bold text-gray-900 mt-2">{stats.totalCustomers}</h3>
                         </div>
-                        <div className="w-12 h-12 bg-pink-50 rounded-2xl flex items-center justify-center text-xl text-pink-600">
-                            👥
+                        <div className="w-12 h-12 bg-pink-50 rounded-2xl flex items-center justify-center text-pink-600">
+                            <Users className="w-6 h-6" />
                         </div>
                     </div>
                 </div>
@@ -106,7 +107,7 @@ export default function Dashboard({ stats, recentOrders, monthlySales }) {
                                             style={{ height: `${Math.max(heightPercentage, saleVal > 0 ? 4 : 0)}%` }}
                                             className={`w-full rounded-t-lg transition-all duration-500 max-h-[92%] ${
                                                 saleVal > 0
-                                                    ? 'bg-gradient-to-t from-violet-600 to-purple-500 hover:from-violet-500 hover:to-purple-400'
+                                                    ? 'bg-gradient-to-t from-[var(--color-primary)] to-[var(--color-secondary)] hover:opacity-90'
                                                     : 'bg-gray-100'
                                             }`}
                                         ></div>
@@ -131,7 +132,9 @@ export default function Dashboard({ stats, recentOrders, monthlySales }) {
                                 className="flex items-center justify-between p-3 rounded-xl border border-gray-100 hover:bg-violet-50 hover:border-violet-200 transition-all group"
                             >
                                 <div className="flex items-center gap-3">
-                                    <span className="text-lg">🍪</span>
+                                    <div className="w-8 h-8 rounded-lg bg-violet-50 flex items-center justify-center text-violet-600 group-hover:scale-105 transition-transform">
+                                        <Package className="w-4 h-4" />
+                                    </div>
                                     <span className="text-sm font-semibold text-gray-700 group-hover:text-violet-700">Tambah Produk Baru</span>
                                 </div>
                                 <span className="text-gray-400 group-hover:translate-x-1 transition-transform">→</span>
@@ -141,7 +144,9 @@ export default function Dashboard({ stats, recentOrders, monthlySales }) {
                                 className="flex items-center justify-between p-3 rounded-xl border border-gray-100 hover:bg-violet-50 hover:border-violet-200 transition-all group"
                             >
                                 <div className="flex items-center gap-3">
-                                    <span className="text-lg">🏷️</span>
+                                    <div className="w-8 h-8 rounded-lg bg-violet-50 flex items-center justify-center text-violet-600 group-hover:scale-105 transition-transform">
+                                        <Tag className="w-4 h-4" />
+                                    </div>
                                     <span className="text-sm font-semibold text-gray-700 group-hover:text-violet-700">Kelola Voucher Promo</span>
                                 </div>
                                 <span className="text-gray-400 group-hover:translate-x-1 transition-transform">→</span>
@@ -217,7 +222,7 @@ export default function Dashboard({ stats, recentOrders, monthlySales }) {
                                                     className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-gray-50 text-gray-600 hover:bg-violet-50 hover:text-violet-600 transition-colors"
                                                     title="Detail"
                                                 >
-                                                    👁️
+                                                    <Eye className="w-3.5 h-3.5" />
                                                 </Link>
                                             </td>
                                         </tr>

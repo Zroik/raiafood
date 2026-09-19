@@ -1,6 +1,7 @@
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Head, useForm, router, usePage } from '@inertiajs/react';
 import { useState } from 'react';
+import { Zap, Plus, CheckCircle2, Pencil, Trash2, X, Flame } from 'lucide-react';
 
 export default function Index({ campaigns = [], products = [], banners = [] }) {
     const { flash } = usePage().props;
@@ -153,7 +154,7 @@ export default function Index({ campaigns = [], products = [], banners = [] }) {
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-2xl shadow-sm border border-purple-50">
                     <div>
                         <div className="flex items-center gap-2 text-xs text-[#843799] font-bold tracking-wider uppercase mb-1">
-                            <span>⚡ Promosi Otomatis</span>
+                            <span className="inline-flex items-center gap-1"><Zap className="w-3 h-3 text-amber-500" /> Promosi Otomatis</span>
                             <span>•</span>
                             <span>Sinkronisasi Realtime</span>
                         </div>
@@ -166,9 +167,9 @@ export default function Index({ campaigns = [], products = [], banners = [] }) {
                     </div>
                     <button
                         onClick={openCreateModal}
-                        className="px-5 py-2.5 bg-[#843799] hover:bg-[#6c2c7d] text-white font-bold rounded-xl shadow-md hover:shadow-purple-200 transition-all flex items-center gap-2 self-start sm:self-auto cursor-pointer"
+                        className="px-5 py-2.5 bg-violet-600 hover:bg-violet-700 text-white font-bold rounded-xl shadow-md shadow-violet-100 transition-all flex items-center gap-2 self-start sm:self-auto cursor-pointer"
                     >
-                        <span>➕</span>
+                        <Plus className="w-4 h-4" />
                         <span>Buat Campaign Flash Sale</span>
                     </button>
                 </div>
@@ -176,7 +177,8 @@ export default function Index({ campaigns = [], products = [], banners = [] }) {
                 {/* Flash Messages */}
                 {flash?.success && (
                     <div className="p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl text-sm font-medium flex items-center gap-2">
-                        <span>✅</span> {flash.success}
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                        <span>{flash.success}</span>
                     </div>
                 )}
 
@@ -237,14 +239,16 @@ export default function Index({ campaigns = [], products = [], banners = [] }) {
                                                     )}
                                                 </td>
                                                 <td className="py-4 px-4">
-                                                    <span className="px-2.5 py-1 bg-purple-100 text-[#843799] font-bold rounded-lg text-xs">
-                                                        ⚡ {c.items?.length || 0} Produk
+                                                    <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-purple-100 text-[#843799] font-bold rounded-lg text-xs">
+                                                        <Zap className="w-3 h-3" />
+                                                        <span>{c.items?.length || 0} Produk</span>
                                                     </span>
                                                 </td>
                                                 <td className="py-4 px-4">
                                                     {isRunning ? (
-                                                        <span className="px-2.5 py-1 bg-emerald-100 text-emerald-700 font-bold rounded-full text-xs animate-pulse">
-                                                            🔥 Sedang Berjalan
+                                                        <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-emerald-100 text-emerald-700 font-bold rounded-full text-xs animate-pulse">
+                                                            <Flame className="w-3.5 h-3.5" />
+                                                            <span>Sedang Berjalan</span>
                                                         </span>
                                                     ) : (
                                                         <span className="px-2.5 py-1 bg-gray-100 text-gray-600 font-medium rounded-full text-xs">
@@ -255,15 +259,17 @@ export default function Index({ campaigns = [], products = [], banners = [] }) {
                                                 <td className="py-4 px-4 text-right space-x-2">
                                                     <button
                                                         onClick={() => openEditModal(c)}
-                                                        className="px-3 py-1 bg-violet-100 text-violet-700 hover:bg-violet-200 rounded-lg text-xs font-bold transition-all cursor-pointer"
+                                                        className="inline-flex items-center gap-1 px-3 py-1 bg-violet-100 text-violet-700 hover:bg-violet-200 rounded-lg text-xs font-bold transition-all cursor-pointer"
                                                     >
-                                                        ✏️ Edit
+                                                        <Pencil className="w-3 h-3" />
+                                                        <span>Edit</span>
                                                     </button>
                                                     <button
                                                         onClick={() => handleDelete(c)}
-                                                        className="px-3 py-1 bg-rose-100 text-rose-700 hover:bg-rose-200 rounded-lg text-xs font-bold transition-all cursor-pointer"
+                                                        className="inline-flex items-center gap-1 px-3 py-1 bg-rose-100 text-rose-700 hover:bg-rose-200 rounded-lg text-xs font-bold transition-all cursor-pointer"
                                                     >
-                                                        🗑️ Hapus
+                                                        <Trash2 className="w-3 h-3" />
+                                                        <span>Hapus</span>
                                                     </button>
                                                 </td>
                                             </tr>
@@ -280,14 +286,15 @@ export default function Index({ campaigns = [], products = [], banners = [] }) {
                     <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
                         <div className="bg-white rounded-3xl max-w-4xl w-full p-6 shadow-2xl border border-purple-100 my-8">
                             <div className="flex items-center justify-between border-b border-gray-100 pb-4 mb-6">
-                                <h2 className="text-xl font-bold text-[#843799]">
-                                    {editMode ? '✏️ Edit Campaign Flash Sale' : '⚡ Buat Campaign Flash Sale Baru'}
+                                <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                                    {editMode ? <Pencil className="w-5 h-5 text-violet-600" /> : <Zap className="w-5 h-5 text-violet-600" />}
+                                    <span>{editMode ? 'Edit Campaign Flash Sale' : 'Buat Campaign Flash Sale Baru'}</span>
                                 </h2>
                                 <button
                                     onClick={() => setModalOpen(false)}
-                                    className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500 font-bold"
+                                    className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500"
                                 >
-                                    ✕
+                                    <X className="w-4 h-4" />
                                 </button>
                             </div>
 
@@ -462,7 +469,7 @@ export default function Index({ campaigns = [], products = [], banners = [] }) {
                                         disabled={processing}
                                         className="px-6 py-2.5 bg-[#843799] hover:bg-[#6c2c7d] text-white rounded-xl text-xs font-bold shadow-md hover:shadow-purple-200 transition-all cursor-pointer"
                                     >
-                                        {processing ? 'Menyimpan...' : (editMode ? '💾 Simpan Perubahan' : '⚡ Buat Flash Sale')}
+                                        {processing ? 'Menyimpan...' : (editMode ? 'Simpan Perubahan' : 'Buat Flash Sale')}
                                     </button>
                                 </div>
                             </form>

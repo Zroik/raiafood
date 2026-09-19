@@ -1,8 +1,9 @@
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Head, useForm } from '@inertiajs/react';
+import { Globe, ShoppingBag } from 'lucide-react';
 
 export default function Social({ settings }) {
-    const { data, setData, post, processing, errors } = useForm({
+    const { data, setData, post, processing, recentlySuccessful } = useForm({
         instagram_url: settings.instagram_url || '',
         tiktok_url: settings.tiktok_url || '',
         facebook_url: settings.facebook_url || '',
@@ -25,7 +26,7 @@ export default function Social({ settings }) {
                     {/* Media Sosial */}
                     <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
                         <h3 className="text-base font-bold text-gray-900 mb-4 pb-2 border-b border-gray-100 flex items-center gap-2">
-                            <span>🌐</span>
+                            <Globe className="w-5 h-5 text-gray-600" />
                             <span>Akun Sosial Media Resmi</span>
                         </h3>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -78,7 +79,7 @@ export default function Social({ settings }) {
                     {/* Marketplace Links */}
                     <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
                         <h3 className="text-base font-bold text-gray-900 mb-4 pb-2 border-b border-gray-100 flex items-center gap-2">
-                            <span>🛍️</span>
+                            <ShoppingBag className="w-5 h-5 text-gray-600" />
                             <span>Toko Online di Marketplace</span>
                         </h3>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

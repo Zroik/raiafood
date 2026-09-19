@@ -30,7 +30,7 @@ export default function Index({ articles, heroArticle, filters = {}, settings = 
                 <div className="w-full max-w-[92vw] xl:max-w-[88vw] 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 space-y-10 sm:space-y-14">
                     {/* Header Banner */}
                     <div className="text-center max-w-2xl mx-auto space-y-3">
-                        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold shadow-sm" style={{ backgroundColor: '#FAE6FF', color: '#843799' }}>
+                        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold shadow-sm" style={{ backgroundColor: 'var(--color-soft)', color: 'var(--color-primary)' }}>
                             <span>📰</span>
                             <span>KABAR & CERITA RAIA FOOD</span>
                         </div>
@@ -56,7 +56,7 @@ export default function Index({ articles, heroArticle, filters = {}, settings = 
                             <button
                                 type="submit"
                                 className="px-5 py-3 rounded-2xl text-xs sm:text-sm font-bold text-white shadow-md hover:shadow-lg transition-all hover:opacity-95 flex-shrink-0"
-                                style={{ backgroundColor: '#843799' }}
+                                style={{ backgroundColor: 'var(--color-primary)' }}
                             >
                                 Cari
                             </button>
@@ -151,7 +151,7 @@ export default function Index({ articles, heroArticle, filters = {}, settings = 
                                             router.get('/news');
                                         }}
                                         className="px-4 py-2 rounded-xl text-xs font-bold text-white shadow-sm transition-all"
-                                        style={{ backgroundColor: '#843799' }}
+                                        style={{ backgroundColor: 'var(--color-primary)' }}
                                     >
                                         Lihat Semua Berita
                                     </button>

@@ -1,6 +1,7 @@
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Head, Link, router } from '@inertiajs/react';
 import { useState } from 'react';
+import { Plus, Pencil, Trash2, Package } from 'lucide-react';
 
 export default function Index({ products, categories, filters }) {
     const [search, setSearch] = useState(filters.search || '');
@@ -50,7 +51,8 @@ export default function Index({ products, categories, filters }) {
                         href={route('admin.products.create')}
                         className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-violet-600 hover:bg-violet-700 text-white rounded-xl text-sm font-semibold transition-all shadow-md shadow-violet-100"
                     >
-                        ➕ Tambah Produk
+                        <Plus className="w-4 h-4" />
+                        <span>Tambah Produk</span>
                     </Link>
                 </div>
 
@@ -87,7 +89,7 @@ export default function Index({ products, categories, filters }) {
                                                             {product.image ? (
                                                                 <img src={`/storage/${product.image}`} alt={product.name} className="w-full h-full object-contain p-1" />
                                                             ) : (
-                                                                '🍪'
+                                                                <Package className="w-6 h-6 text-slate-400" />
                                                             )}
                                                         </div>
                                                         <div>
@@ -126,14 +128,14 @@ export default function Index({ products, categories, filters }) {
                                                         className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-gray-50 text-gray-600 hover:bg-violet-50 hover:text-violet-600 transition-colors"
                                                         title="Edit"
                                                     >
-                                                        ✏️
+                                                        <Pencil className="w-3.5 h-3.5" />
                                                     </Link>
                                                     <button
                                                         onClick={() => handleDelete(product.id)}
                                                         className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-gray-50 text-red-600 hover:bg-red-50 transition-colors"
                                                         title="Hapus"
                                                     >
-                                                        🗑️
+                                                        <Trash2 className="w-3.5 h-3.5" />
                                                     </button>
                                                 </td>
                                             </tr>

@@ -1,5 +1,6 @@
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Head, useForm } from '@inertiajs/react';
+import { PhoneCall, MessageSquare, MapPin } from 'lucide-react';
 
 export default function Contact({ settings }) {
     const { data, setData, post, processing, errors } = useForm({
@@ -28,7 +29,7 @@ export default function Contact({ settings }) {
                     {/* Kontak Utama */}
                     <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
                         <h3 className="text-base font-bold text-gray-900 mb-4 pb-2 border-b border-gray-100 flex items-center gap-2">
-                            <span>📞</span>
+                            <PhoneCall className="w-5 h-5 text-gray-600" />
                             <span>Informasi Kontak Toko</span>
                         </h3>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -70,7 +71,7 @@ export default function Contact({ settings }) {
                     {/* WhatsApp Widget */}
                     <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
                         <h3 className="text-base font-bold text-gray-900 mb-4 pb-2 border-b border-gray-100 flex items-center gap-2">
-                            <span>💬</span>
+                            <MessageSquare className="w-5 h-5 text-gray-600" />
                             <span>Integrasi Tombol WhatsApp Floating</span>
                         </h3>
                         <div className="space-y-4">
@@ -113,7 +114,7 @@ export default function Contact({ settings }) {
                     {/* Alamat & Google Maps */}
                     <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
                         <h3 className="text-base font-bold text-gray-900 mb-4 pb-2 border-b border-gray-100 flex items-center gap-2">
-                            <span>📍</span>
+                            <MapPin className="w-5 h-5 text-gray-600" />
                             <span>Alamat Toko & Lokasi Google Maps</span>
                         </h3>
                         <div className="space-y-4">
