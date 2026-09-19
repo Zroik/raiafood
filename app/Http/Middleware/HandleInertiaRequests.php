@@ -32,12 +32,14 @@ class HandleInertiaRequests extends Middleware
     {
         $settings = Setting::pluck('value', 'key')->all();
 
-        // Decode navbar_menu with fallback
+        // Decode navbar_menu with fallback (6 default menu items)
         $defaultNavbar = [
             ['id' => '1', 'name' => 'Beranda', 'href' => '/'],
             ['id' => '2', 'name' => 'Produk', 'href' => '/products'],
-            ['id' => '3', 'name' => 'Tentang Kami', 'href' => '/tentang-kami'],
-            ['id' => '4', 'name' => 'Hubungi Kami', 'href' => '/hubungi-kami'],
+            ['id' => '3', 'name' => 'Berita', 'href' => '/news'],
+            ['id' => '4', 'name' => 'Tentang Kami', 'href' => '/tentang-kami'],
+            ['id' => '5', 'name' => 'FaQ', 'href' => '/faq'],
+            ['id' => '6', 'name' => 'Hubungi Kami', 'href' => '/hubungi-kami'],
         ];
         $navbarMenu = isset($settings['navbar_menu']) ? json_decode($settings['navbar_menu'], true) : null;
         if (!is_array($navbarMenu) || empty($navbarMenu)) {

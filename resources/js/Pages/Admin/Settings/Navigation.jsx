@@ -28,8 +28,10 @@ export default function Navigation({ settings }) {
         return [
             { id: '1', name: 'Beranda', href: '/' },
             { id: '2', name: 'Produk', href: '/products' },
-            { id: '3', name: 'Tentang Kami', href: '/tentang-kami' },
-            { id: '4', name: 'Hubungi Kami', href: '/hubungi-kami' },
+            { id: '3', name: 'Berita', href: '/news' },
+            { id: '4', name: 'Tentang Kami', href: '/tentang-kami' },
+            { id: '5', name: 'FaQ', href: '/faq' },
+            { id: '6', name: 'Hubungi Kami', href: '/hubungi-kami' },
         ];
     };
 

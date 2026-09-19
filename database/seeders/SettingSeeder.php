@@ -349,6 +349,15 @@ Memberikan pengalaman rasa yang berkesan bagi setiap pelanggan.',
     'created_at' => '2026-09-19 14:35:49',
     'updated_at' => '2026-09-19 14:35:49',
   ),
+  37 => 
+  array (
+    'id' => 38,
+    'key' => 'navbar_menu',
+    'value' => '[{"id":"1","name":"Beranda","href":"\\/"},{"id":"2","name":"Produk","href":"\\/products"},{"id":"3","name":"Berita","href":"\\/news"},{"id":"4","name":"Tentang Kami","href":"\\/tentang-kami"},{"id":"5","name":"FaQ","href":"\\/faq"},{"id":"6","name":"Hubungi Kami","href":"\\/hubungi-kami"}]',
+    'group' => 'navigation',
+    'created_at' => '2026-09-19 17:28:51',
+    'updated_at' => '2026-09-19 17:28:51',
+  ),
 );
 
         foreach ($data as $item) {

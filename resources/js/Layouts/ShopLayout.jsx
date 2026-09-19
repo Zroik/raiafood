@@ -97,13 +97,19 @@ export default function ShopLayout({ children, logoScale = 100 }) {
         }
     };
 
-    // Dynamic navbar links from CMS
-    const rawNavLinks = site_settings?.navbar_menu || [
+    // Dynamic navbar links from CMS (default 6 hardcoded items)
+    const defaultNavLinks = [
         { name: 'Beranda', href: '/' },
         { name: 'Produk', href: '/products' },
+        { name: 'Berita', href: '/news' },
         { name: 'Tentang Kami', href: '/tentang-kami' },
+        { name: 'FaQ', href: '/faq' },
         { name: 'Hubungi Kami', href: '/hubungi-kami' },
     ];
+
+    const rawNavLinks = (site_settings?.navbar_menu && Array.isArray(site_settings.navbar_menu) && site_settings.navbar_menu.length > 0)
+        ? site_settings.navbar_menu
+        : defaultNavLinks;
 
     const currentPath = typeof window !== 'undefined' ? window.location.pathname : '';
     const navLinks = rawNavLinks.map(link => {
@@ -168,7 +174,7 @@ export default function ShopLayout({ children, logoScale = 100 }) {
                         </Link>
 
                         {/* Desktop Nav */}
-                        <nav className="hidden lg:flex items-center gap-8">
+                        <nav className="hidden lg:flex items-center gap-5 xl:gap-8">
                             {navLinks.map(link => (
                                 <Link
                                     key={link.name}
